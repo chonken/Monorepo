@@ -1,0 +1,35 @@
+---
+interface Props {
+  href?: string
+  bgColor?: string
+  color?: string
+  blank?: boolean
+  class?: string
+}
+import { mergeClasses } from '../utils'
+const { class: className = '', href = '#', bgColor = '#000', color = '#fff', blank = false, ...rest } = Astro.props
+
+const styleList = {
+  '--bgc': bgColor,
+  '--clr': color,
+}
+const classList = mergeClasses(className, ['ch-btn-flip']).join(' ')
+---
+
+<a href={href} class={classList} style={styleList} target={blank ? '_blank' : undefined} {...rest}><slot /></a>
+
+<style is:global>
+  .ch-btn-flip {
+    display: inline-block;
+    padding: 0.5em 1.5em;
+    width: fit-content;
+    color: var(--clr);
+    border: 1px solid var(--bgc);
+    background-color: var(--bgc);
+    transition: 0.4s;
+  }
+  .ch-btn-flip:hover {
+    color: var(--bgc);
+    background-color: var(--clr);
+  }
+</style>

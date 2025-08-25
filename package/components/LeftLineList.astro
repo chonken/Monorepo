@@ -1,0 +1,47 @@
+---
+interface Props {
+  class?: string
+  element?: 'ul' | 'ol'
+  dotTop?: string
+  dotColor?: string
+  dotWidth?: string
+  dotCircle?: boolean
+  lineGap?: string
+  lineWidth?: string
+  lineColor?: string
+  lineDotWidth?: string
+  lineDotColor?: string
+  lineDotCircle?: boolean
+}
+import { mergeClasses } from '../utils'
+const { class: className = '', element = 'ul', dotTop = 'auto', dotColor = '#878787', dotWidth = '10px', dotCircle = false, lineGap = '5px', lineWidth = '1px', lineColor = '#878787', lineDotWidth = '5px', lineDotColor = '#878787', lineDotCircle = false, ...rest } = Astro.props
+
+const styleList = {
+  '--dt': dotTop,
+  '--dw': dotWidth,
+  '--dr': dotCircle ? '50%' : '0',
+  '--dc': dotColor,
+  '--l-gap': lineGap,
+  '--lw': lineWidth,
+  '--lc': lineColor,
+  '--l-dw': lineDotWidth,
+  '--l-dc': lineDotColor,
+  '--l-dr': lineDotCircle ? '50%' : '0',
+}
+
+const classList = mergeClasses(className, ['']).join(' ')
+---
+
+{
+  element === 'ul' ? (
+    <ul class={classList} style={styleList} {...rest}>
+      <slot />
+    </ul>
+  ) : (
+    element === 'ol' && (
+      <ol class={classList} style={styleList} {...rest}>
+        <slot />
+      </ol>
+    )
+  )
+}

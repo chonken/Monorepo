@@ -1,0 +1,48 @@
+---
+import data from '../../content/demo.json'
+const layouts = import.meta.glob('@layouts/**/demo.astro', { eager: true }) as Record<string, { default: any }>
+
+export async function getStaticPaths() {
+  const layouts = import.meta.glob('@layouts/**/demo.astro', { eager: true })
+  const paths = Object.keys(layouts)
+    .map((key) => {
+      const match = key.match(/\/([^\/]+)\/demo\.astro$/)
+      return match ? { params: { name: match[1] } } : null
+    })
+    .filter(Boolean)
+  return paths
+}
+
+const { name } = Astro.params
+
+const componentKey = Object.keys(layouts).find((k) => k.includes(name))
+const Component = componentKey ? layouts[componentKey].default : null
+---
+
+<html>
+  <body>
+    {Component && <Component data={data} />}
+  </body>
+</html>
+
+<script>
+  function sendHeight() {
+    const height = document.documentElement.offsetHeight + 0.5
+    window.parent.postMessage({ iframeHeight: height }, '*')
+  }
+
+  window.addEventListener('load', sendHeight)
+  window.addEventListener('resize', sendHeight)
+</script>
+
+<style is:global>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+  html {
+    overflow: hidden;
+  }
+</style>

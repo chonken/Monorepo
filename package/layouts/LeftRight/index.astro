@@ -1,0 +1,99 @@
+---
+interface Props {
+  id?: string
+  class?: string
+  item?: 'stretch' | 'start' | 'center' | 'end'
+  justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly' | 'space-between' | 'space-around' | 'space-evenly'
+  gap?: string | number
+  overlay?: string | number
+  maxWidth?: number | string
+  reverse?: boolean
+  mobile?: '2xl' | 'xl' | 'lg' | 'md' | 'sm' | 'none'
+  mobileItem?: 'stretch' | 'start' | 'center' | 'end'
+  mobileJustify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly' | 'space-between' | 'space-around' | 'space-evenly'
+  mobileFit?: boolean
+  mobileReverse?: boolean
+  center?: boolean
+}
+import { mergeClasses, parseDualUnit, parseUnit, toNegative, isNegative } from '../../utils'
+import Container from '../Container.astro'
+const { id, class: className = '', maxWidth = '100%', item = 'stretch', justify = 'center', gap = '40', overlay: oly = '0', reverse = false, mobile = 'md', mobileItem = 'center', mobileJustify = 'center', mobileFit = false, mobileReverse = false, center = false, ...rest } = Astro.props
+
+const [rowGap, cGap] = parseDualUnit(gap, 'px')
+
+// 處理間距和疊層
+const o = toNegative(parseUnit(oly, 'px'))
+const overlay = o === '-0px' ? (isNegative(cGap) ? cGap : '0px') : o
+const colGap = overlay === '0px' ? cGap : '0px'
+
+const styleList: Record<string, string> = {
+  '--itm': item,
+  '--jst': justify,
+  '--mob-itm': mobileItem,
+  '--mob-jst': mobileJustify,
+  '--gap': `${rowGap} ${colGap === rowGap ? '' : colGap}`.trim(),
+  '--oly': `${overlay}`,
+}
+const classList = mergeClasses(className, ['ch-l-r', reverse ? 'reverse' : '', ...(mobile === 'none' ? [] : [`mob-${mobile}`, mobileFit ? 'mob-fit' : '', mobileReverse ? 'mob-re' : ''])]).join(' ')
+---
+
+<Container id={id} class={classList} styleList={styleList} maxWidth={maxWidth} center={center} {...rest}>
+  <slot />
+</Container>
+
+<style lang="scss" is:global>
+  @use 'sass:list';
+  @use '../../config/breakpoint' as bp;
+  .ch-l-r {
+    display: flex;
+    justify-content: var(--jst);
+    align-items: var(--itm);
+    gap: var(--gap);
+    max-width: var(--mw);
+    &.reverse {
+      flex-direction: row-reverse;
+    }
+    & > * {
+      position: relative;
+      z-index: 1;
+    }
+  }
+  :where(.ch-l-r:not(.reverse)) > :last-child {
+    margin-left: var(--oly);
+  }
+  :where(.ch-l-r.reverse) > :last-child {
+    margin-right: var(--oly);
+  }
+
+  // 手動設定和對應尺寸
+  $map: (
+    2xl: '.mob-2xl',
+    xl: '.mob-xl',
+    lg: '.mob-lg',
+    md: '.mob-md',
+    sm: '.mob-sm',
+  );
+
+  @each $size, $mobile in $map {
+    @media (max-width: bp.size($size)) {
+      .ch-l-r#{$mobile} {
+        flex-direction: column;
+        justify-content: var(--mob-jst);
+        align-items: var(--mob-itm);
+        max-width: 100%;
+        &.mob-fit {
+          width: fit-content;
+        }
+        &.mob-re {
+          flex-direction: column-reverse;
+        }
+      }
+      :where(.ch-l-r:not(.reverse)#{$mobile}) > :last-child {
+        margin-left: 0;
+      }
+      :where(.ch-l-r.reverse#{$mobile}) > :last-child {
+        margin-right: 0;
+      }
+    }
+  }
+</style>

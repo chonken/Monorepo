@@ -1,0 +1,29 @@
+---
+interface Props {
+  class?: string
+  seconds?: string | number
+  translate?: string | number
+}
+import { mergeClasses, parseMultiUnit } from '../utils'
+const { class: className = '', seconds = '1', translate = '0 15%', ...rest } = Astro.props
+
+const styleList = {
+  '--tra': `translate(${parseMultiUnit(translate, '%')});`,
+  '--sec': `${(seconds + '').at(-1) === 's' ? seconds : seconds + 's'};`,
+}
+const classList = mergeClasses(className, ['ch-osc']).join(' ')
+---
+
+<div class={classList} style={styleList} {...rest}><slot /></div>
+
+<style is:global>
+  .ch-osc > * {
+    display: block;
+    animation: osc var(--sec) ease-in-out infinite alternate;
+  }
+  @keyframes osc {
+    100% {
+      transform: var(--tra);
+    }
+  }
+</style>

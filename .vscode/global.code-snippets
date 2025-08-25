@@ -1,0 +1,202 @@
+{
+  "css-media": {
+    "scope": "css",
+    "prefix": "media",
+    "body": ["@media (max-width: ${1|1600,1440,1280,1024,768,576,480,375|}px) {$2}"],
+    "description": "RWD"
+  },
+  "css-font-variables": {
+    "scope": "css",
+    "prefix": "fs",
+    "body": ["font-size: var(--f${1:18});"],
+    "description": "CSS Variables"
+  },
+  "css-font-16": {
+    "scope": "css",
+    "prefix": "f16",
+    "body": ["font-size: var(--f16);"],
+    "description": "CSS Variables"
+  },
+  "css-font-18": {
+    "scope": "css",
+    "prefix": "f18",
+    "body": ["font-size: var(--f18);"],
+    "description": "CSS Variables"
+  },
+  "css-font-20": {
+    "scope": "css",
+    "prefix": "f20",
+    "body": ["font-size: var(--f20);"],
+    "description": "CSS Variables"
+  },
+  "css-font-22": {
+    "scope": "css",
+    "prefix": "f22",
+    "body": ["font-size: var(--f22);"],
+    "description": "CSS Variables"
+  },
+  "css-font-25": {
+    "scope": "css",
+    "prefix": "f25",
+    "body": ["font-size: var(--f25);"],
+    "description": "CSS Variables"
+  },
+  "css-font-24": {
+    "scope": "css",
+    "prefix": "f24",
+    "body": ["font-size: var(--f24);"],
+    "description": "CSS Variables"
+  },
+  "css-font-26": {
+    "scope": "css",
+    "prefix": "f26",
+    "body": ["font-size: var(--f26);"],
+    "description": "CSS Variables"
+  },
+  "css-font-28": {
+    "scope": "css",
+    "prefix": "f28",
+    "body": ["font-size: var(--f28);"],
+    "description": "CSS Variables"
+  },
+  "css-font-30": {
+    "scope": "css",
+    "prefix": "f30",
+    "body": ["font-size: var(--f30);"],
+    "description": "CSS Variables"
+  },
+  "css-font-32": {
+    "scope": "css",
+    "prefix": "f32",
+    "body": ["font-size: var(--f32);"],
+    "description": "CSS Variables"
+  },
+  "css-font-34": {
+    "scope": "css",
+    "prefix": "f34",
+    "body": ["font-size: var(--f34);"],
+    "description": "CSS Variables"
+  },
+  "css-font-35": {
+    "scope": "css",
+    "prefix": "f35",
+    "body": ["font-size: var(--f35);"],
+    "description": "CSS Variables"
+  },
+  "css-font-36": {
+    "scope": "css",
+    "prefix": "f36",
+    "body": ["font-size: var(--f36);"],
+    "description": "CSS Variables"
+  },
+  "css-font-38": {
+    "scope": "css",
+    "prefix": "f38",
+    "body": ["font-size: var(--f38);"],
+    "description": "CSS Variables"
+  },
+  "css-font-40": {
+    "scope": "css",
+    "prefix": "f40",
+    "body": ["font-size: var(--f40);"],
+    "description": "CSS Variables"
+  },
+  "css-font-42": {
+    "scope": "css",
+    "prefix": "f42",
+    "body": ["font-size: var(--f42);"],
+    "description": "CSS Variables"
+  },
+  "css-font-44": {
+    "scope": "css",
+    "prefix": "f44",
+    "body": ["font-size: var(--f44);"],
+    "description": "CSS Variables"
+  },
+  "css-font-45": {
+    "scope": "css",
+    "prefix": "f45",
+    "body": ["font-size: var(--f45);"],
+    "description": "CSS Variables"
+  },
+  "css-font-46": {
+    "scope": "css",
+    "prefix": "f46",
+    "body": ["font-size: var(--f46);"],
+    "description": "CSS Variables"
+  },
+  "css-font-48": {
+    "scope": "css",
+    "prefix": "f48",
+    "body": ["font-size: var(--f48);"],
+    "description": "CSS Variables"
+  },
+  "css-font-50": {
+    "scope": "css",
+    "prefix": "f50",
+    "body": ["font-size: var(--f50);"],
+    "description": "CSS Variables"
+  },
+
+  "html-demo-1": {
+    "scope": "html",
+    "prefix": "demo1",
+    "body": ["<div class=\"demo1\">", "\t$1", "</div>"]
+  },
+
+  "as": {
+    "scope": "astro",
+    "prefix": "as",
+    "body": ["---", "interface Props {", "\tclass?: string", "}", "import { mergeClasses } from '@utils'", "const { class: className = '', ...rest } = Astro.props\n", "const classList = mergeClasses(className, ['$1']).join(' ')", "---\n", "<div class={classList} {...rest}>", "\t", "</div>\n", "<style is:global>", "\t", "</style>"]
+  },
+  "as-fk": {
+    "scope": "astro",
+    "prefix": "as-fk",
+    "body": ["---\nimport YkFk from '../layouts/YongKingFuck.astro'\n---\n\n<YkFk>\n\t\n</YkFk>\n\n<style is:global>\n\t\n</style>"]
+  },
+  "as-fk-index": {
+    "scope": "astro",
+    "prefix": "as-fk-index",
+    "body": ["---\nimport YkFk from '../layouts/YongKingFuck.astro'\n---\n\n<YkFk h2={[]}>\n\t\n</YkFk>\n\n<style is:global>\n\t\n</style>"]
+  },
+  "side-padding": {
+    "scope": "astro",
+    "prefix": "sidePadding",
+    "body": ["<SidePadding class='$1' space='${2|normal,wide,narrow|}'${3| paddingBlock=''|}>", "\t$4", "</SidePadding>"]
+  },
+  "aside-padding": {
+    "scope": "astro",
+    "prefix": "asidePadding",
+    "body": ["<AsidePadding class='$1' maxWidth='${2:1400}' aside='${3|left,right|}' mobile='${4|lg,md,xl,2xl,none|}'${5| mobileFill|}${6| paddingBlock=''|}>", "\t$7", "</AsidePadding>"]
+  },
+  "container": {
+    "scope": "astro",
+    "prefix": "container",
+    "body": ["<Container class='$1' maxWidth='${2:1200}'>", "\t$3", "</Container>"]
+  },
+  "left-right": {
+    "scope": "astro",
+    "prefix": "leftRight",
+    "body": ["<LeftRight class='$1' ${2|gap='40',overlay='-80'|} item='${3|center,stretch,start,end|}' justify='${4|center,between,start,end,around,evenly|}' maxWidth='${5:1200}' mobile='${6|lg,xl,md,2xl,sm|}'${7| reverse|}${8| center|}${9| mobileFit|}${10| mobileReverse|}>", "\t$11", "</LeftRight>"]
+  },
+  "grid-item": {
+    "scope": "astro",
+    "prefix": "gridItem",
+    "body": ["<GridItem class='$1' col='${2:5} 2xl:${3:5} xl:${4:5} lg:${5:4} md:${6:3} sm:${7:2} xs:${8:1}' gap='${9:30}' item='${10|stretch,start,center,end|}' justify='${11|center,between,start,end,around,evenly|}' maxWidth='${12:100%}'${13| center|}>", "\t$14", "</GridItem>"]
+  },
+  "button-swap": {
+    "scope": "astro",
+    "prefix": "btnSwap",
+    "body": ["<BtnSwap ${1|class='' |}href='#' bgColor='#000' color='#fff'${2| target|}>$3</BtnSwap>"]
+  },
+  "image": {
+    "scope": "astro",
+    "prefix": "Img",
+    "body": ["<Img src='$1'${2| class=''|}${3| scale|}${4| cover|} />"]
+  },
+  "background-fixed": {
+    "scope": "astro",
+    "prefix": "bgFixed",
+    "body": ["<BgFixed  ${1|class='' |}src='$2' minHeight='$3vw'>", "\t$4", "</BgFixed>"]
+  }
+}

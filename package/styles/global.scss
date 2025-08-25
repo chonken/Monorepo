@@ -1,0 +1,20 @@
+@use '../config/breakpoint' as bp;
+
+.ch-layout {
+  justify-content: var(--jst);
+  align-items: var(--itm);
+  gap: var(--gap);
+  &:where(.reverse) {
+    direction: rtl;
+  }
+}
+@each $size, $value in bp.$breakpoint {
+  @media (max-width: $value) {
+    .ch-layout.ch-mob-#{$size} {
+      direction: unset;
+      justify-content: var(--mob-jst);
+      align-items: var(--mob-itm);
+      gap: var(--mob-gap);
+    }
+  }
+}

@@ -1,0 +1,60 @@
+---
+interface Props {
+  class?: string
+  diraction?: 'horizon' | 'vertical'
+  borderWidth?: string | number
+  length?: string | number
+  color1?: string
+  color2?: string
+  duration?: string | number
+  delay?: string | number
+}
+import { mergeClasses, parseUnit } from '../utils'
+const { class: className = '', borderWidth = 1, color1 = '#fff', color2 = '#000', length = '100%', duration = 4, delay = 0, diraction = 'horizon', ...rest } = Astro.props
+
+const map = {
+  horizon: {
+    bg: `linear-gradient(to right, ${color1} 50%, ${color2} 50%) right / 200% 100% border-box`,
+    ani: '-100% 0',
+    w: length,
+    h: 0,
+    bw: `${parseUnit(borderWidth, 'px')} 0 0 0`,
+  },
+  vertical: {
+    bg: `linear-gradient(${color1} 50%, ${color2} 50%) bottom / 100% 200% border-box`,
+    ani: '0 -100%',
+    w: 0,
+    h: length === '100%' ? '80px' : length,
+    bw: `0 0 0 ${parseUnit(borderWidth, 'px')}`,
+  },
+}
+
+const styleList = {
+  '--w': parseUnit(map[diraction].w, 'px'),
+  '--h': parseUnit(map[diraction].h, 'px'),
+  '--bor-w': parseUnit(borderWidth, 'px'),
+  '--bg': map[diraction].bg,
+  '--ani': map[diraction].ani,
+  '--dur': parseUnit(duration, 's'),
+  '--dly': parseUnit(delay, 's'),
+}
+const classList = mergeClasses(className, [`${className} ch-div-ani`]).join(' ')
+---
+
+<hr class={classList} style={styleList} {...rest} />
+
+<style is:global>
+  .ch-div-ani {
+    width: var(--w);
+    height: var(--h);
+    border: solid #fff0;
+    border-width: var(--bor-w);
+    background: var(--bg);
+    animation: div-ani var(--dur) var(--dly) ease infinite;
+  }
+  @keyframes div-ani {
+    100% {
+      background-position: var(--ani);
+    }
+  }
+</style>

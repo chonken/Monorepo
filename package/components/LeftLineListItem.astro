@@ -1,0 +1,74 @@
+---
+interface Props {
+  class?: string
+  trimStart?: boolean
+  trimEnd?: boolean
+}
+import { mergeClasses } from '../utils'
+const { class: className = '',  trimStart = false, trimEnd = false, ...rest } = Astro.props
+
+const classList = mergeClasses(className, ['ch-li-l-l', trimStart ? 'ch-ts' : '', trimEnd ? 'ch-te' : '']).join(' ')
+---
+
+<li class={classList} {...rest}>
+  <div class="ch-icon"><slot name="icon" /></div>
+  <div class="ch-marker">
+    <div class="ch-line"></div>
+    <div class="ch-dot"></div>
+    <div class="ch-line"></div>
+  </div>
+  <slot />
+</li>
+
+<style lang="scss" is:global>
+  .ch-li-l-l {
+    display: flex;
+    margin-block: 0 !important;
+    padding-block: 0 !important;
+    &:is(.ch-icon, .ch-marker) {
+      flex-shrink: 0;
+    }
+    & .ch-marker {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--l-gap);
+      align-self: stretch !important;
+    }
+    & .ch-dot {
+      width: var(--dw);
+      height: var(--dw);
+      border-radius: var(--dr);
+      background-color: var(--dc);
+    }
+    & .ch-line {
+      position: relative;
+      border-left: var(--lw) solid var(--lc);
+      flex-grow: 1;
+    }
+    & .ch-line:first-child {
+      max-height: var(--dt);
+    }
+    & .ch-line::after {
+      position: absolute;
+      left: calc((var(--lw) + var(--l-dw)) / -2);
+      width: var(--l-dw);
+      height: var(--l-dw);
+      border-radius: var(--l-dr);
+      background-color: var(--l-dc);
+      z-index: 1;
+    }
+    & .ch-line:first-child::after {
+      content: '';
+      bottom: calc(2.5px * -1);
+    }
+    & .ch-line:last-child::after {
+      content: '';
+      top: calc(2.5px * -1);
+    }
+    &.ch-ts:first-of-type .ch-line:first-child,
+    &.ch-te:last-of-type .ch-line:last-child {
+      opacity: 0;
+    }
+  }
+</style>

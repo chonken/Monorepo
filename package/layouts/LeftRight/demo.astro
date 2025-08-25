@@ -1,0 +1,73 @@
+---
+import LeftRight from './index.astro'
+import Ruler from '../ruler.astro'
+
+export const props = {
+  id: { type: ['string'], require: false, default: '' },
+  class: { type: ['string'], require: false, default: '' },
+  item: { type: ['stretch', 'start', 'center', 'end'], require: false, default: 'stretch' },
+  justify: { type: ['start', 'center', 'end', 'between', 'around', 'evenly', 'space-between', 'space-around', 'space-evenly'], require: false, default: 'center' },
+  gap: { type: ['string', 'number'], require: false, default: '40', demo: '20 -200' },
+  overlay: { type: ['string', 'number'], require: false, default: '0' },
+  maxWidth: { type: ['string', 'number'], require: false, default: '100%', demo: '1200' },
+  reverse: { type: ['boolean'], require: false, default: false },
+  mobile: { type: ['2xl', 'xl', 'lg', 'md', 'sm', 'none'], require: false, default: 'md' },
+  mobileItem: { type: ['stretch', 'start', 'center', 'end'], require: false, default: 'center' },
+  mobileJustify: { type: ['start', 'center', 'end', 'between', 'around', 'evenly', 'space-between', 'space-around', 'space-evenly'], require: false, default: 'center' },
+  mobileFit: { type: ['boolean'], require: false, default: false },
+  mobileReverse: { type: ['boolean'], require: false, default: false },
+  center: { type: ['boolean'], require: false, default: false, demo: true },
+}
+export const slots = ['default']
+
+const data = Astro.props.data['image_txt']?.[0] ?? {}
+---
+
+<LeftRight class="" gap={props.gap.demo} maxWidth={props.maxWidth.demo} center>
+  <Ruler />
+  <div class="pic"><img src=`${data?.image}` alt="" /></div>
+  <div class="content">
+    <div class="inner">
+      <hgroup>
+        <h2>{data?.title}</h2>
+        <p>{data?.subtitle}</p>
+      </hgroup>
+      {data?.text.map((item: string) => <p>{item}</p>)}
+    </div>
+  </div>
+</LeftRight>
+
+<style>
+  .ch-l-r {
+    position: relative;
+    z-index: 1;
+  }
+  .pic {
+    width: 600px;
+    aspect-ratio: 600/400;
+    background-color: #eee;
+  }
+  .pic > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .content {
+    display: flex;
+    margin-top: 100px;
+    width: 800px;
+    background-color: #eeed;
+    backdrop-filter: blur(5px);
+  }
+  .inner {
+    margin: auto 0;
+    padding: 40px 5%;
+    width: 100%;
+  }
+  @media (max-width: 1024px) {
+    .content {
+      margin-top: 0;
+    }
+  }
+</style>

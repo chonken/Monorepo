@@ -1,0 +1,55 @@
+.key_words {
+  padding: 0 !important;
+  height: 0 !important;
+  overflow: hidden;
+}
+.key_words :is(h2, h3, h4, h5, h6) {
+  color: rgba(255, 255, 255, 0);
+}
+.ykfk * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  left: auto;
+}
+.ykfk :where(p) {
+  margin-top: 1em;
+}
+.ykfk :where(h3, h4, h5, h6) {
+  line-height: 1.4;
+}
+@layer base {
+  .ykfk {
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .ykfk,
+  .ykfk * {
+    max-width: 100%;
+    text-decoration: none;
+    list-style: none;
+    font: inherit;
+    color: inherit;
+    transition: color 0.5s, background-color 0.5s, border-color 0.5s;
+  }
+  .ykfk *::before,
+  .ykfk *::after {
+    box-sizing: border-box;
+  }
+  .ykfk iframe {
+    display: block;
+  }
+  .ykfk img {
+    vertical-align: middle;
+  }
+  .ykfk table {
+    border-collapse: collapse;
+  }
+  .ykfk a {
+    transition: 0.5s;
+  }
+}

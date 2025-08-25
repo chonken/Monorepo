@@ -1,0 +1,32 @@
+---
+interface Props {
+  class?: string
+  rotate?: string
+  duration?: string
+  loop?: boolean
+}
+import { mergeClasses, parseUnit } from '../utils'
+const { class: className = '', rotate = '15', duration = '1', loop = false, ...rest } = Astro.props
+const timing = loop ? 'linear' : 'ease-in-out alternate-reverse'
+
+const styleList = {
+  '--sec': parseUnit(duration, 's'),
+  '--rot': parseUnit(loop ? '360deg' : rotate, 'deg'),
+  '--tim': timing,
+}
+const classList = mergeClasses(className, ['ch-rot']).join(' ')
+---
+
+<div class={classList} style={styleList} {...rest}><slot /></div>
+
+<style is:global>
+  .ch-rot > * {
+    display: block;
+    animation: rotate var(--sec) infinite var(--tim);
+  }
+  @keyframes rotate {
+    100% {
+      transform: rotate(var(--rot));
+    }
+  }
+</style>

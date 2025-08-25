@@ -1,0 +1,55 @@
+---
+interface Props {
+  href?: string
+  class?: string
+  dotColor?: string
+  dotSize?: string
+  lineWidth?: string
+  lineColor?: string
+  blank?: boolean
+}
+import { mergeClasses } from '../../utils'
+const { href = '#', class: className = '', dotColor = '#333', dotSize = '0.5em', lineWidth = '1px', lineColor = '#333', blank = false, ...rest } = Astro.props
+
+const styleList = {
+  '--dc': dotColor,
+  '--ds': dotSize,
+  '--lw': lineWidth,
+  '--lc': lineColor,
+}
+const classList = mergeClasses(className, ['btn_type03']).join(' ')
+---
+
+<a href={href} class={classList} style={styleList} target={blank ? '_blank' : undefined} {...rest}><slot /></a>
+
+<style is:global>
+  .btn_type03 {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5em 1em;
+    width: 15ch;
+    text-align: center;
+    line-height: 1.2;
+    border-bottom: var(--lw) solid var(--lc);
+    z-index: 1;
+  }
+  .btn_type03::before {
+    content: '';
+    position: absolute;
+    left: calc(var(--ds) / -2);
+    bottom: calc((var(--ds) + var(--lw)) / -2);
+    width: var(--ds);
+    height: var(--ds);
+    border-radius: 50%;
+    background: var(--dc);
+    transition: 0.4s;
+  }
+  .btn_type03:hover {
+    letter-spacing: 0.3em;
+  }
+  .btn_type03:hover::before {
+    left: calc(100% - var(--ds) / 2);
+  }
+</style>

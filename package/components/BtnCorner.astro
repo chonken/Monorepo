@@ -1,0 +1,78 @@
+---
+interface Props {
+  href?: string
+  bgColor?: string
+  color?: string
+  blank?: boolean
+  class?: string
+  position?: 'lt' | 'rt' | 'lb' | 'rb'
+}
+import { mergeClasses } from '../utils'
+const { href = '#', class: className = '', bgColor = '#fff', color = '#000', blank = false, position = 'rb', ...rest } = Astro.props
+
+const map = {
+  lt: 'ch-lt',
+  rt: 'ch-rt',
+  lb: 'ch-lb',
+  rb: 'ch-rb',
+}
+
+const styleList = {
+  '--bgc': bgColor,
+  '--clr': color,
+}
+const classList = mergeClasses(className, ['ch-btn-cnr', map[position]]).join(' ')
+---
+
+<a href={href} class={classList} style={styleList} target={blank ? '_blank' : undefined} {...rest}><slot /></a>
+
+<style is:global>
+  .ch-btn-cnr {
+    position: relative;
+    display: inline-block;
+    padding: 1em;
+    line-height: 1;
+    color: var(--clr);
+    overflow: hidden;
+    background-color: var(--bgc);
+    transition: 0.4s;
+    z-index: 1;
+  }
+  .ch-btn-cnr::before {
+    content: '';
+    position: absolute;
+    width: 0.7em;
+    aspect-ratio: 1;
+    background-color: var(--clr);
+    transition: 0.6s;
+    transition-timing-function: ease-out;
+    z-index: -1;
+  }
+  .ch-btn-cnr.ch-lt::before {
+    top: 0;
+    left: 0;
+    clip-path: polygon(0 0, 0% 100%, 100% 0);
+  }
+  .ch-btn-cnr.ch-rt::before {
+    top: 0;
+    right: 0;
+    clip-path: polygon(0 0, 100% 100%, 100% 0);
+  }
+  .ch-btn-cnr.ch-lb::before {
+    bottom: 0;
+    left: 0;
+    clip-path: polygon(0 0, 0% 100%, 100% 100%);
+  }
+  .ch-btn-cnr.ch-rb::before {
+    bottom: 0;
+    right: 0;
+    clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+  }
+  .ch-btn-cnr:hover {
+    color: #fff;
+  }
+  .ch-btn-cnr:hover::before {
+    width: 200%;
+    transition-timing-function: ease-in;
+  }
+</style>

@@ -1,0 +1,69 @@
+---
+interface Props {
+  class?: string
+  name: string
+  mobile?: string[]
+}
+import { mergeClasses } from '@utils'
+import breakpoint from '@config/breakpoint.json'
+const { class: className = '', name, mobile = [], ...rest } = Astro.props
+
+const classList = mergeClasses(className, ['']).join(' ')
+---
+
+<div class={classList} {...rest}>
+  <ul class="flex flex-wrap justify-center gap-2">
+    {
+      ['1920', ...mobile].map((item) =>
+        ['none'].includes(item) ? null : (
+          <li class="min-w-20">
+            <button class="componentResize px-3 py-1.5 w-full text-center leading-tight bg-[var(--bg-inverted)] hover:bg-transparent text-[var(--text-inverted)] hover:text-[var(--text-elevated-2)]  rounded-full border-[var(--bg-inverted)] border-2 transition cursor-pointer" data-mobile={item}>
+              {item}
+            </button>
+          </li>
+        )
+      )
+    }
+  </ul>
+  <div class="component mt-10 w-full"><div class="inner"><iframe class="block w-full mx-auto outline-1 outline-red-500" src=`getDemo/${name}`></iframe></div></div>
+</div>
+
+<script define:vars={{ breakpoint }}>
+  const iframe = document.querySelector('.component iframe')
+  if (iframe) {
+    window.addEventListener('message', (event) => {
+      if (event.data.iframeHeight) {
+        iframe.style.height = event.data.iframeHeight + 'px'
+      }
+    })
+  }
+
+  const comp = document.querySelector('.component')
+  function onResize(contentWidth = 1920) {
+    if (!comp) return
+
+    const containerWidth = comp.clientWidth ?? 0
+    const scale = containerWidth / contentWidth
+    if (scale < 1) {
+      iframe.style.zoom = scale + ''
+      iframe.style.width = '100%'
+    } else {
+      iframe.style.zoom = '1'
+      iframe.style.width = contentWidth + 'px'
+    }
+  }
+
+  const components = document.querySelectorAll('.componentResize')
+  let last = 1920
+  for (const component of components) {
+    component.addEventListener('click', () => {
+      const mobile = component.dataset.mobile
+      if (mobile === '1920') last = 1920
+      else last = +breakpoint[mobile].slice(0, -2)
+      onResize(last)
+    })
+  }
+
+  window.addEventListener('resize', () => onResize(last))
+  window.addEventListener('load', onResize())
+</script>

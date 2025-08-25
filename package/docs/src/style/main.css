@@ -1,0 +1,62 @@
+@import '../../../styles/normalize.css';
+
+:root {
+  --bg-main-1: #fff;
+  --bg-main-2: #e5e7eb;
+  --bg-main-3: #dcd7d7;
+  --bg-main-4: #ccc;
+  --bg-inverted: #191818;
+  --bg-elevated-1: #fff;
+  --bg-elevated-2: #e5e7eb;
+  --bg-elevated-4: #cec5c5;
+  --bg-elevated-3: #cec5c5;
+  --bg-accent-1: #3b82f6;
+  --bg-accent-2: #2563eb;
+  --bg-accent-3: #1d4ed8;
+  --text-main-1: #444;
+  --text-main-2: #555;
+  --text-main-3: #666;
+  --text-inverted: #eee;
+  --text-elevated-1: #444;
+  --text-elevated-2: #555;
+  --text-elevated-3: #666;
+  --text-accent-1: #3b82f6;
+  --text-accent-2: #2563eb;
+  --text-accent-3: #1d4ed8;
+  --border-1: #444;
+  --border-2: #555;
+  --border-3: #666;
+  --border-inverted: #eee;
+}
+.dark {
+  --bg-main-1: #1b1b1b;
+  --bg-main-2: #191818;
+  --bg-main-3: #2a2a2a;
+  --bg-main-4: #343434;
+  --bg-inverted: #fff;
+  --bg-elevated-1: #191818;
+  --bg-elevated-2: #191818;
+  --bg-elevated-3: #5d5555;
+  --bg-elevated-4: #5d5555;
+  --bg-accent-1: #3b82f6;
+  --bg-accent-2: #2563eb;
+  --bg-accent-3: #1d4ed8;
+  --text-main-1: #fff;
+  --text-main-2: #ccc;
+  --text-main-3: #aaa;
+  --text-inverted: #444;
+  --text-elevated-1: #fff;
+  --text-elevated-2: #ccc;
+  --text-elevated-3: #aaa;
+  --text-accent-1: #3b82f6;
+  --text-accent-2: #2563eb;
+  --text-accent-3: #1d4ed8;
+  --border-1: #fff;
+  --border-2: #ccc;
+  --border-3: #aaa;
+  --border-inverted: #444;
+}
+html,
+body {
+  height: 100%;
+}

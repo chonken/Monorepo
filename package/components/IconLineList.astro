@@ -1,0 +1,39 @@
+---
+interface Props {
+  class?: string
+  element?: 'ul' | 'ol'
+  mobile?: 'md' | 'sm' | 'xs' | '2xs' | 'none'
+  gap?: string | number
+  mobileGap?: string | number
+  iconHeight: string | number
+  mobileIconHeight?: string | number
+}
+import { mergeClasses, parseUnit } from '../utils'
+const { class: className = '', element = 'ul', gap = '40px', iconHeight, mobile = 'none', mobileGap = '20px', mobileIconHeight = '', ...rest } = Astro.props
+
+const styleList = {
+  '--gap': parseUnit(gap, 'px'),
+  '--mob-gap': parseUnit(mobileGap, 'px'),
+  '--ih': parseUnit(iconHeight, 'px'),
+  '--mob-ih': parseUnit(mobileIconHeight, 'px'),
+}
+const classList = mergeClasses(className, ['']).join(' ')
+---
+
+{
+  element === 'ul' ? (
+    <ul class={classList} style={styleList} {...rest}>
+      <slot />
+    </ul>
+  ) : (
+    element === 'ol' && (
+      <ol class={classList} style={styleList} {...rest}>
+        <slot />
+      </ol>
+    )
+  )
+}
+
+<style lang="scss" is:global>
+  // 沒寫
+</style>

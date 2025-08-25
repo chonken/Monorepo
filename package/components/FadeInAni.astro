@@ -1,0 +1,41 @@
+---
+interface Props {
+  direction?: 'left' | 'right'
+  class?: string
+  seconds?: string | number
+  translate?: string | number
+}
+import { mergeClasses, parseUnit } from '../utils'
+const { class: className = '', seconds = '1', translate = '15%', direction = 'right', ...rest } = Astro.props
+
+const styleList = {
+  '--sec': parseUnit(seconds, 's'),
+  '--tra': parseUnit(translate, '%'),
+}
+const classList = mergeClasses(className, [`ch-${direction}-fade`]).join(' ')
+---
+
+<div class={classList} style={styleList} {...rest}><slot /></div>
+
+<style is:global>
+  .ch-left-fade > *,
+  .ch-right-fade > * {
+    display: block;
+    animation:
+      hr-fade-right var(--sec) ease-in-out infinite,
+      hr-fade-opacity var(--sec) ease-in-out infinite;
+  }
+  .ch-left-fade > * {
+    animation-direction: reverse, normal;
+  }
+  @keyframes hr-fade-right {
+    100% {
+      transform: translateX(var(--tra));
+    }
+  }
+  @keyframes hr-fade-opacity {
+    100% {
+      opacity: 0;
+    }
+  }
+</style>

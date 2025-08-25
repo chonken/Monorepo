@@ -1,0 +1,30 @@
+---
+interface Props {
+  class?: string
+  props?: Record<string, Record<string, any>>
+}
+import { mergeClasses } from '@utils'
+const { class: className = '', props, ...rest } = Astro.props
+
+const classList = mergeClasses(className, ['grid', 'grid-cols-[max-content_auto_minmax(40%,_auto)]', 'mx-auto', 'mt-10', 'max-w-6xl']).join(' ')
+---
+
+<div class={classList} {...rest}>
+  <h5 class="px-6 py-2.5 text-center font-bold text-xl border-r first-of-type:border-l border-y bg-[var(--bg-main-4)]">屬性名</h5>
+  <h5 class="px-6 py-2.5 text-center font-bold text-xl border-r first-of-type:border-l border-y bg-[var(--bg-main-4)]">資料型態</h5>
+  <h5 class="px-6 py-2.5 text-center font-bold text-xl border-r first-of-type:border-l border-y bg-[var(--bg-main-4)]">說明</h5>
+  {
+    Object.entries(props ?? {})?.map(([name, datas]) => (
+      <Fragment>
+        <div class="px-4 py-2 text-end flex flex-wrap justify-end items-center border-r nth-of-type-[3n+1]:border-l border-b bg-[var(--bg-main-1)] nth-of-type-[6n+4]:bg-[var(--bg-main-3)]">{name}</div>
+        <div class="px-4 py-2 border-r flex flex-wrap items-center nth-of-type-[3n+1]:border-l border-b bg-[var(--bg-main-1)] nth-of-type-[6n+5]:bg-[var(--bg-main-3)]">{datas['type'].join(' || ')}</div>
+        <div class="px-4 py-2 border-r nth-of-type-[3n+1]:border-l border-b bg-[var(--bg-main-1)] nth-of-type-[6n+6]:bg-[var(--bg-main-3)]">
+          <p class="mt-0">
+            <span>預設值: {typeof datas['default'] === 'string' ? `'${datas['default']}'` : datas['default'] + ''}</span>
+            {datas['demo'] !== undefined ? <span>，當前展示: {typeof datas['demo'] === 'string' ? `'${datas['demo']}'` : datas['demo'] + ''}</span> : null}
+          </p>
+        </div>
+      </Fragment>
+    ))
+  }
+</div>

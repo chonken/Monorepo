@@ -1,0 +1,86 @@
+---
+interface Props {
+  class?: string
+}
+import { mergeClasses } from '../utils'
+const { class: className = '', ...rest } = Astro.props
+
+const classList = mergeClasses(className, ['ruler']).join(' ')
+---
+
+<div class={classList} {...rest}>
+  <div class="horizontal">
+    <div class="line"></div>
+    <strong class="widthText">0</strong>
+    <div class="line"></div>
+  </div>
+  <div class="vertical">
+    <div class="line"></div>
+    <strong class="heightText">0</strong>
+    <div class="line"></div>
+  </div>
+</div>
+
+<script>
+  const ruler = document.querySelector('.ruler') as HTMLDivElement
+  const widthText = document.querySelector('.widthText') as HTMLDivElement
+  const heightText = document.querySelector('.heightText') as HTMLDivElement
+
+  function updateSize() {
+    widthText.textContent = ruler.clientWidth + ''
+    heightText.textContent = ruler.clientHeight + ''
+  }
+
+  updateSize()
+
+  window.addEventListener('resize', updateSize)
+</script>
+
+<style>
+  .ruler {
+    position: absolute;
+    inset: 0;
+    text-align: center;
+    z-index: calc(Infinity);
+    pointer-events: none;
+  }
+  .ruler strong {
+    display: block;
+    padding: 0 0.5em;
+    font-size: 40px;
+    font-weight: bold;
+    flex-shrink: 0;
+    border-radius: 999em;
+    background-color: #eee6;
+    backdrop-filter: blur(4px);
+  }
+  .horizontal {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+  }
+  .horizontal .line {
+    border-top: 1px solid #333333;
+    flex-grow: 1;
+  }
+  .vertical {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: fit-content;
+    height: 100%;
+  }
+  .vertical .line {
+    border-left: 1px solid #333333;
+    flex-grow: 1;
+  }
+</style>

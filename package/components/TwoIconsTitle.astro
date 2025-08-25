@@ -1,0 +1,51 @@
+---
+interface Props {
+  class?: string
+  gap?: string | number
+  mobile?: 'md' | 'sm' | 'xs' | '2xl'
+  mobilKeep?: boolean
+}
+import { mergeClasses, parseMultiUnit } from '../utils'
+const { class: className = '', gap = '20', mobile = 'md', mobilKeep = false, ...rest } = Astro.props
+const  [rowGap, colGap]  = parseMultiUnit(gap)
+
+const classList = mergeClasses(className, ['ch-tit', `mob-${mobile}`, `${mobilKeep ? 'mob-keep' : ''}`]).join(' ')
+const styleList = `--gap: ${rowGap + ' ' + colGap};`.trim()
+---
+
+<div class={classList} style={styleList} {...rest}>
+  <div class="ch-tit-i"><slot name="icon" /></div>
+  <div class="ch-tit-t"><slot /></div>
+  <div class="ch-tit-i"><slot name="icon" /></div>
+</div>
+
+<style lang="scss" is:global>
+  @use '../config/breakpoint' as bp;
+  .ch-tit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap);
+  }
+  .ch-tit-t {
+    flex-shrink: 0;
+  }
+
+  $map: (md, sm, xs, 2xl);
+
+  @each $size in $map {
+    @media (max-width: bp.size($size)) {
+      .ch-tit.mob-#{$size} {
+        .ch-tit-i {
+          display: none;
+        }
+      }
+      .ch-tit.mob-#{$size}.mob-keep {
+        flex-direction: column;
+        .ch-tit-i {
+          display: block;
+        }
+      }
+    }
+  }
+</style>

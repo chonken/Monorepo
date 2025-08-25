@@ -1,0 +1,29 @@
+---
+interface Props {
+  href?: string
+  class?: string
+  target?: boolean
+}
+const { href = '#', target = false } = Astro.props
+let { class: className = '' } = Astro.props
+if (className === 'btn_type01') className = ''
+
+const classList = `${className} btn_type01`.trim()
+---
+
+<a class={classList} href={href} target={target ? '_blank' : undefined}><slot /></a>
+
+<style is:global>
+  a.btn_type01 {
+    display: block;
+    width: 140px;
+    height: 40px;
+    background: #2b4346;
+    color: #ffffff;
+    text-align: center;
+  }
+  a.btn_type01:hover {
+    transform: translate(-5px, -5px);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+  }
+</style>

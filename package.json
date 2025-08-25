@@ -1,0 +1,19 @@
+{
+  "name": "monorepo",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "astro": "^5.12.7"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.11",
+    "@types/jquery": "^3.5.32",
+    "sass-embedded": "^1.89.2",
+    "tailwindcss": "^4.1.11",
+    "vite-plugin-devtools-json": "^0.4.1",
+    "vite-plugin-static-copy": "^3.1.0"
+  }
+}

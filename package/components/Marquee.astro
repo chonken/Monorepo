@@ -1,0 +1,64 @@
+---
+interface Props {
+  seconds?: string | number
+  direction?: 'left' | 'right' | 'up' | 'down'
+  class?: string
+}
+import { mergeClasses, parseUnit } from '../utils'
+const { class: className = '', seconds = 20, direction = 'left', ...rest } = Astro.props
+
+const map = {
+  left: [-1, 0],
+  right: [1, 0],
+  up: [0, -1],
+  down: [0, 1],
+}
+const [hr, vr] = map[direction] ?? [0, 0]
+
+const styleList = {
+  '--sec': parseUnit(seconds, 's'),
+  '--tra': `translate(${hr * 100}%, ${vr * 100}%)`,
+}
+const classList = mergeClasses(className, ['ch-mar', `ch-dir-${direction}`]).join(' ')
+---
+
+<div class={classList} style={styleList} {...rest}>
+  <div class="ch-item"><slot /></div>
+  <div class="ch-item"><slot /></div>
+</div>
+
+<style lang="scss" is:global>
+  @use 'sass:map';
+  .ch-mar {
+    display: flex;
+    overflow: hidden;
+    & .ch-item {
+      max-width: unset;
+      animation: marquee var(--sec) linear infinite;
+      flex-shrink: 0;
+      & > img {
+        max-width: unset;
+      }
+    }
+    &.ch-dir-right,
+    &.ch-dir-down {
+      justify-content: end;
+    }
+    &.ch-dir-left .ch-item *,
+    &.ch-dir-right .ch-item * {
+      height: 100% !important;
+    }
+    &.ch-dir-up,
+    &.ch-dir-down {
+      flex-direction: column;
+      & .ch-item * {
+        width: 100%;
+      }
+    }
+  }
+  @keyframes marquee {
+    100% {
+      transform: var(--tra);
+    }
+  }
+</style>

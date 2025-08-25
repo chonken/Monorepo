@@ -1,0 +1,49 @@
+---
+interface Props {
+  root?: string
+  isDev?: boolean
+  isIndex?: boolean
+  h2?: string[]
+}
+import '../styles/normalize.css'
+import '../styles/global.scss'
+const { root = '', isDev = false, isIndex = false, h2 = [] } = Astro.props
+---
+
+{
+  isDev ? (
+    <html lang="zh-Hant">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <script is:inline src="https://pic03.eapple.com.tw/yk_js_web/jquery-1.11.3.min.js" />
+        <script is:inline src="https://pic03.eapple.com.tw/yk_js_web/scrollfade.js" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.css"/>
+        <slot name="head" />
+      </head>
+      <body>
+        <div class={root}>
+          <slot />
+        </div>
+      </body>
+    </html>
+  ) : (
+  <head>
+    <script is:inline src="https://pic03.eapple.com.tw/yk_js_web/scrollfade.js" />
+    <slot name="head" />
+  </head>
+  <div class={root}>
+    {isIndex && (
+    <div class="key_words">
+      <h2>{h2[0]}</h2>
+      <h3>{h2[1]}</h3>
+      <h4>{h2[2]}</h4>
+      <h5>{h2[3]}</h5>
+      <h6>{h2[4]}</h6>
+    </div>
+    )}
+    <slot />
+  </div>
+  )
+}

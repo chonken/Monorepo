@@ -1,0 +1,31 @@
+---
+interface Props {
+  src?: string
+  class?: string
+  scale?: boolean
+  cover?: boolean
+}
+import { mergeClasses } from '../utils'
+const { class: className = '', src = '', scale = false, cover = false, ...rest } = Astro.props
+
+const classList = mergeClasses(className, ['ch-img', `${scale ? 'ch-img-scl' : ''}`, `${cover ? 'ch-img-cvr' : ''}`]).join(' ')
+---
+
+<div class={classList} {...rest}><img src={src} alt="" /></div>
+
+<style is:global>
+  .ch-img img {
+    display: block;
+    transition: 0.4s;
+  }
+  .ch-img-scl {
+    overflow: hidden;
+  }
+  .ch-img-scl img:hover {
+    transform: scale(1.1);
+  }
+  .ch-img-cvr img {
+    min-height: 100%;
+    object-fit: cover;
+  }
+</style>

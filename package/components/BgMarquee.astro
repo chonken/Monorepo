@@ -1,0 +1,43 @@
+---
+interface Props {
+  src?: string
+  seconds?: string | number
+  direction?: 'left' | 'right' | 'up' | 'down'
+  class?: string
+}
+import { mergeClasses } from '../utils'
+const { class: className = '', seconds = 20, direction = 'left', src = '', ...rest } = Astro.props
+
+const map = {
+  left: [1, 0],
+  right: [-1, 0],
+  up: [0, 1],
+  down: [0, -1],
+}
+const [hr, vr] = map[direction] ?? [0, 0]
+
+const styleList = {
+  '--sec': `${seconds}s`,
+  '--bgp': (hr === 0 ? '50%' : `calc(${hr * 100}% + ${hr * -100}vw)`) + (vr === 0 ? '50%' : ` calc(${vr * 100}% + ${vr * -100}vh)`),
+  '--bg': `url(${src})`,
+}
+const classList = mergeClasses(className, ['ch-bgmar']).join(' ')
+---
+
+<div class={classList} style={styleList} {...rest}>
+  <slot />
+</div>
+
+<style lang="scss" is:global>
+  .ch-bgmar {
+    background-image: var(--bg);
+    background-size: cover;
+    animation: bg-marquee var(--sec) linear infinite;
+    background-position: top left;
+  }
+  @keyframes bg-marquee {
+    100% {
+      background-position: var(--bgp);
+    }
+  }
+</style>

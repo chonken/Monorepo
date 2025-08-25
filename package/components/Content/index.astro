@@ -1,0 +1,33 @@
+---
+import type { ElementProps } from '../../type/element'
+import { mergeClasses, parseMultiUnit } from '../../utils'
+
+interface Props extends ElementProps {
+  width?: string
+  margin?: string | number
+  padding?: string | number
+}
+const { class: className = '', width = 'auto', margin = '0', padding = '0', ...rest } = Astro.props
+
+const styleList = {
+  '--w': parseMultiUnit(width, 'px'),
+  '--m': parseMultiUnit(margin, 'px'),
+  '--p': parseMultiUnit(padding, 'px'),
+}
+const classList = mergeClasses(className, ['ch-cnt'])
+---
+
+<div class:list={classList} style={styleList} {...rest}></div>
+
+<style is:global>
+  .ch-cnt {
+    position: relative;
+    margin: var(--m);
+    padding: var(--p);
+    width: var(--w);
+    z-index: 1;
+  }
+  .ch-cnt p {
+    margin-top: 1em;
+  }
+</style>

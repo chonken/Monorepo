@@ -1,0 +1,67 @@
+---
+interface Props {
+  id?: string
+  mobile?: '2xl' | 'xl' | 'lg' | 'md' | 'none'
+  mobileFill?: boolean
+  class?: string
+  maxWidth?: string | number
+  marginBlock?: string | number
+  paddingBlock?: string | number
+  aside?: 'left' | 'right'
+  space?: 'normal' | 'wide' | 'narrow'
+}
+import { mergeClasses, parseUnit, parseMultiUnit } from '../utils'
+const { id, class: className = '', maxWidth = '1400', aside = 'left', mobile = 'md', mobileFill = false, space = 'normal', paddingBlock = '0', marginBlock = '0', ...rest } = Astro.props
+
+const spaceMap = {
+  normal: '5%',
+  wide: '2.5%',
+  narrow: '10%',
+}
+
+const styleList = {
+  '--mw': parseUnit(maxWidth, 'px'),
+  '--pdb': parseMultiUnit(paddingBlock, 'px').join(' '),
+  '--mgb': parseMultiUnit(marginBlock, 'px').join(' '),
+  '--sp': spaceMap[space] ?? '',
+}
+const classList = mergeClasses(className, ['ch-asp', `ch-pd${aside[0]}`, ...(mobile === 'none' ? [] : [`mob-${mobile}`, `${mobileFill ? 'mob-fill' : ''}`])]).join(' ')
+---
+
+<section id={id} class={classList} style={styleList} {...rest}>
+  <slot />
+</section>
+
+<style lang="scss" is:global>
+  @use 'sass:list';
+  @use '../config/breakpoint' as bp;
+  .ch-asp {
+    margin-block: var(--mgb);
+    padding-block: var(--pdb);
+  }
+  .ch-pdl {
+    padding-inline-start: calc(max(50% - var(--mw) / 2, max(var(--sp), 25px))) !important;
+  }
+  .ch-pdr {
+    padding-inline-end: calc(max(50% - var(--mw) / 2, max(var(--sp), 25px))) !important;
+  }
+
+  // 手動設定和對應尺寸
+  $map: (
+    2xl: '.mob-2xl',
+    xl: '.mob-xl',
+    lg: '.mob-lg',
+    md: '.mob-md',
+  );
+
+  @each $size, $mobile in $map {
+    @media (max-width: bp.size($size)) {
+      #{$mobile}:is(.ch-pdl, .ch-pdr) {
+        padding-inline: max(var(--sp), 25px) !important;
+      }
+      #{$mobile}.mob-fill:is(.ch-pdl, .ch-pdr) {
+        padding-inline: 0 !important;
+      }
+    }
+  }
+</style>

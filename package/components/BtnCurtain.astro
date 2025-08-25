@@ -1,0 +1,80 @@
+---
+interface Props {
+  href?: string
+  class?: string
+  bgColor?: string
+  color?: string
+  curtain?: 'left' | 'right' | 'top' | 'bottom'
+  curtainWidth?: string
+  open?: boolean
+  black?: boolean
+}
+import { mergeClasses } from '../utils'
+const { class: className = '', href = '#', bgColor = '#fff', color = '#000', curtain = 'left', curtainWidth = '0.12em', open = false, black = false, ...rest } = Astro.props
+
+const styleList = {
+  '--bgc': bgColor,
+  '--clr': color,
+  '--curw': curtainWidth,
+}
+const classList = mergeClasses(className, ['ch-btn-cur', `cur-${curtain[0]}`, `${open ? 'ch-open' : ''}`]).join(' ')
+---
+
+<a href={href} class={classList} style={styleList} target={black ? '_blank' : undefined} {...rest}><slot /></a>
+
+<style is:global>
+  .ch-btn-cur {
+    position: relative;
+    display: inline-block;
+    padding: 0.5em 2em;
+    font-weight: bold;
+    width: fit-content;
+    color: var(--clr);
+    background-color: var(--bgc);
+    transition: 0.4s;
+    z-index: 1;
+  }
+  .ch-btn-cur::before {
+    content: '';
+    position: absolute;
+    width: var(--curw);
+    height: 100%;
+    transition: 0.4s;
+    background-color: var(--clr);
+    z-index: -1;
+  }
+  .ch-btn-cur.ch-open {
+    color: var(--bgc);
+  }
+  .ch-btn-cur.ch-open::before {
+    width: 100%;
+  }
+  .ch-btn-cur.cur-l::before {
+    top: 0;
+    left: 0;
+  }
+  .ch-btn-cur.cur-r::before {
+    top: 0;
+    right: 0;
+  }
+  .ch-btn-cur.cur-t::before {
+    left: 0;
+    top: 0;
+  }
+  .ch-btn-cur.cur-b::before {
+    left: 0;
+    bottom: 0;
+  }
+  .ch-btn-cur:hover {
+    color: var(--bgc);
+  }
+  .ch-btn-cur:hover::before {
+    width: 100%;
+  }
+  .ch-btn-cur.ch-open:hover {
+    color: var(--clr);
+  }
+  .ch-btn-cur.ch-open:hover::before {
+    width: var(--curw);
+  }
+</style>
