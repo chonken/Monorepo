@@ -15,7 +15,7 @@ interface Props {
   mobileReverse?: boolean
   center?: boolean
 }
-import { mergeClasses, parseDualUnit, parseUnit, toNegative, isNegative } from '../../utils'
+import { mergeClasses, parseDualUnit, parseUnit, parseJustify, toNegative, isNegative } from '../../utils'
 import Container from '../Container.astro'
 const { id, class: className = '', maxWidth = '100%', item = 'stretch', justify = 'center', gap = '40', overlay: oly = '0', reverse = false, mobile = 'md', mobileItem = 'center', mobileJustify = 'center', mobileFit = false, mobileReverse = false, center = false, ...rest } = Astro.props
 
@@ -28,9 +28,9 @@ const colGap = overlay === '0px' ? cGap : '0px'
 
 const styleList: Record<string, string> = {
   '--itm': item,
-  '--jst': justify,
+  '--jst': parseJustify(justify),
   '--mob-itm': mobileItem,
-  '--mob-jst': mobileJustify,
+  '--mob-jst': parseJustify(mobileJustify),
   '--gap': `${rowGap} ${colGap === rowGap ? '' : colGap}`.trim(),
   '--oly': `${overlay}`,
 }
@@ -65,18 +65,12 @@ const classList = mergeClasses(className, ['ch-l-r', reverse ? 'reverse' : '', .
     margin-right: var(--oly);
   }
 
-  // 手動設定和對應尺寸
-  $map: (
-    2xl: '.mob-2xl',
-    xl: '.mob-xl',
-    lg: '.mob-lg',
-    md: '.mob-md',
-    sm: '.mob-sm',
-  );
+  // 手動設定尺寸
+  $map: 2xl, xl, lg, md, sm;
 
-  @each $size, $mobile in $map {
+  @each $size in $map {
     @media (max-width: bp.size($size)) {
-      .ch-l-r#{$mobile} {
+      .ch-l-r.mob-#{$size} {
         flex-direction: column;
         justify-content: var(--mob-jst);
         align-items: var(--mob-itm);
@@ -88,10 +82,10 @@ const classList = mergeClasses(className, ['ch-l-r', reverse ? 'reverse' : '', .
           flex-direction: column-reverse;
         }
       }
-      :where(.ch-l-r:not(.reverse)#{$mobile}) > :last-child {
+      :where(.ch-l-r:not(.reverse).mob-#{$size}) > :last-child {
         margin-left: 0;
       }
-      :where(.ch-l-r.reverse#{$mobile}) > :last-child {
+      :where(.ch-l-r.reverse.mob-#{$size}) > :last-child {
         margin-right: 0;
       }
     }

@@ -16,6 +16,8 @@ interface Props {
 import { mergeClasses } from '../utils'
 const { class: className = '', element = 'ul', dotTop = 'auto', dotColor = '#878787', dotWidth = '10px', dotCircle = false, lineGap = '5px', lineWidth = '1px', lineColor = '#878787', lineDotWidth = '5px', lineDotColor = '#878787', lineDotCircle = false, ...rest } = Astro.props
 
+const Component = element
+
 const styleList = {
   '--dt': dotTop,
   '--dw': dotWidth,
@@ -28,20 +30,9 @@ const styleList = {
   '--l-dc': lineDotColor,
   '--l-dr': lineDotCircle ? '50%' : '0',
 }
-
 const classList = mergeClasses(className, ['']).join(' ')
 ---
 
-{
-  element === 'ul' ? (
-    <ul class={classList} style={styleList} {...rest}>
-      <slot />
-    </ul>
-  ) : (
-    element === 'ol' && (
-      <ol class={classList} style={styleList} {...rest}>
-        <slot />
-      </ol>
-    )
-  )
-}
+<Component class={classList} style={styleList} {...rest}>
+  <slot />
+</Component>

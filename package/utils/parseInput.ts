@@ -6,7 +6,7 @@
  */
 export function mergeClasses(input: string | string[], current: string[]): string[] {
   const normalized = typeof input === 'string' ? input.trim().split(/\s+/) : input
-  const merged = new Set([...current.filter(Boolean), ...normalized.filter(Boolean)])
+  const merged = new Set([...normalized.filter(Boolean), ...current.filter(Boolean)])
   return Array.from(merged)
 }
 

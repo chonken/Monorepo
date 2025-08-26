@@ -5,9 +5,9 @@ interface Props {
   mobile?: 'md' | 'sm' | 'xs' | '2xl'
   mobilKeep?: boolean
 }
-import { mergeClasses, parseMultiUnit } from '../utils'
+import { mergeClasses, parseDualUnit } from '../utils'
 const { class: className = '', gap = '20', mobile = 'md', mobilKeep = false, ...rest } = Astro.props
-const  [rowGap, colGap]  = parseMultiUnit(gap)
+const [rowGap, colGap] = parseDualUnit(gap)
 
 const classList = mergeClasses(className, ['ch-tit', `mob-${mobile}`, `${mobilKeep ? 'mob-keep' : ''}`]).join(' ')
 const styleList = `--gap: ${rowGap + ' ' + colGap};`.trim()
@@ -16,7 +16,7 @@ const styleList = `--gap: ${rowGap + ' ' + colGap};`.trim()
 <div class={classList} style={styleList} {...rest}>
   <div class="ch-tit-i"><slot name="icon" /></div>
   <div class="ch-tit-t"><slot /></div>
-  <div class="ch-tit-i"><slot name="icon" /></div>
+  <div class="ch-tit-i">{Astro.slots.has('icon2') ? <slot name="icon2" /> : <slot name="icon" />}</div>
 </div>
 
 <style lang="scss" is:global>
