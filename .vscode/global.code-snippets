@@ -138,12 +138,6 @@
     "description": "CSS Variables"
   },
 
-  "html-demo-1": {
-    "scope": "html",
-    "prefix": "demo1",
-    "body": ["<div class=\"demo1\">", "\t$1", "</div>"]
-  },
-
   "as": {
     "scope": "astro",
     "prefix": "as",
@@ -152,12 +146,17 @@
   "as-fk": {
     "scope": "astro",
     "prefix": "as-fk",
-    "body": ["---\nimport YkFk from '../layouts/YongKingFuck.astro'\n---\n\n<YkFk>\n\t\n</YkFk>\n\n<style is:global>\n\t\n</style>"]
+    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "---\n", "<YkFk>", "\t", "</YkFk>\n", "<style is:global>", "\t", "</style>"]
   },
   "as-fk-index": {
     "scope": "astro",
     "prefix": "as-fk-index",
     "body": ["---\nimport YkFk from '../layouts/YongKingFuck.astro'\n---\n\n<YkFk h2={[]}>\n\t\n</YkFk>\n\n<style is:global>\n\t\n</style>"]
+  },
+  "as-demo": {
+    "scope": "astro",
+    "prefix": "as-demo",
+    "body": ["---", "import BgFixed from './index.astro'", "\t", "export const props = {}", "export const slots = ['default']\n", "const data = Astro.props.data['image']?.[0] ?? {}", "---", "\t", "<BgFixed class=''>", "\t", "</BgFixed>\n", "<style is:global>", "\t", "</style>"]
   },
   "side-padding": {
     "scope": "astro",
@@ -187,16 +186,16 @@
   "button-swap": {
     "scope": "astro",
     "prefix": "btnSwap",
-    "body": ["<BtnSwap ${1|class='' |}href='#' bgColor='#000' color='#fff'${2| target|}>$3</BtnSwap>"]
+    "body": ["<BtnSwap class='$1' href='#' bgColor='#000' color='#fff'${2| blank|}>$3</BtnSwap>"]
   },
   "image": {
     "scope": "astro",
     "prefix": "Img",
-    "body": ["<Img src='$1'${2| class=''|}${3| scale|}${4| cover|} />"]
+    "body": ["<Img class='$1' src='$2' ${3| scale|}${4| cover|} />"]
   },
   "background-fixed": {
     "scope": "astro",
     "prefix": "bgFixed",
-    "body": ["<BgFixed  ${1|class='' |}src='$2' minHeight='$3vw'>", "\t$4", "</BgFixed>"]
+    "body": ["<BgFixed  class='$1' src='$2' minHeight='$3vw'>", "\t$4", "</BgFixed>"]
   }
 }
