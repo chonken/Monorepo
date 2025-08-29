@@ -32,8 +32,8 @@ export function toNegative(value: string): string {
   if (isNegative(trimmed)) return trimmed
 
   // 是 CSS 變數或 calc 表達式，包裝成 calc(-1 * ...)
-  if (/^var\(|^calc\(/.test(trimmed)) {
-    return `calc(-1 * ${trimmed})`;
+  if (/\(.*\)/.test(trimmed)) {
+    return `calc(-1 * ${trimmed})`
   }
 
   return `-${trimmed}`;

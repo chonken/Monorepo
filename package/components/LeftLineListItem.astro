@@ -5,16 +5,22 @@ interface Props {
   trimEnd?: boolean
 }
 import { mergeClasses } from '../utils'
-const { class: className = '',  trimStart = false, trimEnd = false, ...rest } = Astro.props
+const { class: className = '', trimStart = false, trimEnd = false, ...rest } = Astro.props
 
 const classList = mergeClasses(className, ['ch-li-l-l', trimStart ? 'ch-ts' : '', trimEnd ? 'ch-te' : '']).join(' ')
 ---
 
 <li class={classList} {...rest}>
-  <div class="ch-icon"><slot name="icon" /></div>
+  {
+    Astro.slots.has('icon') && (
+      <div class="ch-icon">
+        <slot name="icon" />
+      </div>
+    )
+  }
   <div class="ch-marker">
     <div class="ch-line"></div>
-    <div class="ch-dot"></div>
+    <div class="ch-dot"><slot name="marker" /></div>
     <div class="ch-line"></div>
   </div>
   <slot />

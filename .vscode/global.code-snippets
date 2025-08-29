@@ -146,56 +146,66 @@
   "as-fk": {
     "scope": "astro",
     "prefix": "as-fk",
-    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "---\n", "<YkFk>", "\t", "</YkFk>\n", "<style is:global>", "\t", "</style>"]
+    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Content from '@components/Content/index.astro'", "---\n", "<YkFk>", "\t", "</YkFk>\n", "<style is:global>", "\t", "</style>"]
   },
   "as-fk-index": {
     "scope": "astro",
     "prefix": "as-fk-index",
-    "body": ["---\nimport YkFk from '../layouts/YongKingFuck.astro'\n---\n\n<YkFk h2={[]}>\n\t\n</YkFk>\n\n<style is:global>\n\t\n</style>"]
+    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Content from '@components/Content/index.astro'", "---\n", "<YkFk h2={[]}>", "\t", "</YkFk>\n", "<style is:global>", "\t", "</style>"]
   },
   "as-demo": {
     "scope": "astro",
     "prefix": "as-demo",
-    "body": ["---", "import BgFixed from './index.astro'", "\t", "export const props = {}", "export const slots = ['default']\n", "const data = Astro.props.data['image']?.[0] ?? {}", "---", "\t", "<BgFixed class=''>", "\t", "</BgFixed>\n", "<style is:global>", "\t", "</style>"]
+    "body": ["---", "import $1 from './index.astro'", "\t", "export const props = {}", "export const slots = ['default']", "export const keywords = []", "export const categrory = []\n", "const data = Astro.props.data['image']?.[0] ?? {}", "---", "\t", "<$1 class=''>", "\t", "</$1>\n", "<style>", "\t", "</style>"]
   },
   "side-padding": {
     "scope": "astro",
     "prefix": "sidePadding",
-    "body": ["<SidePadding class='$1' space='${2|normal,wide,narrow|}'${3| paddingBlock=''|}>", "\t$4", "</SidePadding>"]
+    "body": ["<SidePadding class='$1' space='${2|normal,wide,narrow|}' ${3|paddingBlock='',marginBlock=''|}>", "\t$4", "</SidePadding>"]
   },
   "aside-padding": {
     "scope": "astro",
     "prefix": "asidePadding",
-    "body": ["<AsidePadding class='$1' maxWidth='${2:1400}' aside='${3|left,right|}' mobile='${4|lg,md,xl,2xl,none|}'${5| mobileFill|}${6| paddingBlock=''|}>", "\t$7", "</AsidePadding>"]
+    "body": ["<AsidePadding class='$1' maxWidth='${2:1400}' aside='${3|left,right|}' mobile='${4|lg,md,xl,2xl,none|}' ${5|mobileFill|} ${6|paddingBlock='',marginBlock=''|}>", "\t$7", "</AsidePadding>"]
   },
   "container": {
     "scope": "astro",
     "prefix": "container",
     "body": ["<Container class='$1' maxWidth='${2:1200}'>", "\t$3", "</Container>"]
   },
+  "flex": {
+    "scope": "astro",
+    "prefix": "Flex",
+    "body": ["<Flex class='$1' gap='${2:40}' item='${3|center,stretch,start,end|}' justify='${4|center,between,start,end,around,evenly|}' mobile='${5|lg,xl,md,2xl,sm|}' ${6|reverse,flexReverse|} ${7| ,mobileReverse|}>", "\t$8", "</Flex>"]
+  },
   "left-right": {
     "scope": "astro",
     "prefix": "leftRight",
-    "body": ["<LeftRight class='$1' ${2|gap='40',overlay='-80'|} item='${3|center,stretch,start,end|}' justify='${4|center,between,start,end,around,evenly|}' maxWidth='${5:1200}' mobile='${6|lg,xl,md,2xl,sm|}'${7| reverse|}${8| center|}${9| mobileFit|}${10| mobileReverse|}>", "\t$11", "</LeftRight>"]
+    "body": ["<LeftRight class='$1' ${2|gap='40',overlay='-80'|} item='${3|center,stretch,start,end|}' justify='${4|center,between,start,end,around,evenly|}' maxWidth='${5:1200}' mobile='${6|lg,xl,md,2xl,sm|}' ${7| ,reverse|} ${8| ,center|} ${9| ,mobileFit|} ${10| ,mobileReverse|}>", "\t$11", "</LeftRight>"]
   },
   "grid-item": {
     "scope": "astro",
     "prefix": "gridItem",
-    "body": ["<GridItem class='$1' col='${2:5} 2xl:${3:5} xl:${4:5} lg:${5:4} md:${6:3} sm:${7:2} xs:${8:1}' gap='${9:30}' item='${10|stretch,start,center,end|}' justify='${11|center,between,start,end,around,evenly|}' maxWidth='${12:100%}'${13| center|}>", "\t$14", "</GridItem>"]
+    "body": ["<GridItem class='$1' col='${2|4 lg:3 sm:2 xs:1|}' gap='${3:30}' item='${4|stretch,start,center,end|}' justify='${5|center,between,start,end,around,evenly|}' maxWidth='${6:100%}' ${7| ,center|}>", "\t$8", "</GridItem>"]
   },
   "button-swap": {
     "scope": "astro",
     "prefix": "btnSwap",
-    "body": ["<BtnSwap class='$1' href='#' bgColor='#000' color='#fff'${2| blank|}>$3</BtnSwap>"]
+    "body": ["<BtnSwap class='$1' href='#' bgColor='#000' color='#fff' ${2|blank|}>$3</BtnSwap>"]
   },
   "image": {
     "scope": "astro",
     "prefix": "Img",
-    "body": ["<Img class='$1' src='$2' ${3| scale|}${4| cover|} />"]
+    "body": ["<Img class='$1' src='$2'  ${3|scale|} ${4|cover|} />"]
   },
   "background-fixed": {
     "scope": "astro",
     "prefix": "bgFixed",
-    "body": ["<BgFixed  class='$1' src='$2' minHeight='$3vw'>", "\t$4", "</BgFixed>"]
+    "body": ["<BgFixed class='$1' src='$2' minHeight='$3vw'>", "\t$4", "</BgFixed>"]
+  },
+  "content": {
+    "scope": "astro",
+    "prefix": "content",
+    "body": ["<Content class='$1' width='$2' padding='$3'>", "\t", "</Content>"]
   }
 }

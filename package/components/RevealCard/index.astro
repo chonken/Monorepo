@@ -1,13 +1,18 @@
 ---
+import { ElementProps } from '../../type/element'
 import { mergeClasses } from '../../utils'
-interface Props {
-  class?: string
+import Content from '../Content/index.astro'
+
+export interface RevealCardProps extends ElementProps {
   background?: string
   backgroundHover?: string
   mobile?: 'md' | 'sm' | 'xs' | '2xl' | 'none'
 }
-const { class: className = '', background = '#eee8', backgroundHover = background, mobile = 'none', ...rest } = Astro.props
+interface Props extends RevealCardProps {}
 
+const { element = 'div', id, class: className = '', background = '#eee8', backgroundHover = background, mobile = 'none', ...rest } = Astro.props
+
+const Element = element as keyof HTMLElement
 const styleList = {
   '--bg': background,
   '--bg-h': backgroundHover,
@@ -15,22 +20,22 @@ const styleList = {
 const classList = mergeClasses(className, ['ch-rvc', mobile === 'none' ? '' : `mob-${mobile}`]).join(' ')
 ---
 
-<div class:list={classList} style={styleList} {...rest}>
-  <slot name="img" />
-  <div class="ch-cnt">
+<Element class:list={classList} style={styleList} {...rest}>
+  <slot name="image" />
+  <Content>
     <div class="ch-ttl"><slot name="title" /></div>
     <div class="ch-bdy"><slot /></div>
-  </div>
-</div>
+  </Content>
+</Element>
 
 <style lang="scss" is:global>
-  @use 'sass:list';
   @use '../../config/breakpoint' as bp;
 
   .ch-rvc {
     position: relative;
+    width: fit-content;
   }
-  .ch-cnt {
+  .ch-rvc > .ch-cnt {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -52,7 +57,7 @@ const classList = mergeClasses(className, ['ch-rvc', mobile === 'none' ? '' : `m
     overflow: hidden;
     transition: 0.4s linear;
   }
-  .ch-rvc:hover .ch-cnt {
+  .ch-rvc:hover > .ch-cnt {
     max-height: 100%;
     background: var(--bg-h);
     transition-timing-function: ease;
@@ -66,7 +71,7 @@ const classList = mergeClasses(className, ['ch-rvc', mobile === 'none' ? '' : `m
 
   @each $size in $map {
     @media (max-width: bp.size($size)) {
-      .ch-rvc.mob-#{$size} .ch-cnt {
+      .ch-rvc.mob-#{$size} > .ch-cnt {
         position: static;
         max-height: unset;
         height: auto;

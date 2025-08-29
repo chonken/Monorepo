@@ -1,6 +1,7 @@
 ---
 import Flex from './index.astro'
 
+export const id = 'ch-flex'
 export const props = {
   id: { type: ['string'], require: false, default: '' },
   class: { type: ['string'], require: false, default: '' },
@@ -8,7 +9,7 @@ export const props = {
   wrap: { type: ['boolean'], require: false, default: false, demo: true },
   flexReverse: { type: ['boolean'], require: false, default: false },
   item: { type: ['stretch', 'start', 'center', 'end'], require: false, default: 'stretch' },
-  justify: { type: ['start', 'center', 'end', 'between', 'around', 'evenly', 'space-between', 'space-around', 'space-evenly'], require: false, default: 'start', demo: 'center' },
+  justify: { type: ['start', 'center', 'end', 'between', 'around', 'evenly', 'space-between', 'space-around', 'space-evenly'], require: false, default: 'start', demo: 'center' as const },
   gap: { type: ['string', 'number'], require: false, default: '40', demo: '15' },
   reverse: { type: ['boolean'], require: false, default: false },
   mobile: { type: ['3xl', '2xl', 'xl', 'lg', 'md', 'sm', 'xs', '2xs', 'none', 'inherit'], require: false, default: 'md' },
@@ -18,6 +19,8 @@ export const props = {
   mobileReverse: { type: ['boolean'], require: false, default: false },
 }
 export const slots = ['default']
+export const keywords = []
+export const categrory = []
 const data = Astro.props.data['item'] ?? []
 ---
 

@@ -19,9 +19,6 @@
   font-weight: inherit;
   word-break: normal;
 }
-.ykfk :where(p) {
-  margin-top: 1em;
-}
 .ykfk :where(h3, h4, h5, h6) {
   line-height: 1.4;
 }

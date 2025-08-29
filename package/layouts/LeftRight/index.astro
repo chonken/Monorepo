@@ -1,68 +1,60 @@
 ---
-interface Props {
-  id?: string
-  class?: string
-  item?: 'stretch' | 'start' | 'center' | 'end'
-  justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly' | 'space-between' | 'space-around' | 'space-evenly'
-  gap?: string | number
-  overlay?: string | number
-  maxWidth?: number | string
-  reverse?: boolean
-  mobile?: '2xl' | 'xl' | 'lg' | 'md' | 'sm' | 'none'
-  mobileItem?: 'stretch' | 'start' | 'center' | 'end'
-  mobileJustify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly' | 'space-between' | 'space-around' | 'space-evenly'
-  mobileFit?: boolean
-  mobileReverse?: boolean
-  center?: boolean
-}
-import { mergeClasses, parseDualUnit, parseUnit, parseJustify, toNegative, isNegative } from '../../utils'
-import Container from '../Container.astro'
-const { id, class: className = '', maxWidth = '100%', item = 'stretch', justify = 'center', gap = '40', overlay: oly = '0', reverse = false, mobile = 'md', mobileItem = 'center', mobileJustify = 'center', mobileFit = false, mobileReverse = false, center = false, ...rest } = Astro.props
+import { mergeClasses, parseUnit, parseDualUnit, isNegative, toNegative } from '../../utils'
+import Content from '@components/Content/index.astro'
+import Flex, { type FlexProps } from '../../components/Flex/index.astro'
+import Container, { type ContainerProps } from '../Container/index.astro'
 
-const [rowGap, cGap] = parseDualUnit(gap, 'px')
+export interface LeftRightProps extends FlexProps, ContainerProps {
+  mobileFit?: boolean
+  overlay?: string
+  contentWidth?: string
+  contentDirection?: 'ltr' | 'rtl' | 'inherit'
+}
+interface Props extends LeftRightProps {}
+
+const { element, id, class: className = '', maxWidth, item = 'stretch', justify = 'center', gap: g = '40', reverse = false, mobile = 'lg', mobileItem = 'center', mobileJustify = 'center', mobileFit = false, mobileReverse, center = false, overlay: oly = '0', contentWidth = '600', contentDirection = 'ltr', ...rest } = Astro.props
 
 // 處理間距和疊層
+const [rowGap, cGap] = parseDualUnit(g, 'px')
 const o = toNegative(parseUnit(oly, 'px'))
 const overlay = o === '-0px' ? (isNegative(cGap) ? cGap : '0px') : o
 const colGap = overlay === '0px' ? cGap : '0px'
+const gap = `${rowGap} ${colGap}`
 
-const styleList: Record<string, string> = {
-  '--itm': item,
-  '--jst': parseJustify(justify),
-  '--mob-itm': mobileItem,
-  '--mob-jst': parseJustify(mobileJustify),
-  '--gap': `${rowGap} ${colGap === rowGap ? '' : colGap}`.trim(),
-  '--oly': `${overlay}`,
+const contentStyleList = {
+  display: 'contents',
+  '--oly': toNegative(parseUnit(oly, 'px')),
 }
-const classList = mergeClasses(className, ['ch-l-r', reverse ? 'reverse' : '', ...(mobile === 'none' ? [] : [`mob-${mobile}`, mobileFit ? 'mob-fit' : '', mobileReverse ? 'mob-re' : ''])]).join(' ')
+const classList = mergeClasses(className, ['ch-l-r', ...(mobile === 'none' ? [] : [mobileFit ? 'mob-fit' : ''])])
 ---
 
-<Container id={id} class={classList} styleList={styleList} maxWidth={maxWidth} center={center} {...rest}>
-  <slot />
+<Container element={element} id={id} maxWidth={maxWidth} center={center}>
+  <div style={contentStyleList}>
+    <Flex class:list={classList} gap={gap} item={item} justify={justify} reverse={reverse} mobile={mobile} mobileItem={mobileItem} mobileJustify={mobileJustify} mobileReverse={mobileReverse} {...rest}>
+      {Astro.slots.has('image') && <slot name="image" />}
+      <slot />
+      {
+        Astro.slots.has('content') && (
+          <Content width={contentWidth} direction={contentDirection}>
+            <slot name="content" />
+          </Content>
+        )
+      }
+    </Flex>
+  </div>
 </Container>
 
 <style lang="scss" is:global>
-  @use 'sass:list';
   @use '../../config/breakpoint' as bp;
   .ch-l-r {
-    display: flex;
-    justify-content: var(--jst);
-    align-items: var(--itm);
-    gap: var(--gap);
-    max-width: var(--mw);
-    &.reverse {
-      flex-direction: row-reverse;
-    }
     & > * {
       position: relative;
       z-index: 1;
     }
   }
-  :where(.ch-l-r:not(.reverse)) > :last-child {
-    margin-left: var(--oly);
-  }
-  :where(.ch-l-r.reverse) > :last-child {
-    margin-right: var(--oly);
+  :where(.ch-l-r) > :is(:last-child, .ch-cnt) {
+    margin-inline-start: var(--oly);
+    z-index: 2;
   }
 
   // 手動設定尺寸
@@ -71,22 +63,16 @@ const classList = mergeClasses(className, ['ch-l-r', reverse ? 'reverse' : '', .
   @each $size in $map {
     @media (max-width: bp.size($size)) {
       .ch-l-r.mob-#{$size} {
-        flex-direction: column;
-        justify-content: var(--mob-jst);
-        align-items: var(--mob-itm);
-        max-width: 100%;
         &.mob-fit {
+          margin-inline: auto;
           width: fit-content;
         }
-        &.mob-re {
-          flex-direction: column-reverse;
+        & .ch-cnt {
+          margin-inline-start: 0;
         }
       }
-      :where(.ch-l-r:not(.reverse).mob-#{$size}) > :last-child {
-        margin-left: 0;
-      }
-      :where(.ch-l-r.reverse.mob-#{$size}) > :last-child {
-        margin-right: 0;
+      :where(.ch-l-r.mob-#{$size}) > :is(:last-child, .ch-cnt) {
+        margin-inline-start: 0;
       }
     }
   }

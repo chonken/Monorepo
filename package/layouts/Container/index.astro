@@ -1,0 +1,29 @@
+---
+import { mergeClasses, parseUnit } from '../../utils'
+import type { ElementProps } from '../../type/element'
+
+export interface ContainerProps extends ElementProps {
+  maxWidth?: number | string
+  center?: boolean
+}
+interface Props extends ContainerProps {}
+
+const { element = 'div', id, class: className = '', maxWidth = '100%', center = true, ...rest } = Astro.props
+
+const Element = element as keyof HTMLElement
+const styleList = {
+  '--mw': parseUnit(maxWidth, 'px'),
+}
+const classList = mergeClasses(className, ['ch-ctr', `${center ? 'ch-cen' : ''}`])
+---
+
+<Element id={id} class:list={classList} style={styleList} {...rest}><slot /></Element>
+
+<style lang="scss" is:global>
+  .ch-ctr {
+    max-width: var(--mw);
+    &.ch-cen {
+      margin-inline: auto !important;
+    }
+  }
+</style>

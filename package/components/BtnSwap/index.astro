@@ -1,29 +1,28 @@
 ---
-interface Props {
-  class?: string
-  href?: string
-  bgColor?: string
-  color?: string
+import type { ButtonProps } from '../../type/button'
+import { mergeClasses, parseUnit } from '../../utils'
+
+export interface BtnSwap extends ButtonProps {
   borderColor?: string
   borderRadius?: string | number
   iconHoverInvert?: boolean
   iconReverse?: boolean
-  blank?: boolean
 }
-import { mergeClasses, parseUnit } from '../utils'
-const { class: className = '', href = '#', bgColor = '#000', color = '#fff', borderColor = bgColor, borderRadius, iconHoverInvert = false, iconReverse = false, blank = false, ...rest } = Astro.props
+interface Props extends BtnSwap {}
+
+const { class: className = '', href = '#', backgroundColor = '#000', color = '#fff', borderColor = backgroundColor, borderRadius, iconHoverInvert = false, iconReverse = false, blank = false, ...rest } = Astro.props
 
 const styleList = {
-  '--bgc': bgColor,
+  '--bgc': backgroundColor,
   '--clr': color,
   '--bor': parseUnit(borderColor, 'px'),
   '--brr': borderRadius,
   '--icn-inv': iconHoverInvert ? 1 : 0,
 }
-const classList = mergeClasses(className, ['ch-btn-flip', `${iconReverse ? 'ch-icon-re' : ''}`]).join(' ')
+const classList = mergeClasses(className, ['ch-btn-swap', iconReverse ? 'ch-icon-re' : ''])
 ---
 
-<a href={href} class={classList} style={styleList} target={blank ? '_blank' : undefined} {...rest}>
+<a href={href} class:list={classList} style={styleList} target={blank ? '_blank' : undefined} {...rest}>
   {
     Astro.slots.has('icon') && (
       <span class="ch-icon">
@@ -31,18 +30,20 @@ const classList = mergeClasses(className, ['ch-btn-flip', `${iconReverse ? 'ch-i
       </span>
     )
   }
-  <slot />
+  <slot>查看更多</slot>
 </a>
 
 <style lang="scss" is:global>
-  .ch-btn-flip {
+  .ch-btn-swap {
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     gap: 15px;
     padding: 0.5em 1.5em;
     text-align: center;
     color: var(--clr);
+    line-height: 1.2;
     border-radius: var(--brr, 0);
     border: 1px solid var(--bor);
     background-color: var(--bgc);

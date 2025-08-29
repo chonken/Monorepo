@@ -3,13 +3,15 @@ interface Props {
   class?: string
   seconds?: string | number
   translate?: string | number
+  delay?: string | number
 }
-import { mergeClasses, parseMultiUnit } from '../utils'
-const { class: className = '', seconds = '1', translate = '0 15%', ...rest } = Astro.props
+import { mergeClasses, parseUnit, parseMultiUnit } from '../utils'
+const { class: className = '', seconds = '1', translate = '0 15%', delay = '0', ...rest } = Astro.props
 
 const styleList = {
   '--tra': `translate(${parseMultiUnit(translate, '%')});`,
-  '--sec': `${(seconds + '').at(-1) === 's' ? seconds : seconds + 's'};`,
+  '--sec': `${parseUnit(seconds, 's')};`,
+  '--dly': `${parseUnit(delay, 's')};`,
 }
 const classList = mergeClasses(className, ['ch-osc']).join(' ')
 ---
@@ -19,7 +21,7 @@ const classList = mergeClasses(className, ['ch-osc']).join(' ')
 <style is:global>
   .ch-osc > * {
     display: block;
-    animation: osc var(--sec) ease-in-out infinite alternate;
+    animation: osc var(--sec) var(--dly) ease-in-out infinite alternate;
   }
   @keyframes osc {
     100% {

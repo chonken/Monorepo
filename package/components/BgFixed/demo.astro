@@ -1,12 +1,15 @@
 ---
 import BgFixed from './index.astro'
 
+export const id = 'ch-bgf'
 export const props = {
   class: { type: ['string'], require: false, default: '' },
   src: { type: ['string'], require: true, default: '', demo: '{圖片路徑}' },
   minHeight: { type: ['string', 'number'], require: false, default: '40vw' },
 }
 export const slots = ['default']
+export const keywords = []
+export const categrory = []
 
 const data = Astro.props.data['image']?.[0] ?? {}
 ---

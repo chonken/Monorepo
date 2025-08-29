@@ -10,11 +10,11 @@
 }
 @each $size, $value in bp.$breakpoint {
   @media (max-width: $value) {
-    .ch-layout.ch-mob-#{$size} {
+    .ch-layout.mob-#{$size} {
       direction: unset;
       justify-content: var(--mob-jst);
       align-items: var(--mob-itm);
-      gap: var(--mob-gap);
+      gap: var(--gap);
     }
   }
 }

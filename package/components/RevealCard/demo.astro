@@ -1,0 +1,33 @@
+---
+import RevealCard from './index.astro'
+
+export const props = {
+  element: { type: ['string'], require: false, default: 'div' },
+  id: { type: ['string'], require: false, default: '' },
+  class: { type: ['string'], require: false, default: '' },
+  background: { type: ['string'], require: false, default: '#eee8' },
+  backgroundHover: { type: ['string'], require: false, default: '#eee8' },
+  mobile: { type: ['md', 'sm', 'xs', '2xl', 'none'], require: false, default: 'none' },
+}
+export const slots = ['default', 'image', 'title']
+export const keywords = []
+export const categrory = []
+
+const data = Astro.props.data['image_txt']?.[0] ?? {}
+---
+
+<RevealCard class="">
+  <img slot="image" src={data?.image} alt="" />
+  <h4 slot="title">{data?.title}</h4>
+  <div class="txt">{data?.text.map((item: string) => <p>{item}</p>)}</div>
+</RevealCard>
+
+<style>
+  h4 {
+    padding: 1em 5%;
+    text-align: center;
+  }
+  .txt {
+    padding: 0 5% 40px;
+  }
+</style>

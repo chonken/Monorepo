@@ -1,0 +1,24 @@
+---
+import Btn02 from './index.astro'
+
+export const id = 'btn_type02'
+export const props = {
+  href: { type: ['string'], require: false, default: '#', demo: '#' },
+  class: { type: ['string'], require: false, default: 'inherit' },
+  color: { type: ['string'], require: false, default: '#fff' },
+  backgroundColor: { type: ['string'], require: false, default: '#eef1f6' },
+  blank: { type: ['boolean'], require: false, default: false, demo: true },
+  shadow: { type: ['string'], require: false, default: false, demo: '#8888' },
+}
+export const slots = ['default']
+export const keywords = []
+export const categrory = []
+
+const data = Astro.props.data['button']?.[0] ?? {}
+---
+
+<Btn02 href="#" shadow={props.shadow.demo}>
+  {data.text}
+</Btn02>
+
+<style></style>

@@ -6,26 +6,37 @@ interface Props extends ElementProps {
   width?: string
   margin?: string | number
   padding?: string | number
+  direction?: 'ltr' | 'rtl' | 'inherit'
 }
-const { class: className = '', width = 'auto', margin = '0', padding = '0', ...rest } = Astro.props
+const { element = 'div', id, class: className = '', width = 'auto', margin = '0', padding = '0', direction = 'inherit', ...rest } = Astro.props
 
+const Element = element as keyof HTMLElement
 const styleList = {
-  '--w': parseMultiUnit(width, 'px'),
-  '--m': parseMultiUnit(margin, 'px'),
-  '--p': parseMultiUnit(padding, 'px'),
+  '--w': parseMultiUnit(width, 'px').join(' '),
+  '--mg': parseMultiUnit(margin, 'px').join(' '),
+  '--pd': parseMultiUnit(padding, 'px').join(' '),
+  '--dir': direction,
 }
 const classList = mergeClasses(className, ['ch-cnt'])
 ---
 
-<div class:list={classList} style={styleList} {...rest}></div>
+<Element class:list={classList} style={styleList} {...rest}>
+  <div>
+    <slot />
+  </div>
+</Element>
 
-<style is:global>
+<style lang="scss" is:global>
   .ch-cnt {
     position: relative;
-    margin: var(--m);
-    padding: var(--p);
+    margin: var(--mg);
+    padding: var(--pd);
     width: var(--w);
     z-index: 1;
+    & > div {
+      display: contents;
+      direction: var(--dir);
+    }
   }
   .ch-cnt p {
     margin-top: 1em;

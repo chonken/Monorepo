@@ -2,16 +2,17 @@
 import LeftRight from './index.astro'
 import Ruler from '../ruler.astro'
 
+export const id = 'ch-l-r'
 export const props = {
   id: { type: ['string'], require: false, default: '' },
   class: { type: ['string'], require: false, default: '' },
   item: { type: ['stretch', 'start', 'center', 'end'], require: false, default: 'stretch' },
   justify: { type: ['start', 'center', 'end', 'between', 'around', 'evenly', 'space-between', 'space-around', 'space-evenly'], require: false, default: 'center' },
-  gap: { type: ['string', 'number'], require: false, default: '40', demo: '20 -200' },
-  overlay: { type: ['string', 'number'], require: false, default: '0' },
+  gap: { type: ['string', 'number'], require: false, default: '40', demo: '40' },
+  overlay: { type: ['string', 'number'], require: false, default: '0', demo: '-200' },
   maxWidth: { type: ['string', 'number'], require: false, default: '100%', demo: '1200' },
   reverse: { type: ['boolean'], require: false, default: false },
-  mobile: { type: ['2xl', 'xl', 'lg', 'md', 'sm', 'none'], require: false, default: 'md' },
+  mobile: { type: ['2xl', 'xl', 'lg', 'md', 'sm', 'none'], require: false, default: 'lg' },
   mobileItem: { type: ['stretch', 'start', 'center', 'end'], require: false, default: 'center' },
   mobileJustify: { type: ['start', 'center', 'end', 'between', 'around', 'evenly', 'space-between', 'space-around', 'space-evenly'], require: false, default: 'center' },
   mobileFit: { type: ['boolean'], require: false, default: false },
@@ -19,13 +20,14 @@ export const props = {
   center: { type: ['boolean'], require: false, default: false, demo: true },
 }
 export const slots = ['default']
-
+export const keywords = []
+export const categrory = []
 const data = Astro.props.data['image_txt']?.[0] ?? {}
 ---
 
-<LeftRight class="" gap={props.gap.demo} maxWidth={props.maxWidth.demo} center>
+<LeftRight class="" gap={props.gap.demo} overlay={props.overlay.demo} maxWidth={props.maxWidth.demo} center>
   <Ruler />
-  <div class="pic"><img src=`${data?.image}` alt="" /></div>
+  <div class="pic"><img src={data?.image} alt="" /></div>
   <div class="content">
     <div class="inner">
       <hgroup>
