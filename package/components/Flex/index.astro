@@ -12,7 +12,7 @@ export interface FlexProps extends LayoutProps {
 }
 interface Props extends FlexProps {}
 
-const { id, class: className = '', element = 'div', wrap = false, item = 'stretch', justify = 'start', gap = '0', reverse = false, flexReverse = false, mobile = 'none', mobileItem = 'center', mobileJustify = 'center', mobileReverse = false, ...rest } = Astro.props
+const { element = 'div', id, class: className = '', wrap = false, item = 'stretch', justify = 'start', gap = '0', reverse = false, flexReverse = false, mobile = 'none', mobileItem = 'center', mobileJustify = 'center', mobileReverse = false, ...rest } = Astro.props
 
 const Element = element as keyof HTMLElement
 const styleList: Record<string, string> = {

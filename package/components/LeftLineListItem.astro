@@ -23,7 +23,7 @@ const classList = mergeClasses(className, ['ch-li-l-l', trimStart ? 'ch-ts' : ''
     <div class="ch-dot"><slot name="marker" /></div>
     <div class="ch-line"></div>
   </div>
-  <slot />
+  <div class="ch-txt"><slot /></div>
 </li>
 
 <style lang="scss" is:global>
@@ -75,6 +75,10 @@ const classList = mergeClasses(className, ['ch-li-l-l', trimStart ? 'ch-ts' : ''
     &.ch-ts:first-of-type .ch-line:first-child,
     &.ch-te:last-of-type .ch-line:last-child {
       opacity: 0;
+    }
+
+    & .ch-txt {
+      flex-grow: 1;
     }
   }
 </style>

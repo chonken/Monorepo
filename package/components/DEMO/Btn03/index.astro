@@ -10,9 +10,10 @@ export interface Btn03Props extends ButtonProps {
 }
 interface Props extends Btn03Props {}
 
-const { href = '#', class: className = '', dotColor = '#333', dotSize = '0.5em', lineWidth = '1px', lineColor = '#333', blank = false, ...rest } = Astro.props
+const { href = '#', class: className = '', color = 'inherit', dotColor = '#333', dotSize = '0.5em', lineWidth = '1px', lineColor = '#333', blank = false, ...rest } = Astro.props
 
 const styleList = {
+  '--clr': color,
   '--dc': dotColor,
   '--ds': dotSize,
   '--lw': lineWidth,
@@ -40,6 +41,7 @@ const classList = mergeClasses(className, ['btn_type03'])
     align-items: center;
     flex-wrap: wrap;
     padding: 0.5em 1em;
+    color: var(--clr);
     min-width: 15ch;
     text-align: center;
     line-height: 1.2;

@@ -8,7 +8,7 @@ export interface GridItemProps extends FlexProps, ContainerProps {
 }
 interface Props extends GridItemProps {}
 
-const { id, class: className = '', maxWidth = '100%', item = 'stretch', justify = 'center', gap = '0', col, center = false, ...rest } = Astro.props
+const { element, id, class: className = '', maxWidth = '100%', item = 'stretch', justify = 'center', gap = '0', col, center = false, ...rest } = Astro.props
 
 // RWD尺寸(由大到小排序)
 const sizes = ['2xl', 'xl', 'lg', 'md', 'sm', 'xs', '2xs']
@@ -32,7 +32,7 @@ const classList = mergeClasses(className, ['ch-grd']).join(' ')
 
 <div style={styleList}>
   <Container class=`ch-grd-ctr ${(maxWidth + '').endsWith('px') || +maxWidth ? 'ch-fixed' : ''}` maxWidth={maxWidth} center={center}>
-    <Flex id={id} class={classList} wrap item={item} justify={justify} gap={parseUnit(gap)} {...rest}><slot /></Flex>
+    <Flex element={element} id={id} class={classList} wrap item={item} justify={justify} gap={parseUnit(gap)} {...rest}><slot /></Flex>
   </Container>
 </div>
 
@@ -40,7 +40,7 @@ const classList = mergeClasses(className, ['ch-grd']).join(' ')
   @use '../../config/breakpoint' as bp;
   .ch-grd {
     & > * {
-      max-width: calc((100% - var(--cgap, 0) * max(var(--col-2xl) - 1, 0)) / var(--col-2xl));
+      max-width: calc((100% - var(--cgap, 0) * max(var(--col) - 1, 0)) / var(--col));
     }
   }
   :where(.ch-grd) > * {

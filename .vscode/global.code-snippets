@@ -141,17 +141,17 @@
   "as": {
     "scope": "astro",
     "prefix": "as",
-    "body": ["---", "interface Props {", "\tclass?: string", "}", "import { mergeClasses } from '@utils'", "const { class: className = '', ...rest } = Astro.props\n", "const classList = mergeClasses(className, ['$1']).join(' ')", "---\n", "<div class={classList} {...rest}>", "\t", "</div>\n", "<style is:global>", "\t", "</style>"]
+    "body": ["---", "interface Props {", "\tclass?: string", "}", "import { mergeClasses } from '@utils'", "const { class: className = '', ...rest } = Astro.props\n", "const classList = mergeClasses(className, ['$1'])", "---\n", "<div class:list={classList} {...rest}>", "\t", "</div>\n", "<style is:global>", "\t", "</style>"]
   },
   "as-fk": {
     "scope": "astro",
     "prefix": "as-fk",
-    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Content from '@components/Content/index.astro'", "---\n", "<YkFk>", "\t", "</YkFk>\n", "<style is:global>", "\t", "</style>"]
+    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Content from '@components/Content/index.astro'", "import SidePadding from '@layouts/SidePadding.astro'", "---\n", "<YkFk>", "\t", "</YkFk>\n", "<style is:global>", "\t", "</style>"]
   },
   "as-fk-index": {
     "scope": "astro",
     "prefix": "as-fk-index",
-    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Content from '@components/Content/index.astro'", "---\n", "<YkFk h2={[]}>", "\t", "</YkFk>\n", "<style is:global>", "\t", "</style>"]
+    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Content from '@components/Content/index.astro'", "import SidePadding from '@layouts/SidePadding.astro'", "---\n", "<YkFk h2={[]}>", "\t", "</YkFk>\n", "<style is:global>", "\t", "</style>"]
   },
   "as-demo": {
     "scope": "astro",
@@ -191,7 +191,7 @@
   "button-swap": {
     "scope": "astro",
     "prefix": "btnSwap",
-    "body": ["<BtnSwap class='$1' href='#' bgColor='#000' color='#fff' ${2|blank|}>$3</BtnSwap>"]
+    "body": ["<BtnSwap class='$1' href='#' backgroundColor='#000' color='#fff' ${2|blank|}>$3</BtnSwap>"]
   },
   "image": {
     "scope": "astro",

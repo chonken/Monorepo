@@ -1,7 +1,8 @@
 ---
+import { mergeClasses, parseUnit, parseMultiUnit } from '../utils'
 interface Props {
-  class?: string
   element?: 'ul' | 'ol'
+  class?: string
   dotTop?: string
   dotColor?: string
   dotWidth?: string
@@ -13,20 +14,19 @@ interface Props {
   lineDotColor?: string
   lineDotCircle?: boolean
 }
-import { mergeClasses } from '../utils'
 const { class: className = '', element = 'ul', dotTop = 'auto', dotColor = '#878787', dotWidth = '10px', dotCircle = false, lineGap = '5px', lineWidth = '1px', lineColor = '#878787', lineDotWidth = '5px', lineDotColor = '#878787', lineDotCircle = false, ...rest } = Astro.props
 
 const Component = element
 
 const styleList = {
-  '--dt': dotTop,
-  '--dw': dotWidth,
+  '--dt': parseUnit(dotTop),
+  '--dw': parseUnit(dotWidth),
   '--dr': dotCircle ? '50%' : '0',
   '--dc': dotColor,
-  '--l-gap': lineGap,
-  '--lw': lineWidth,
+  '--l-gap': parseMultiUnit(lineGap),
+  '--lw': parseUnit(lineWidth),
   '--lc': lineColor,
-  '--l-dw': lineDotWidth,
+  '--l-dw': parseUnit(lineDotWidth),
   '--l-dc': lineDotColor,
   '--l-dr': lineDotCircle ? '50%' : '0',
 }

@@ -1,0 +1,22 @@
+---
+import Btn10 from './index.astro'
+
+export const id = 'btn_type10'
+export const props = {
+  href: { type: ['string'], require: false, default: '#', demo: '#' },
+  class: { type: ['string'], require: false, default: '' },
+  color: { type: ['string'], require: false, default: 'inherit' },
+  backgroundColor: { type: ['string'], require: false, default: '#0000' },
+  hoverBackgroundColor: { type: ['string'], require: false, default: '#eef1f6', demo: '#8888' },
+  hoverBorderColor: { type: ['string'], require: false, default: '#333', demo: '#888' },
+  blank: { type: ['boolean'], require: false, default: false },
+}
+export const slots = ['default', 'icon']
+export const keywords = []
+export const categrory = []
+const data = Astro.props.data['button']?.[0] ?? {}
+---
+
+<Btn10 href={props.href.demo} hoverBackgroundColor={props.hoverBackgroundColor.demo} hoverBorderColor={props.hoverBorderColor.demo}>
+  {data.text}
+</Btn10>

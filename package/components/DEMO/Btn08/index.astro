@@ -1,0 +1,99 @@
+---
+import type { ButtonProps } from '../../../type/button'
+import { mergeClasses } from '../../../utils'
+
+export interface Btn08Props extends ButtonProps {
+  hoverColor?: string
+  hoverBackgroundColor?: string
+}
+interface Props extends Btn08Props {}
+
+const { href = '#', class: className = '', color = 'inherit', backgroundColor = '#eef1f6', hoverColor = '#fff', hoverBackgroundColor = '#2b4346', blank = false, ...rest } = Astro.props
+
+const styleList = {
+  '--clr': color,
+  '--bgc': backgroundColor,
+  '--clr-h': hoverColor,
+  '--bgc-h': hoverBackgroundColor,
+}
+const classList = mergeClasses(className, ['btn_type08'])
+---
+
+<a href={href} class:list={classList} style={styleList} target={blank ? '_blank' : undefined} {...rest}>
+  <span><span><slot>查看更多</slot></span></span>
+</a>
+
+<style lang="scss" is:global>
+  .btn_type08 {
+    position: relative;
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0.5em 1.5em;
+    color: var(--clr);
+    overflow: hidden;
+    background: var(--bgc);
+    z-index: 1;
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      background: var(--bgc-h);
+      transform: translateX(-100%);
+    }
+    &::before {
+      width: 135%;
+      clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 0% 0%);
+    }
+    &::after {
+      width: 105%;
+      transition: 0.3s cubic-bezier(0.7, 0, 0.2, 1);
+    }
+    & span {
+      display: block;
+      position: relative;
+      transition: 0.1s;
+      z-index: 1;
+    }
+    & > span {
+      overflow: hidden;
+    }
+    &:hover {
+      color: var(--clr-h);
+      & > span > span {
+        animation:
+          MoveRightInitial 0.1s forwards,
+          MoveRightEnd 0.3s forwards 0.2s;
+      }
+      &::before,
+      &::after {
+        transform: none;
+        transition-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
+      }
+      &::before {
+        transition: transform 0.3s;
+      }
+      &::after {
+        transition: transform 0.01s 0.3s;
+      }
+    }
+  }
+  @keyframes MoveRightInitial {
+    to {
+      transform: translateX(105%);
+    }
+  }
+  @keyframes MoveRightEnd {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+</style>

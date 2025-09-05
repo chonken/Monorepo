@@ -4,23 +4,22 @@ import Btn03 from './index.astro'
 export const id = 'btn_type03'
 export const props = {
   href: { type: ['string'], require: false, default: '#', demo: '#' },
-  class: { type: ['string'], require: false, default: 'inherit' },
-  color: { type: ['string'], require: false, default: '#fff' },
-  backgroundColor: { type: ['string'], require: false, default: '#eef1f6' },
-  blank: { type: ['boolean'], require: false, default: false, demo: true },
+  class: { type: ['string'], require: false, default: '' },
+  color: { type: ['string'], require: false, default: 'inherit' },
   dotColor: { type: ['string'], require: false, default: '#333', demo: '#888' },
   dotSize: { type: ['string'], require: false, default: '0.5em' },
   lineWidth: { type: ['string'], require: false, default: '1px' },
   lineColor: { type: ['string'], require: false, default: '#333', demo: '#888' },
+  blank: { type: ['boolean'], require: false, default: false },
 }
-export const slots = ['default']
+export const slots = ['default', 'icon']
 export const keywords = []
 export const categrory = []
 
 const data = Astro.props.data['button']?.[0] ?? {}
 ---
 
-<Btn03 href="#" dotColor={props.dotColor.demo} lineColor={props.lineColor.demo}>
+<Btn03 href={props.href.demo} dotColor={props.dotColor.demo} lineColor={props.lineColor.demo}>
   {data.text}
 </Btn03>
 

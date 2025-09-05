@@ -1,11 +1,11 @@
 ---
 interface Props {
   seconds?: string | number
-  direction?: 'left' | 'right' | 'up' | 'down'
+  move?: 'left' | 'right' | 'up' | 'down'
   class?: string
 }
 import { mergeClasses, parseUnit } from '../utils'
-const { class: className = '', seconds = 20, direction = 'left', ...rest } = Astro.props
+const { class: className = '', seconds = 20, move = 'left', ...rest } = Astro.props
 
 const map = {
   left: [-1, 0],
@@ -13,13 +13,13 @@ const map = {
   up: [0, -1],
   down: [0, 1],
 }
-const [hr, vr] = map[direction] ?? [0, 0]
+const [hr, vr] = map[move] ?? [0, 0]
 
 const styleList = {
   '--sec': parseUnit(seconds, 's'),
   '--tra': `translate(${hr * 100}%, ${vr * 100}%)`,
 }
-const classList = mergeClasses(className, ['ch-mar', `ch-dir-${direction}`]).join(' ')
+const classList = mergeClasses(className, ['ch-mar', `ch-dir-${move}`]).join(' ')
 ---
 
 <div class={classList} style={styleList} {...rest}>

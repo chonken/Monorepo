@@ -6,6 +6,7 @@
 .key_words :is(h2, h3, h4, h5, h6) {
   color: rgba(255, 255, 255, 0);
 }
+/* 重製公司的白痴設定 */
 .ykfk,
 .ykfk * {
   margin: 0;
@@ -15,12 +16,10 @@
   right: auto;
   bottom: auto;
   left: auto;
+  color: inherit;
   font-size: inherit;
   font-weight: inherit;
   word-break: normal;
-}
-.ykfk :where(h3, h4, h5, h6) {
-  line-height: 1.4;
 }
 @layer base {
   .ykfk {
@@ -41,6 +40,9 @@
   .ykfk *::before,
   .ykfk *::after {
     box-sizing: border-box;
+  }
+  .ykfk :is(h3, h4, h5, h6) {
+    line-height: 1.4;
   }
   .ykfk iframe {
     display: block;

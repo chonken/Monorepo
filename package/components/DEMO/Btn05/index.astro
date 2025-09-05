@@ -2,10 +2,10 @@
 import type { ButtonProps } from '../../../type/button'
 import { mergeClasses } from '../../../utils'
 
-export interface Btn04Props extends ButtonProps {
+export interface Btn05Props extends ButtonProps {
   borderColor?: string
 }
-interface Props extends Btn04Props {}
+interface Props extends Btn05Props {}
 
 const { href = '#', class: className = '', color = 'inherit', backgroundColor = '#333', borderColor = '#333', blank = false, ...rest } = Astro.props
 
@@ -14,55 +14,46 @@ const styleList = {
   '--bgc': backgroundColor,
   '--bor-c': borderColor,
 }
-const classList = mergeClasses(className, ['btn_type04'])
+const classList = mergeClasses(className, ['btn_type05'])
 ---
 
 <a href={href} class:list={classList} style={styleList} target={blank ? '_blank' : undefined} {...rest}>
-  {
-    Astro.slots.has('icon') && (
-      <span class="ch-icon">
-        <slot name="icon" />
-      </span>
-    )
-  }
   <slot>查看更多</slot>
 </a>
 
 <style lang="scss" is:global>
-  .btn_type04 {
+  .btn_type05 {
     position: relative;
     display: inline-flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    color: var(--clr);
-    text-align: center;
     padding: 0.5em 1.5em;
-    z-index: 1;
+    color: var(--clr);
     &::before,
     &::after {
       content: '';
       position: absolute;
       inset: 0;
-      transition: 0.3s;
+      transition: all 0.3s;
     }
     &::before {
-      opacity: 0.1;
       background: var(--bgc);
       z-index: 1;
+      opacity: 0.1;
     }
     &::after {
-      opacity: 0.3;
-      border-top: 1px solid var(--bor-c);
-      border-bottom: 1px solid var(--bor-c);
-      transform: scale(0, 1);
+      border: 1px solid var(--bor-c);
+      transform: scale(1.5);
+      opacity: 0;
     }
     &:hover::before {
+      transform: scale(0);
       opacity: 0;
-      transform: scale(0, 1);
     }
     &:hover:after {
       transform: scale(1);
+      opacity: 0.5;
     }
   }
 </style>
