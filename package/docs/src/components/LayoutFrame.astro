@@ -1,11 +1,12 @@
 ---
+import { mergeClasses } from '@utils'
+import breakpoint from '@config/breakpoint.json'
+
 interface Props {
   class?: string
   name: string
   mobile?: string[]
 }
-import { mergeClasses } from '@utils'
-import breakpoint from '@config/breakpoint.json'
 const { class: className = '', name, mobile = [], ...rest } = Astro.props
 
 const classList = mergeClasses(className, ['']).join(' ')

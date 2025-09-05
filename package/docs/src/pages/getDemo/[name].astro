@@ -1,12 +1,11 @@
 ---
-import data from '../../content/demo.json'
-const layouts = import.meta.glob('@layouts/**/demo.astro', { eager: true }) as Record<string, { default: any }>
+import { layouts } from '../../utiles/AsyncImportDemo.js'
 
 export async function getStaticPaths() {
-  const layouts = import.meta.glob('@layouts/**/demo.astro', { eager: true })
+  const layouts = import.meta.glob('../../demo/layouts/*.astro', { eager: true })
   const paths = Object.keys(layouts)
     .map((key) => {
-      const match = key.match(/\/([^\/]+)\/demo\.astro$/)
+      const match = key.match(/\/([^\/]+)\.astro$/)
       return match ? { params: { name: match[1] } } : null
     })
     .filter(Boolean)
@@ -16,12 +15,12 @@ export async function getStaticPaths() {
 const { name } = Astro.params
 
 const componentKey = Object.keys(layouts).find((k) => k.includes(name))
-const Component = componentKey ? layouts[componentKey].default : null
+const Component = componentKey ? ((await layouts[componentKey]()) as any).default : null
 ---
 
 <html>
   <body>
-    {Component && <Component data={data} />}
+    {Component && <Component />}
   </body>
 </html>
 

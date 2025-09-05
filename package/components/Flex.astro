@@ -1,0 +1,54 @@
+---
+import type { LayoutProps } from '../type/layout'
+import { mergeClasses, parseJustify, parseMultiUnit } from '../utils'
+
+export interface FlexProps extends LayoutProps {
+  wrap?: boolean
+  flexReverse?: boolean
+  mobile?: '3xl' | '2xl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs' | '2xs' | 'none' | 'inherit'
+  mobileItem?: 'stretch' | 'start' | 'center' | 'end'
+  mobileJustify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly' | 'space-between' | 'space-around' | 'space-evenly'
+  mobileReverse?: boolean
+}
+interface Props extends FlexProps {}
+
+const { element = 'div', id, class: className = '', wrap = false, item = 'stretch', justify = 'start', gap = '0', reverse = false, flexReverse = false, mobile = 'none', mobileItem = 'center', mobileJustify = 'center', mobileReverse = false, ...rest } = Astro.props
+
+const Element = element as keyof HTMLElement
+const styleList: Record<string, string> = {
+  '--wrp': wrap ? 'wrap' : 'nowrap',
+  '--itm': item,
+  '--jst': parseJustify(justify),
+  '--mob-itm': mobileItem,
+  '--mob-jst': parseJustify(mobileJustify),
+  '--gap': parseMultiUnit(gap, 'px').join(' '),
+}
+const classList = mergeClasses(className, ['ch-flex', 'ch-layout', reverse ? 'reverse' : '', flexReverse ? 'flex-re' : '', ...(mobile === 'none' ? [] : [`mob-${mobile}`, mobileReverse ? 'mob-re' : ''])])
+---
+
+<Element class:list={classList} style={styleList} {...rest}>
+  <slot />
+</Element>
+
+<style lang="scss" is:global>
+  @use '../styles/global.scss';
+  @use '../config/breakpoint' as bp;
+  .ch-flex {
+    display: flex;
+    flex-wrap: var(--wrp);
+    &:where(.flex-re) {
+      flex-direction: row-reverse;
+    }
+  }
+
+  @each $size, $value in bp.$breakpoint {
+    @media (max-width: $value) {
+      .ch-flex:is(.mob-inherit.main-mob-#{$size}, .mob-#{$size}) {
+        flex-direction: column;
+        &:where(.mob-re) {
+          flex-direction: column-reverse;
+        }
+      }
+    }
+  }
+</style>

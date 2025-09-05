@@ -1,0 +1,90 @@
+---
+import type { ButtonProps } from '../../type/button'
+import { mergeClasses } from '../../utils'
+
+export interface Btn06Props extends ButtonProps {
+  borderColor?: string
+  hoverBorderColor?: string
+}
+interface Props extends Btn06Props {}
+
+const { href = '#', class: className = '', color = 'inherit', backgroundColor = '#eef1f6', borderColor = '#fff0', hoverBorderColor = '#00b39b', blank = false, ...rest } = Astro.props
+
+const styleList = {
+  '--clr': color,
+  '--bgc': backgroundColor,
+  '--bor-c': borderColor,
+  '--bor-c-h': hoverBorderColor,
+}
+const classList = mergeClasses(className, ['btn_type06'])
+---
+
+<a href={href} class:list={classList} style={styleList} target={blank ? '_blank' : undefined} {...rest}>
+  <span><slot>查看更多</slot></span>
+</a>
+
+<style lang="scss" is:global>
+  .btn_type06 {
+    position: relative;
+    display: inline-block;
+    color: var(--clr);
+    overflow: hidden;
+    color: var(--clr);
+    background-color: var(--bgc);
+    z-index: 1;
+    & span {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0.5em 1.5em;
+      border: 2px solid var(--bor-c);
+    }
+    &::before,
+    &::after,
+    & span::before,
+    & span::after {
+      content: '';
+      position: absolute;
+      border: solid var(--bor-c-h);
+      z-index: 1;
+      pointer-events: none;
+      transition: 0.3s;
+    }
+    &::before,
+    &::after {
+      top: 0;
+      bottom: 0;
+      border-left: 2px;
+    }
+    &::before {
+      left: 0;
+      transform: translateY(calc(100% + 2px));
+    }
+    &::after {
+      right: 0;
+      transform: translateY(calc(-100% - 2px));
+    }
+    & span::before,
+    & span::after {
+      left: 0;
+      right: 0;
+      border-top: 2px;
+    }
+    & span::before {
+      top: 0;
+      transform: translateX(calc(-100% - 2px));
+    }
+    & span::after {
+      bottom: 0;
+      transform: translateX(calc(100% + 2px));
+    }
+    &:hover::before,
+    &:hover::after,
+    &:hover span::before,
+    &:hover span::after {
+      transform: none;
+    }
+  }
+</style>

@@ -1,0 +1,28 @@
+---
+import Component from '@components/BtnCorner.astro'
+import config from '../config.json'
+import content from '../../content/demo.json'
+
+export const id = 'ch-btn-cnr'
+export const { keywords, category } = config['components'][id]
+export const props = {
+  class: { type: ['string'], require: false, default: '' },
+  href: { type: ['string'], require: false, default: '#' },
+  color: { type: ['string'], require: false, default: '#000', demo: 'inherit' },
+  backgroundColor: { type: ['string'], require: false, default: '#fff', demo: '#eeea' },
+  hoverColor: { type: ['string'], require: false, default: '#fff', demo: 'inherit' },
+  hoverBackgroundColor: { type: ['string'], require: false, default: '#000', demo: '#2b434688' },
+  iconHoverInvert: { type: ['boolean'], require: false, default: false },
+  iconReverse: { type: ['boolean'], require: false, default: false },
+  blank: { type: ['boolean'], require: false, default: false },
+}
+export const slots = ['default', 'icon']
+
+const data = content['button']?.[0] ?? {}
+---
+
+<Component href="#" color={props.color.demo} backgroundColor={props.backgroundColor.demo} hoverColor={props.hoverColor.demo} hoverBackgroundColor={props.hoverBackgroundColor.demo}>
+  {data.text}
+</Component>
+
+<style></style>

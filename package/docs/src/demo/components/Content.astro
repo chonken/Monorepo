@@ -1,0 +1,34 @@
+---
+import Component from '@components/Content.astro'
+import config from '../config.json'
+import content from '../../content/demo.json'
+
+export const id = 'ch-cnt'
+export const { keywords, category } = config['components'][id]
+export const props = {
+  element: { type: ['string'], require: false, default: 'div' },
+  id: { type: ['string'], require: false, default: '' },
+  class: { type: ['string'], require: false, default: '' },
+  width: { type: ['string', 'number'], require: false, default: 'auto' },
+  padding: { type: ['string', 'number'], require: false, default: '0', demo: '60 5%' },
+  margin: { type: ['string', 'number'], require: false, default: '0' },
+}
+export const slots = ['default']
+
+const data = content['item']?.[0] ?? {}
+---
+
+<Component class="content" padding={props.padding.demo}>
+  <hgroup>
+    <h4>{data.title}</h4>
+    <p>{data.subtitle}</p>
+  </hgroup>
+  {data.text.map((item: string) => <p>{item}</p>)}
+</Component>
+
+<style>
+  .content {
+    color: #000;
+    background-color: #eee8;
+  }
+</style>

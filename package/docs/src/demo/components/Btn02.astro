@@ -1,0 +1,25 @@
+---
+import Component from '@components/DEMO/Btn02.astro'
+import config from '../config.json'
+import content from '../../content/demo.json'
+
+export const id = 'btn_type02'
+export const { keywords, category } = config['components'][id]
+export const props = {
+  href: { type: ['string'], require: false, default: '#', demo: '#' },
+  class: { type: ['string'], require: false, default: '' },
+  color: { type: ['string'], require: false, default: '#fff' },
+  backgroundColor: { type: ['string'], require: false, default: '#eef1f6' },
+  shadow: { type: ['string'], require: false, default: false, demo: '#8888' },
+  blank: { type: ['boolean'], require: false, default: false },
+}
+export const slots = ['default', 'icon']
+
+const data = content['button']?.[0] ?? {}
+---
+
+<Component href={props.href.demo} shadow={props.shadow.demo}>
+  {data.text}
+</Component>
+
+<style></style>

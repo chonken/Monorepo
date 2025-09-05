@@ -1,25 +1,32 @@
 ---
 import '@tailwind'
-import data from '../content/demo.json'
 import LayoutFrame from '../components/LayoutFrame.astro'
 import ThemeToggle from '../components/ThemeToggle.astro'
 import PropsTable from '../components/PropsTable.astro'
-const components = import.meta.glob('@components/**/demo.astro', { eager: true })
-const layouts = import.meta.glob('@layouts/**/demo.astro', { eager: true })
+import { layouts, components } from '../utiles/AsyncImportDemo.js'
 
-function formatList(globObj: Record<string, any>) {
-  return Object.entries(globObj).map(([path, component]: [string, any]) => ({
-    path: path.split('/').slice(1, -1).join(' / '),
-    name: path.split('/').at(-2),
-    Component: component.default,
-    props: component.props,
-    slots: component.slots,
-  }))
+function formatList(globObj: Record<string, () => Promise<unknown>>) {
+  const entries = Object.entries(globObj)
+  return Promise.all(
+    entries.map(async ([path, promise]: [string, any]) => {
+      const component = await promise()
+      return {
+        path: path,
+        name: path.split('/').at(-1)?.split('.')[0],
+        Component: component.default,
+        id: component.id,
+        props: component.props,
+        slots: component.slots,
+        category: component.category,
+        keywords: component.keywords,
+      }
+    })
+  )
 }
 
 const list = [
-  { title: 'UI Components', items: formatList(components) },
-  { title: 'Layouts', items: formatList(layouts) },
+  { title: 'Components', items: await formatList(components) },
+  { title: 'Layouts', items: await formatList(layouts) },
 ]
 ---
 
@@ -63,7 +70,7 @@ const list = [
               list.map((group) => (
                 <article>
                   <h2 class="font-bold my-15 text-5xl">{group.title}</h2>
-                  {group.items.map(({ path, name, Component, props, slots }) => (
+                  {group.items.map(({ path, name, Component, props, slots, category, keywords }) => (
                     <section class="mt-10">
                       <h3 class="font-bold text-4xl">{name}</h3>
                       <small class="inline-block mt-4 px-3.5 py-0.5 text-sm italic rounded-lg bg-[var(--bg-elevated-4)]">{path}</small>
@@ -71,7 +78,7 @@ const list = [
                         <LayoutFrame class="mt-10" name={name ?? ''} mobile={props['mobile']['type']} />
                       ) : (
                         <div class="mt-10">
-                          <Component data={data} />
+                          <Component />
                         </div>
                       )}
                       <PropsTable props={props} />

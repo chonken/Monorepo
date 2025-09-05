@@ -1,10 +1,13 @@
 ---
-interface Props {
+import type { ElementProps } from '../type/element'
+import { mergeClasses, parseUnit } from '../utils'
+
+export interface MarqueeProps extends ElementProps {
   seconds?: string | number
   move?: 'left' | 'right' | 'up' | 'down'
-  class?: string
 }
-import { mergeClasses, parseUnit } from '../utils'
+interface Props extends MarqueeProps {}
+
 const { class: className = '', seconds = 20, move = 'left', ...rest } = Astro.props
 
 const map = {
@@ -19,10 +22,10 @@ const styleList = {
   '--sec': parseUnit(seconds, 's'),
   '--tra': `translate(${hr * 100}%, ${vr * 100}%)`,
 }
-const classList = mergeClasses(className, ['ch-mar', `ch-dir-${move}`]).join(' ')
+const classList = mergeClasses(className, ['ch-mar', `ch-dir-${move}`])
 ---
 
-<div class={classList} style={styleList} {...rest}>
+<div class:list={classList} style={styleList} {...rest}>
   <div class="ch-item"><slot /></div>
   <div class="ch-item"><slot /></div>
 </div>
@@ -34,18 +37,16 @@ const classList = mergeClasses(className, ['ch-mar', `ch-dir-${move}`]).join(' '
     overflow: hidden;
     & .ch-item {
       max-width: unset;
+      height: 100%;
       animation: marquee var(--sec) linear infinite;
       flex-shrink: 0;
-      & > img {
-        max-width: unset;
-      }
     }
     &.ch-dir-right,
     &.ch-dir-down {
       justify-content: end;
     }
-    &.ch-dir-left .ch-item *,
-    &.ch-dir-right .ch-item * {
+    &.ch-dir-left .ch-item > *,
+    &.ch-dir-right .ch-item > * {
       height: 100% !important;
     }
     &.ch-dir-up,

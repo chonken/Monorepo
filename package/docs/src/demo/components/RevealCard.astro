@@ -1,0 +1,35 @@
+---
+import Component from '@components/RevealCard.astro'
+import config from '../config.json'
+import content from '../../content/demo.json'
+
+export const id = 'ch-rvc'
+export const { keywords, category } = config['components'][id]
+export const props = {
+  element: { type: ['string'], require: false, default: 'div' },
+  id: { type: ['string'], require: false, default: '' },
+  class: { type: ['string'], require: false, default: '' },
+  background: { type: ['string'], require: false, default: '#eee8' },
+  backgroundHover: { type: ['string'], require: false, default: '#eee8' },
+  mobile: { type: ['md', 'sm', 'xs', '2xl', 'none'], require: false, default: 'none' },
+}
+export const slots = ['default', 'image', 'title']
+
+const data = content['image_txt']?.[0] ?? {}
+---
+
+<Component>
+  <img slot="image" src={data?.image} alt="" />
+  <h4 slot="title">{data?.title}</h4>
+  <div class="txt">{data?.text.map((item: string) => <p>{item}</p>)}</div>
+</Component>
+
+<style>
+  h4 {
+    padding: 1em 5%;
+    text-align: center;
+  }
+  .txt {
+    padding: 0 5% 40px;
+  }
+</style>

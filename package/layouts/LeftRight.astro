@@ -1,0 +1,79 @@
+---
+import { mergeClasses, parseUnit, parseDualUnit, isNegative, toNegative } from '../utils'
+import Content from '../components/Content.astro'
+import Flex, { type FlexProps } from '../components/Flex.astro'
+import Container, { type ContainerProps } from './Container.astro'
+
+export interface LeftRightProps extends FlexProps, ContainerProps {
+  mobileFit?: boolean
+  overlay?: string
+  contentWidth?: string
+  contentDirection?: 'ltr' | 'rtl' | 'inherit'
+}
+interface Props extends LeftRightProps {}
+
+const { element, id, class: className = '', maxWidth, item = 'stretch', justify = 'center', gap: g = '40', reverse = false, mobile = 'lg', mobileItem = 'center', mobileJustify = 'center', mobileFit = false, mobileReverse, center = false, overlay: oly = '0', contentWidth = '600', contentDirection = 'ltr', ...rest } = Astro.props
+
+// 處理間距和疊層
+const [rowGap, cGap] = parseDualUnit(g, 'px')
+const o = toNegative(parseUnit(oly, 'px'))
+const overlay = o === '-0px' ? (isNegative(cGap) ? cGap : '0px') : o
+const colGap = overlay === '0px' ? cGap : '0px'
+const gap = `${rowGap} ${colGap}`
+
+const contentStyleList = {
+  display: 'contents',
+  '--oly': toNegative(parseUnit(oly, 'px')),
+}
+const classList = mergeClasses(className, ['ch-l-r', ...(mobile === 'none' ? [] : [mobileFit ? 'mob-fit' : ''])])
+---
+
+<Container element={element} id={id} maxWidth={maxWidth} center={center}>
+  <div style={contentStyleList}>
+    <Flex class:list={classList} gap={gap} item={item} justify={justify} reverse={reverse} mobile={mobile} mobileItem={mobileItem} mobileJustify={mobileJustify} mobileReverse={mobileReverse} {...rest}>
+      {Astro.slots.has('image') && <slot name="image" />}
+      <slot />
+      {
+        Astro.slots.has('content') && (
+          <Content width={contentWidth} direction={contentDirection}>
+            <slot name="content" />
+          </Content>
+        )
+      }
+    </Flex>
+  </div>
+</Container>
+
+<style lang="scss" is:global>
+  @use '../config/breakpoint' as bp;
+  .ch-l-r {
+    & > * {
+      position: relative;
+      z-index: 1;
+    }
+  }
+  :where(.ch-l-r) > :is(:last-child, .ch-cnt) {
+    margin-inline-start: var(--oly);
+    z-index: 2;
+  }
+
+  // 手動設定尺寸
+  $map: 2xl, xl, lg, md, sm;
+
+  @each $size in $map {
+    @media (max-width: bp.size($size)) {
+      .ch-l-r.mob-#{$size} {
+        &.mob-fit {
+          margin-inline: auto;
+          width: fit-content;
+        }
+        & .ch-cnt {
+          margin-inline-start: 0;
+        }
+      }
+      :where(.ch-l-r.mob-#{$size}) > :is(:last-child, .ch-cnt) {
+        margin-inline-start: 0;
+      }
+    }
+  }
+</style>

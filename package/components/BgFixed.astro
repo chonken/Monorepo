@@ -1,0 +1,35 @@
+---
+import type { ElementProps } from '../type/element'
+import { mergeClasses, parseUnit } from '../utils'
+
+export interface BgFixedProps extends ElementProps {
+  src: string
+  minHeight?: number | string
+}
+interface Props extends BgFixedProps {}
+
+const { src, class: className = '', minHeight = '40vw', ...rest } = Astro.props
+
+const styleList = {
+  '--url': `url(${src})`,
+  '--h': parseUnit(minHeight, 'vw'),
+}
+const classList = mergeClasses(className, ['ch-bgf'])
+---
+
+<div class:list={classList} style={styleList} {...rest}><slot /></div>
+
+<style lang="scss" is:global>
+  @use '../config/breakpoint' as bp;
+  @use 'sass:map';
+
+  .ch-bgf {
+    min-height: var(--h);
+    background: var(--url) center / cover fixed;
+  }
+  @media (max-width: map.get(bp.$breakpoint,md)) {
+    .ch-bgf {
+      background-attachment: local;
+    }
+  }
+</style>

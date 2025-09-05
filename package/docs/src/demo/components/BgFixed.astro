@@ -1,0 +1,20 @@
+---
+import Component from '@components/BgFixed.astro'
+import config from '../config.json'
+import content from '../../content/demo.json'
+
+export const id = 'ch-bgf'
+export const { keywords, category } = config['components'][id]
+export const props = {
+  class: { type: ['string'], require: false, default: '' },
+  src: { type: ['string'], require: true, default: '', demo: '{圖片路徑}' },
+  minHeight: { type: ['string', 'number'], require: false, default: '40vw' },
+}
+export const slots = ['default']
+
+const data = content['image']?.[0] ?? {}
+---
+
+<Component class="" src={data.image} />
+
+<style is:global></style>

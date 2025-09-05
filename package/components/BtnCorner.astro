@@ -1,14 +1,16 @@
 ---
-interface Props {
-  href?: string
-  bgColor?: string
-  color?: string
-  blank?: boolean
-  class?: string
-  position?: 'lt' | 'rt' | 'lb' | 'rb'
-}
+import type { ButtonProps } from '../type/button'
 import { mergeClasses } from '../utils'
-const { href = '#', class: className = '', bgColor = '#fff', color = '#000', blank = false, position = 'rb', ...rest } = Astro.props
+
+export interface BtnCorner extends ButtonProps {
+  position?: 'lt' | 'rt' | 'lb' | 'rb'
+  hoverColor?: string
+  hoverBackgroundColor?: string
+  iconHoverInvert?: boolean
+}
+interface Props extends BtnCorner {}
+
+const { href = '#', class: className = '', color = '#000', backgroundColor = '#fff', hoverColor = backgroundColor, hoverBackgroundColor = color, blank = false, position = 'rb', iconHoverInvert = false, ...rest } = Astro.props
 
 const map = {
   lt: 'ch-lt',
@@ -18,61 +20,91 @@ const map = {
 }
 
 const styleList = {
-  '--bgc': bgColor,
   '--clr': color,
+  '--bgc': backgroundColor,
+  '--clr-h': hoverColor,
+  '--bgc-h': hoverBackgroundColor,
+  '--icn-inv': iconHoverInvert ? 1 : 0,
 }
-const classList = mergeClasses(className, ['ch-btn-cnr', map[position]]).join(' ')
+const classList = mergeClasses(className, ['ch-btn-cnr', map[position]])
 ---
 
-<a href={href} class={classList} style={styleList} target={blank ? '_blank' : undefined} {...rest}><slot /></a>
+<a href={href} class:list={classList} style={styleList} target={blank ? '_blank' : undefined} {...rest}>
+  {
+    Astro.slots.has('icon') && (
+      <span class="ch-icon">
+        <slot name="icon" />
+      </span>
+    )
+  }
+  <slot>查看更多</slot>
+</a>
 
-<style is:global>
+<style lang="scss" is:global>
   .ch-btn-cnr {
     position: relative;
-    display: inline-block;
-    padding: 1em;
-    line-height: 1;
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    padding: 0.5em 1.5em;
+    line-height: 1.2;
     color: var(--clr);
     overflow: hidden;
     background-color: var(--bgc);
     transition: 0.4s;
     z-index: 1;
-  }
-  .ch-btn-cnr::before {
-    content: '';
-    position: absolute;
-    width: 0.7em;
-    aspect-ratio: 1;
-    background-color: var(--clr);
-    transition: 0.6s;
-    transition-timing-function: ease-out;
-    z-index: -1;
-  }
-  .ch-btn-cnr.ch-lt::before {
-    top: 0;
-    left: 0;
-    clip-path: polygon(0 0, 0% 100%, 100% 0);
-  }
-  .ch-btn-cnr.ch-rt::before {
-    top: 0;
-    right: 0;
-    clip-path: polygon(0 0, 100% 100%, 100% 0);
-  }
-  .ch-btn-cnr.ch-lb::before {
-    bottom: 0;
-    left: 0;
-    clip-path: polygon(0 0, 0% 100%, 100% 100%);
-  }
-  .ch-btn-cnr.ch-rb::before {
-    bottom: 0;
-    right: 0;
-    clip-path: polygon(100% 0, 0% 100%, 100% 100%);
-  }
-  .ch-btn-cnr:hover {
-    color: #fff;
-  }
-  .ch-btn-cnr:hover::before {
-    width: 200%;
-    transition-timing-function: ease-in;
+    &::before {
+      content: '';
+      position: absolute;
+      width: 0.7em;
+      aspect-ratio: 1;
+      background-color: var(--bgc-h);
+      transition: 0.6s;
+      transition-timing-function: ease-out;
+      z-index: -1;
+    }
+    & .ch-icon {
+      flex-shrink: 0;
+      filter: none;
+      transition: 0.4s;
+    }
+    &.ch-icon-re .ch-icon {
+      filter: grayscale(1) invert(var(--icn-inv)) brightness(2);
+    }
+    &.ch-lt::before {
+      top: 0;
+      left: 0;
+      clip-path: polygon(0 0, 0% 100%, 100% 0);
+    }
+    &.ch-rt::before {
+      top: 0;
+      right: 0;
+      clip-path: polygon(0 0, 100% 100%, 100% 0);
+    }
+    &.ch-lb::before {
+      bottom: 0;
+      left: 0;
+      clip-path: polygon(0 0, 0% 100%, 100% 100%);
+    }
+    &.ch-rb::before {
+      bottom: 0;
+      right: 0;
+      clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+    }
+    &:hover {
+      color: var(--clr-h);
+      &::before {
+        width: 200%;
+        transition-timing-function: ease-in;
+      }
+    }
+    &:hover .ch-icon {
+      filter: grayscale(1) invert(var(--icn-inv)) brightness(2);
+    }
+    &.ch-icon-re:hover .ch-icon {
+      filter: none;
+    }
   }
 </style>

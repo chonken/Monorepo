@@ -1,0 +1,47 @@
+---
+import type { ButtonProps } from '../../type/button'
+import { mergeClasses } from '../../utils'
+
+export interface Btn09Props extends ButtonProps {}
+interface Props extends Btn09Props {}
+
+const { href = '#', class: className = '', color = '#fff', backgroundColor = '#333', blank = false, ...rest } = Astro.props
+
+const styleList = {
+  '--clr': color,
+  '--bgc': backgroundColor,
+}
+const classList = mergeClasses(className, ['btn_type09'])
+---
+
+<a href={href} class:list={classList} style={styleList} target={blank ? '_blank' : undefined} {...rest}>
+  <slot>查看更多</slot>
+</a>
+
+<style lang="scss" is:global>
+  .btn_type09 {
+    position: relative;
+    display: inline-block;
+    padding: 1em 1.5em;
+    width: fit-content;
+    color: var(--clr);
+    line-height: 1.2;
+    overflow: hidden;
+    background: var(--bgc);
+    z-index: 1;
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      transform-origin: 50% 100%;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+      transition: clip-path 0.4s cubic-bezier(0.7, 0, 0.2, 1);
+      background: #2b4346;
+      z-index: -1;
+    }
+    &:hover::before {
+      clip-path: polygon(0 0, 100% 0, 0 0, 0% 100%);
+      transition-duration: 0.2s;
+    }
+  }
+</style>

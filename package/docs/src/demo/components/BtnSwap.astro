@@ -1,0 +1,28 @@
+---
+import Component from '@components/BtnSwap.astro'
+import config from '../config.json'
+import content from '../../content/demo.json'
+
+export const id = 'ch-btn-swap'
+export const { keywords, category } = config['components'][id]
+export const props = {
+  class: { type: ['string'], require: false, default: '' },
+  href: { type: ['string'], require: false, default: '#' },
+  color: { type: ['string'], require: false, default: '#fff', demo: '#000' },
+  backgroundColor: { type: ['string'], require: false, default: '#000', demo: '#eee' },
+  blank: { type: ['boolean'], require: false, default: false },
+  borderColor: { type: ['string'], require: false, default: '#000', demo: '#eee' },
+  borderRadius: { type: ['string', 'number'], require: false, default: '0' },
+  iconHoverInvert: { type: ['boolean'], require: false, default: false },
+  iconReverse: { type: ['boolean'], require: false, default: false },
+}
+export const slots = ['default', 'icon']
+
+const data = content['button']?.[0] ?? {}
+---
+
+<Component href="#" color={props.color.demo} backgroundColor={props.backgroundColor.demo} borderColor={props.borderColor.demo}>
+  {data.text}
+</Component>
+
+<style></style>
