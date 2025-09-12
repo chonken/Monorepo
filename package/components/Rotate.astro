@@ -2,15 +2,15 @@
 interface Props {
   class?: string
   rotate?: string
-  duration?: string
+  seconds?: string
   loop?: boolean
 }
 import { mergeClasses, parseUnit } from '../utils'
-const { class: className = '', rotate = '15', duration = '1', loop = false, ...rest } = Astro.props
+const { class: className = '', rotate = '15', seconds = '1', loop = false, ...rest } = Astro.props
 const timing = loop ? 'linear' : 'ease-in-out alternate-reverse'
 
 const styleList = {
-  '--sec': parseUnit(duration, 's'),
+  '--sec': parseUnit(seconds, 's'),
   '--rot': parseUnit(loop ? '360deg' : rotate, 'deg'),
   '--tim': timing,
 }

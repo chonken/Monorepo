@@ -11,7 +11,7 @@ interface Props extends GridItemProps {}
 const { element, id, class: className = '', maxWidth = '100%', item = 'stretch', justify = 'center', gap = '0', col, center = false, ...rest } = Astro.props
 
 // RWD尺寸(由大到小排序)
-const sizes = ['2xl', 'xl', 'lg', 'md', 'sm', 'xs', '2xs']
+const sizes = ['3xl', '2xl', 'xl', 'lg', 'md', 'sm', 'xs', '2xs']
 
 // 解析gap
 const [rowGap, colGap] = parseDualUnit(gap)
@@ -48,7 +48,7 @@ const classList = mergeClasses(className, ['ch-grd']).join(' ')
   }
 
   // 手動設定和對應尺寸
-  $map: 2xl, xl, lg, md, sm, xs, 2xs;
+  $map: 3xl, 2xl, xl, lg, md, sm, xs, 2xs;
 
   @each $size in $map {
     @media (max-width: bp.size($size)) {

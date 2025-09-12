@@ -3,6 +3,8 @@ import type { ButtonProps } from '../type/button'
 import { mergeClasses, parseUnit } from '../utils'
 
 export interface BtnSwap extends ButtonProps {
+  hoverColor?: string
+  hoverBackgroundColor?: string
   borderColor?: string
   borderRadius?: string | number
   iconHoverInvert?: boolean
@@ -10,11 +12,13 @@ export interface BtnSwap extends ButtonProps {
 }
 interface Props extends BtnSwap {}
 
-const { class: className = '', href = '#', backgroundColor = '#000', color = '#fff', borderColor = backgroundColor, borderRadius, iconHoverInvert = false, iconReverse = false, blank = false, ...rest } = Astro.props
+const { class: className = '', href = '#', backgroundColor = '#000', color = '#fff', borderColor = backgroundColor, hoverColor = backgroundColor, hoverBackgroundColor = color, borderRadius, iconHoverInvert = false, iconReverse = false, blank = false, ...rest } = Astro.props
 
 const styleList = {
-  '--bgc': backgroundColor,
   '--clr': color,
+  '--bgc': backgroundColor,
+  '--clr-h': hoverColor,
+  '--bgc-h': hoverBackgroundColor,
   '--bor': parseUnit(borderColor, 'px'),
   '--brr': borderRadius,
   '--icn-inv': iconHoverInvert ? 1 : 0,
@@ -57,8 +61,8 @@ const classList = mergeClasses(className, ['ch-btn-swap', iconReverse ? 'ch-icon
       filter: grayscale(1) invert(var(--icn-inv)) brightness(2);
     }
     &:hover {
-      color: var(--bgc);
-      background-color: var(--clr);
+      color: var(--clr-h);
+      background-color: var(--bgc-h);
     }
     &:hover .ch-icon {
       filter: grayscale(1) invert(var(--icn-inv)) brightness(2);

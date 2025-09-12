@@ -1,23 +1,28 @@
 ---
-interface Props {
-  class?: string
-  gap?: string | number
-  mobile?: 'md' | 'sm' | 'xs' | '2xl'
-  mobilKeep?: boolean
-}
-import { mergeClasses, parseDualUnit } from '../utils'
-const { class: className = '', gap = '20', mobile = 'md', mobilKeep = false, ...rest } = Astro.props
-const [rowGap, colGap] = parseDualUnit(gap)
+import type { ElementProps } from '../type/element'
+import { mergeClasses, parseMultiUnit } from '../utils'
 
-const classList = mergeClasses(className, ['ch-tit', `mob-${mobile}`, `${mobilKeep ? 'mob-keep' : ''}`]).join(' ')
-const styleList = `--gap: ${rowGap + ' ' + colGap};`.trim()
+export interface TwoIconsTitleProps extends ElementProps {
+  gap?: string | number
+  mobile?: 'md' | 'sm' | 'xs' | '2xl' | 'none'
+  mobileKeep?: boolean
+}
+interface Props extends TwoIconsTitleProps {}
+
+const { id, element = 'div', class: className = '', gap = '20', mobile = 'md', mobileKeep = false, ...rest } = Astro.props
+
+const Element = element as keyof HTMLElement
+const styleList = {
+  '--gap': parseMultiUnit(gap),
+}
+const classList = mergeClasses(className, ['ch-tit', ...(mobile === 'none' ? [] : [`mob-${mobile}`, `${mobileKeep ? 'mob-keep' : ''}`])])
 ---
 
-<div class={classList} style={styleList} {...rest}>
+<Element class:list={classList} style={styleList} {...rest}>
   <div class="ch-tit-i"><slot name="icon" /></div>
   <div class="ch-tit-t"><slot /></div>
   <div class="ch-tit-i">{Astro.slots.has('icon2') ? <slot name="icon2" /> : <slot name="icon" />}</div>
-</div>
+</Element>
 
 <style lang="scss" is:global>
   @use '../config/breakpoint' as bp;

@@ -1,0 +1,25 @@
+---
+import Component from '@components/TwoLinesTitle.astro'
+import config from '../config.json'
+import content from '../../content/demo.json'
+
+export const id = 'ch-tlt'
+export const { keywords, category } = config['components'][id]
+export const props = {
+  element: { type: ['string'], require: false, default: 'div' },
+  id: { type: ['string'], require: false, default: '' },
+  class: { type: ['string'], require: false, default: '' },
+  gap: { type: ['string', 'number'], require: false, default: '20' },
+  borderColor: { type: ['string'], require: false, default: '#000', demo: '#888' },
+  borderWidth: { type: ['string'], require: false, default: '1px' },
+  mobile: { type: ['md', 'sm', 'xs', '2xl', 'none'], require: false, default: 'md' },
+}
+export const slots = ['default']
+const data = content['title']?.[0] ?? {}
+---
+
+<Component borderColor={props.borderColor.demo}>
+  {data.title}
+</Component>
+
+<style></style>

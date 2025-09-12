@@ -1,0 +1,18 @@
+---
+import type { ElementProps } from '../type/element'
+import { mergeClasses } from '../utils'
+
+export interface ProcessTimelineProps extends ElementProps {
+  mobile?: 'md' | 'sm' | 'xs' | '2xl' | 'none'
+}
+interface Props extends ProcessTimelineProps {}
+const {element = 'ol', class: className = '', mobile = 'md', ...rest } = Astro.props
+
+const Element = element as keyof HTMLElement
+const styleList = {}
+const classList = mergeClasses(className, ['', mobile === 'none' ? '' : `mob-${mobile}`])
+---
+
+<Element class:list={classList} style={styleList} {...rest}>
+  
+</Element>

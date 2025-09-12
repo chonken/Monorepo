@@ -1,0 +1,24 @@
+---
+import type { LayoutProps } from '../type/layout'
+import { mergeClasses } from '../utils'
+
+export interface ProcessTimelineItemProps extends LayoutProps {
+}
+interface Props extends ProcessTimelineItemProps {}
+const {element = 'li', class: className = '', ...rest } = Astro.props
+
+const Element = element as keyof HTMLElement
+const styleList = {}
+const classList = mergeClasses(className, ['ch-li-ptt', 'ch-layout'])
+---
+
+<Element class:list={classList} style={styleList} {...rest}>
+  <div class="ch-icon"><slot name="icon" /></div>
+</Element>
+
+<style lang="scss" is:global>
+  .ch-li-ptt {
+    display: grid;
+    grid-template-columns: 1fr max-content 1fr;
+  }
+</style>

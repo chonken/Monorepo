@@ -1,0 +1,58 @@
+---
+import type { ElementProps } from '../type/element'
+import { mergeClasses, parseMultiUnit } from '../utils'
+
+export interface TwoLinesTitleProps extends ElementProps {
+  gap?: string | number
+  borderColor?: string
+  borderWidth?: string
+  mobile?: 'md' | 'sm' | 'xs' | '2xl' | 'none'
+}
+interface Props extends TwoLinesTitleProps {}
+
+const { id, element = 'div', class: className = '', gap = '20', borderColor = '#000', borderWidth = '1px', mobile = 'md', ...rest } = Astro.props
+
+const Element = element as keyof HTMLElement
+const styleList = {
+  '--gap': parseMultiUnit(gap).join(' '),
+  '--bor-c': borderColor,
+  '--bor-w': borderWidth,
+}
+const classList = mergeClasses(className, ['ch-tlt', mobile === 'none' ? '' : `mob-${mobile}`])
+---
+
+<Element class:list={classList} style={styleList} {...rest}>
+  <div class="ch-tlt-t"><slot /></div>
+</Element>
+
+<style lang="scss" is:global>
+  @use '../config/breakpoint' as bp;
+  .ch-tlt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap);
+    &::before,
+    &::after {
+      content: '';
+      flex-grow: 1;
+      border-top: var(--bor-w) solid var(--bor-c);
+    }
+  }
+  .ch-tlt-t {
+    flex-shrink: 0;
+  }
+
+  $map: (md, sm, xs, 2xl);
+
+  @each $size in $map {
+    @media (max-width: bp.size($size)) {
+      .ch-tlt.mob-#{$size} {
+        &::before,
+        &::after {
+          display: none;
+        }
+      }
+    }
+  }
+</style>

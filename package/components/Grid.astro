@@ -1,0 +1,23 @@
+---
+import { mergeClasses } from '../utils'
+import type { LayoutProps } from '../type/layout'
+interface GridProps extends LayoutProps {
+}
+interface Props extends GridProps {}
+const { element = 'div', class: className = '', ...rest } = Astro.props
+
+const Element = element as keyof HTMLElement
+const styleList = {}
+const classList = mergeClasses(className, ['ch-grid'])
+---
+
+<Element class:list={classList} style={styleList} {...rest}>
+  
+</Element>
+
+<style lang="scss" is:global>
+  .ch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+</style>

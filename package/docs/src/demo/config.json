@@ -75,6 +75,10 @@
     "ch-l-r": {
       "keywords": ["flex", "left right", "左右排版", "圖文排版", "覆蓋排版"],
       "category": ["layout"]
+    },
+    "ch-tlt": {
+      "keywords": ["two line", "兩條線"],
+      "category": ["title"]
     }
   }
 }
