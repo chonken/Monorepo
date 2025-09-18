@@ -16,14 +16,12 @@ const sizes = ['3xl', '2xl', 'xl', 'lg', 'md', 'sm', 'xs', '2xs']
 // 解析gap
 const [rowGap, colGap] = parseDualUnit(gap)
 
-// 解析col
-const colMap = fullRWD(parseRWD(col), sizes)
-
 const styleList: Record<string, string> = {
   display: 'contents',
   '--cgap': colGap || '0px',
 }
 // 設定col數量
+const colMap = fullRWD(parseRWD(col), sizes)
 Object.entries(colMap).forEach(([key, val]) => {
   styleList[`--col${key === 'default' ? '' : '-' + key}`] = `${val}`
 })
@@ -47,11 +45,8 @@ const classList = mergeClasses(className, ['ch-grd']).join(' ')
     width: 100%;
   }
 
-  // 手動設定和對應尺寸
-  $map: 3xl, 2xl, xl, lg, md, sm, xs, 2xs;
-
-  @each $size in $map {
-    @media (max-width: bp.size($size)) {
+  @each $size, $value in bp.$breakpoint {
+    @media (max-width: $value) {
       .ch-grd-ctr.ch-fixed {
         max-width: calc((var(--mw) - var(--cgap, 0) * max(var(--col) - 1, 0)) / var(--col) * var(--col-#{$size}) + (var(--col-#{$size}) - 1) * var(--cgap, 0));
       }

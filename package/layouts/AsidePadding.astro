@@ -11,7 +11,7 @@ interface Props {
   space?: 'normal' | 'wide' | 'narrow'
 }
 import { mergeClasses, parseUnit, parseMultiUnit } from '../utils'
-const { id, class: className = '', maxWidth = '1400', aside = 'left', mobile = 'md', mobileFill = false, space = 'normal', paddingBlock = '0', marginBlock = '0', ...rest } = Astro.props
+const { id, class: className = '', maxWidth = '1400', aside = 'left', mobile = 'lg', mobileFill = false, space = 'normal', paddingBlock = '0', marginBlock = '0', ...rest } = Astro.props
 
 const spaceMap = {
   normal: '5%',

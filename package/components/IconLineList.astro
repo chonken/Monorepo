@@ -19,10 +19,10 @@ const styleList = {
   '--ih': parseUnit(iconHeight, 'px'),
   '--mob-ih': parseUnit(mobileIconHeight, 'px'),
 }
-const classList = mergeClasses(className, ['']).join(' ')
+const classList = mergeClasses(className, ['ch-ill'])
 ---
 
-<Component class={classList} style={styleList} {...rest}>
+<Component class:list={classList} style={styleList} {...rest}>
   <slot />
 </Component>
 

@@ -2,83 +2,113 @@
   "components": {
     "ch-bgf": {
       "keywords": ["background", "fixed"],
-      "category": []
+      "category": [],
+      "binding": []
     },
     "btn_type01": {
       "keywords": ["伊萍DEMO"],
-      "category": ["button"]
+      "category": ["button"],
+      "binding": []
     },
     "btn_type02": {
       "keywords": ["伊萍DEMO"],
-      "category": ["button"]
+      "category": ["button"],
+      "binding": []
     },
     "btn_type03": {
       "keywords": ["伊萍DEMO"],
-      "category": ["button"]
+      "category": ["button"],
+      "binding": []
     },
     "btn_type04": {
       "keywords": ["伊萍DEMO"],
-      "category": ["button"]
+      "category": ["button"],
+      "binding": []
     },
     "btn_type05": {
       "keywords": ["伊萍DEMO"],
-      "category": ["button"]
+      "category": ["button"],
+      "binding": []
     },
     "btn_type06": {
       "keywords": ["伊萍DEMO"],
-      "category": ["button"]
+      "category": ["button"],
+      "binding": []
     },
     "btn_type07": {
       "keywords": ["伊萍DEMO"],
-      "category": ["button"]
+      "category": ["button"],
+      "binding": []
     },
     "btn_type08": {
       "keywords": ["伊萍DEMO"],
-      "category": ["button"]
+      "category": ["button"],
+      "binding": []
     },
     "btn_type09": {
       "keywords": ["伊萍DEMO"],
-      "category": ["button"]
+      "category": ["button"],
+      "binding": []
     },
     "btn_type10": {
       "keywords": ["伊萍DEMO"],
-      "category": ["button"]
+      "category": ["button"],
+      "binding": []
     },
     "btn_type11": {
       "keywords": ["伊萍DEMO"],
-      "category": ["button"]
+      "category": ["button"],
+      "binding": []
     },
     "btn_type12": {
       "keywords": ["伊萍DEMO"],
-      "category": ["button"]
+      "category": ["button"],
+      "binding": []
     },
     "ch-btn-swap": {
       "keywords": ["swap"],
-      "category": ["button"]
+      "category": ["button"],
+      "binding": []
     },
     "ch-btn-cnr": {
       "keywords": [""],
-      "category": ["button"]
+      "category": ["button"],
+      "binding": []
     },
     "ch-cnt": {
       "keywords": ["container", "content", "內容區塊"],
-      "category": ["layout"]
+      "category": ["layout"],
+      "binding": []
     },
     "ch-rvc": {
       "keywords": ["container"],
-      "category": ["layout"]
+      "category": ["layout"],
+      "binding": []
     },
     "ch-flex": {
       "keywords": ["flex"],
-      "category": ["layout"]
+      "category": ["layout"],
+      "binding": []
     },
     "ch-l-r": {
       "keywords": ["flex", "left right", "左右排版", "圖文排版", "覆蓋排版"],
-      "category": ["layout"]
+      "category": ["layout"],
+      "binding": []
     },
     "ch-tlt": {
       "keywords": ["two line", "兩條線"],
-      "category": ["title"]
+      "category": ["title"],
+      "binding": []
+    },
+    "ch-lll": {
+      "keywords": ["left line", "左線列表"],
+      "category": ["list"],
+      "binding": ["ch-llli"]
+    },
+    "ch-llli": {
+      "keywords": [],
+      "category": [],
+      "binding": []
     }
   }
 }

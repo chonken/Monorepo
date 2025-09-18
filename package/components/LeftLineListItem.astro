@@ -1,84 +1,79 @@
 ---
-interface Props {
-  class?: string
-  trimStart?: boolean
-  trimEnd?: boolean
-}
-import { mergeClasses } from '../utils'
-const { class: className = '', trimStart = false, trimEnd = false, ...rest } = Astro.props
+import type { ElementProps } from '../type/element'
 
-const classList = mergeClasses(className, ['ch-li-l-l', trimStart ? 'ch-ts' : '', trimEnd ? 'ch-te' : '']).join(' ')
+export interface LeftLineListItemProps extends ElementProps {}
+interface Props extends LeftLineListItemProps {}
+
+import { mergeClasses } from '../utils'
+const { id, class: className = '', ...rest } = Astro.props
+
+const classList = mergeClasses(className, ['ch-llli'])
 ---
 
-<li class={classList} {...rest}>
+<li id={id} class:list={classList} {...rest}>
   {
     Astro.slots.has('icon') && (
-      <div class="ch-icon">
+      <div class="ch-llli-i">
         <slot name="icon" />
       </div>
     )
   }
-  <div class="ch-marker">
-    <div class="ch-line"></div>
+  <div class="ch-llli-m">
+    <div class="ch-llli-l"></div>
     <div class="ch-dot"><slot name="marker" /></div>
-    <div class="ch-line"></div>
+    <div class="ch-llli-l"></div>
   </div>
   <div class="ch-txt"><slot /></div>
 </li>
 
-<style lang="scss" is:global>
-  .ch-li-l-l {
+<style is:global>
+  .ch-llli {
     display: flex;
     margin-block: 0 !important;
     padding-block: 0 !important;
-    &:is(.ch-icon, .ch-marker) {
-      flex-shrink: 0;
-    }
-    & .ch-marker {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: var(--l-gap);
-      align-self: stretch !important;
-    }
-    & .ch-dot {
-      width: var(--dw);
-      height: var(--dw);
-      border-radius: var(--dr);
-      background-color: var(--dc);
-    }
-    & .ch-line {
-      position: relative;
-      border-left: var(--lw) solid var(--lc);
-      flex-grow: 1;
-    }
-    & .ch-line:first-child {
-      max-height: var(--dt);
-    }
-    & .ch-line::after {
-      position: absolute;
-      left: calc((var(--lw) + var(--l-dw)) / -2);
-      width: var(--l-dw);
-      height: var(--l-dw);
-      border-radius: var(--l-dr);
-      background-color: var(--l-dc);
-      z-index: 1;
-    }
-    & .ch-line:first-child::after {
-      content: '';
-      bottom: calc(2.5px * -1);
-    }
-    & .ch-line:last-child::after {
-      content: '';
-      top: calc(2.5px * -1);
-    }
-    &.ch-ts:first-of-type .ch-line:first-child,
-    &.ch-te:last-of-type .ch-line:last-child {
-      opacity: 0;
-    }
-
-    & .ch-txt {
-      flex-grow: 1;
-    }
+  }
+  :is(.ch-llli-i, .ch-llli-m) {
+    flex-shrink: 0;
+  }
+  .ch-llli-m {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--l-gap);
+    align-self: stretch !important;
+  }
+  .ch-dot {
+    width: var(--dw);
+    height: var(--dw);
+    border-radius: var(--dr);
+    background-color: var(--dc);
+  }
+  .ch-llli-l {
+    position: relative;
+    border-left: var(--lw) solid var(--lc);
+    flex-grow: 1;
+  }
+  .ch-llli-l:first-child {
+    max-height: var(--dt);
+  }
+  .ch-llli-l::after {
+    position: absolute;
+    left: calc((var(--lw) + var(--l-dw)) / -2);
+    width: var(--l-dw);
+    height: var(--l-dw);
+    border-radius: var(--l-dr);
+    background-color: var(--l-dc);
+    z-index: 1;
+  }
+  .ch-llli-l:first-child::after {
+    content: '';
+    bottom: calc(2.5px * -1);
+  }
+  .ch-llli-l:last-child::after {
+    content: '';
+    top: calc(2.5px * -1);
+  }
+  .ch-txt {
+    flex-grow: 1;
   }
 </style>

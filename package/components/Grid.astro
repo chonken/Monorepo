@@ -1,23 +1,94 @@
 ---
 import { mergeClasses } from '../utils'
 import type { LayoutProps } from '../type/layout'
+import { parseMultiUnit, fullRWD, parseRWD, parseJustify } from '../utils'
+import '../styles/global.scss'
+
 interface GridProps extends LayoutProps {
+  gridAutoFlow?: 'row' | 'column'
+  gridTemplateColumns?: string
+  gridTemplateRows?: string
+  gridAutoColumns?: string
+  gridAutoRows?: string
+  gap?: string | number
+  col?: string
 }
 interface Props extends GridProps {}
-const { element = 'div', class: className = '', ...rest } = Astro.props
+const { element = 'div', class: className = '', style = {}, gridAutoFlow = 'row', gridTemplateColumns = 'none', gridTemplateRows = 'none', gridAutoColumns = 'auto', gridAutoRows = 'auto', item = 'stretch', justify = 'start', gap = '0', col = '', ...rest } = Astro.props
 
 const Element = element as keyof HTMLElement
-const styleList = {}
-const classList = mergeClasses(className, ['ch-grid'])
+const styleList: Record<string, string> = {
+  ...style,
+  '--itm': item,
+  '--jst': parseJustify(justify),
+  '--flow': gridAutoFlow,
+  '--gap': parseMultiUnit(gap).join(' '),
+}
+const classList = mergeClasses(className, ['ch-grid', 'ch-layout'])
+
+const sizes = ['3xl', '2xl', 'xl', 'lg', 'md', 'sm', 'xs', '2xs']
+// 解析col
+if (gridTemplateColumns !== 'none') {
+  const colMap = fullRWD(parseRWD(gridTemplateColumns), sizes)
+  Object.entries(colMap).forEach(([key, val]) => {
+    styleList[`--col${key === 'default' ? '' : '-' + key}`] = `${val}`
+  })
+  mergeClasses(classList, 'ch-tem-c')
+} else if (col !== '') {
+  const colMap = fullRWD(parseRWD(col), sizes)
+  Object.entries(colMap).forEach(([key, val]) => {
+    styleList[`--col${key === 'default' ? '' : '-' + key}`] = `repeat(${val},1fr)`
+  })
+  mergeClasses(classList, 'ch-tem-c')
+} else if (gridAutoColumns !== 'auto') {
+  styleList['--col'] = gridAutoColumns
+  mergeClasses(classList, 'ch-ato-c')
+}
+// 解析row
+if (gridTemplateRows !== 'none') {
+  const rowMap = fullRWD(parseRWD(gridTemplateRows), sizes)
+  Object.entries(rowMap).forEach(([key, val]) => {
+    styleList[`--row${key === 'default' ? '' : '-' + key}`] = `${val}`
+  })
+  mergeClasses(classList, 'ch-tem-r')
+} else if (gridAutoRows !== 'auto') {
+  styleList['--row'] = gridAutoRows
+  mergeClasses(classList, 'ch-ato-r')
+}
 ---
 
 <Element class:list={classList} style={styleList} {...rest}>
-  
+  <slot />
 </Element>
 
 <style lang="scss" is:global>
+  @use '../config/breakpoint' as bp;
   .ch-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    &.ch-tem-c {
+      grid-template-columns: var(--col);
+    }
+    &.ch-tem-r {
+      grid-template-rows: var(--row);
+    }
+    &.ch-ato-c {
+      grid-auto-columns: var(--col);
+    }
+    &.ch-ato-r {
+      grid-auto-rows: var(--row);
+    }
+  }
+
+  @each $size, $value in bp.$breakpoint {
+    @media (max-width: $value) {
+      .ch-grid.mob-#{$size} {
+        &.ch-tem-c {
+          grid-template-columns: var(--col-#{$size});
+        }
+        &.ch-tem-r {
+          grid-template-rows: var(--row-#{$size});
+        }
+      }
+    }
   }
 </style>

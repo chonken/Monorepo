@@ -1,18 +1,44 @@
 ---
 import type { ElementProps } from '../type/element'
-import { mergeClasses } from '../utils'
+import { mergeClasses, parseDualUnit } from '../utils'
 
 export interface ProcessTimelineProps extends ElementProps {
+  item?: 'center' | 'start' | 'end'
+  evenReverse?: boolean
+  gap?: string | number
+  trimStart?: boolean
+  trimEnd?: boolean
   mobile?: 'md' | 'sm' | 'xs' | '2xl' | 'none'
+  mobileItem?: 'center' | 'start' | 'end'
 }
 interface Props extends ProcessTimelineProps {}
-const {element = 'ol', class: className = '', mobile = 'md', ...rest } = Astro.props
+const { element = 'ol', class: className = '', item = 'center', evenReverse = false, gap = '40 0', trimStart = false, trimEnd = false, mobile = 'none', mobileItem = 'center', ...rest } = Astro.props
+
+// 解析gap
+const [rowGap, colGap] = parseDualUnit(gap)
 
 const Element = element as keyof HTMLElement
-const styleList = {}
-const classList = mergeClasses(className, ['', mobile === 'none' ? '' : `mob-${mobile}`])
+const styleList = {
+  '--xgap': colGap || '0px',
+  '--ygap': `calc(${rowGap} / 2)` || '0px',
+  '--itm': item,
+  '--dt': item === 'center' ? 'auto' : '0',
+  '--mob-dt': mobileItem === 'center' ? 'auto' : '0',
+  '--dot-s': '20px',
+  '--dot-bgc': '#F2B81A',
+}
+const classList = mergeClasses(className, ['ch-ptt', evenReverse ? 'odd-reverse' : '', trimStart ? 'ch-ts' : '', trimEnd ? 'ch-te' : '', mobile === 'none' ? '' : `mob-${mobile}`])
 ---
 
 <Element class:list={classList} style={styleList} {...rest}>
-  
+  <slot />
 </Element>
+
+<style lang="scss" is:global>
+  .ch-ptt.ch-ts > .ch-li-ptt:first-of-type > .ch-li-ptt-i::before {
+    opacity: 0;
+  }
+  .ch-ptt.ch-te > .ch-li-ptt:last-of-type > .ch-li-ptt-i::after {
+    opacity: 0;
+  }
+</style>

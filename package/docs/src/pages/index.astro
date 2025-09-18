@@ -3,7 +3,7 @@ import '@tailwind'
 import LayoutFrame from '../components/LayoutFrame.astro'
 import ThemeToggle from '../components/ThemeToggle.astro'
 import PropsTable from '../components/PropsTable.astro'
-import { layouts, components } from '../utiles/AsyncImportDemo.js'
+import { layouts, components } from '../utils/AsyncImportDemo.js'
 
 function formatList(globObj: Record<string, () => Promise<unknown>>) {
   const entries = Object.entries(globObj)

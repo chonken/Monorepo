@@ -1,0 +1,29 @@
+---
+import type { ElementProps } from '../type/element'
+import { mergeClasses, parseUnit } from '../utils'
+import Flex from './Flex.astro'
+
+export interface StepListProps extends ElementProps {
+  col?: string
+  itemWidth?: string | number
+  arrowSrc?: string
+}
+interface Props extends StepListProps {}
+
+const { id, class: className = '', col, itemWidth = '', arrowSrc = '#', ...rest } = Astro.props
+
+const styleList = {
+  '--arw-url': `url('${arrowSrc}')`,
+  '--itm-w': parseUnit(itemWidth),
+}
+const classList = mergeClasses(className, ['ch-stl'])
+---
+
+<Flex element='ol' id={id} class:list={classList} style={styleList} {...rest}>
+  <slot />
+</Flex>
+
+<style is:global>
+  .ch-stl > li {
+  }
+</style>

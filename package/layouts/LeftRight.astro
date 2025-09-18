@@ -67,12 +67,9 @@ const classList = mergeClasses(className, ['ch-l-r', ...(mobile === 'none' ? [] 
           margin-inline: auto;
           width: fit-content;
         }
-        & .ch-cnt {
-          margin-inline-start: 0;
+        & > :is(:last-child, .ch-cnt) {
+          margin-inline: 0;
         }
-      }
-      :where(.ch-l-r.mob-#{$size}) > :is(:last-child, .ch-cnt) {
-        margin-inline-start: 0;
       }
     }
   }

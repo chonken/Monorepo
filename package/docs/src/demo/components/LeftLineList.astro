@@ -1,0 +1,41 @@
+---
+import Component from '@components/LeftLineList.astro'
+import Li from '@components/LeftLineListItem.astro'
+import config from '../config.json'
+import content from '../../content/demo.json'
+
+export const id = 'ch-lll'
+export const { keywords, category } = config['components'][id]
+export const props = {
+  element: { type: ['string'], require: false, default: 'ul' },
+  id: { type: ['string'], require: false, default: '' },
+  class: { type: ['string'], require: false, default: '' },
+  dotTop: { type: ['string'], require: false, default: 'auto' },
+  dotColor: { type: ['string'], require: false, default: '#878787' },
+  dotWidth: { type: ['string'], require: false, default: '10px' },
+  dotCircle: { type: ['boolean'], require: false, default: false },
+  lineGap: { type: ['string'], require: false, default: '5px' },
+  lineWidth: { type: ['string'], require: false, default: '1px' },
+  lineColor: { type: ['string'], require: false, default: '#878787' },
+  lineDotWidth: { type: ['string'], require: false, default: '5px' },
+  lineDotColor: { type: ['string'], require: false, default: '#878787' },
+  lineDotCircle: { type: ['boolean'], require: false, default: false },
+  trimStart: { type: ['boolean'], require: false, default: false },
+  trimEnd: { type: ['boolean'], require: false, default: false },
+}
+export const slots = ['default']
+const data = content['list'] ?? []
+---
+
+<Component class="">
+  {
+    data.map(({ title, content }) => (
+      <Li>
+        <h4>{title}</h4>
+        <p>{content}</p>
+      </Li>
+    ))
+  }
+</Component>
+
+<style></style>

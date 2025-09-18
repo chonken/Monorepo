@@ -1,13 +1,19 @@
 /**
  * 合併`class`並去重
- * @param {string | string[]} input 輸入的字串或陣列
- * @param {string[]} current 目前已有的`class`陣列
+ * @param {string | string[]} exist 已有的`class`字串或陣列，是陣列的話會直接合併
+ * @param {string | string[]} current 目前輸入的`class`字串或陣列
  * @returns {string[]} 合併後的`class`陣列
  */
-export function mergeClasses(input: string | string[], current: string[]): string[] {
-  const normalized = typeof input === 'string' ? input.trim().split(/\s+/) : input
-  const merged = new Set([...normalized.filter(Boolean), ...current.filter(Boolean)])
-  return Array.from(merged)
+export function mergeClasses(exist: string | string[], current: string | string[]): string[] {
+  const normalize = (v: string | string[]) => (Array.isArray(v) ? v : v.trim().split(/\s+/).filter(Boolean))
+  const merged = Array.from(new Set([...normalize(exist), ...normalize(current)]))
+
+  if (Array.isArray(exist)) {
+    exist.length = 0
+    exist.push(...merged)
+  }
+
+  return merged
 }
 
 /**
@@ -35,7 +41,7 @@ export function parseUnit(value: string | number, unit: string = 'px'): string {
  * parseUnit('var(--pd40) 0') // ['var(--pd40) 0px']
  */
 export function parseMultiUnit(input: string | number, unit: string = 'px'): string[] {
-  const parts = typeof input === 'number' ? [input + ''] : input.trim().split(/\s+/)
+  const parts = typeof input === 'number' ? [input + ''] : splitUnit(input)
   return parts.map((item) => parseUnit(item, unit))
 }
 
@@ -50,7 +56,7 @@ export function parseMultiUnit(input: string | number, unit: string = 'px'): str
  * parseDualUnit('10px 20px') // ['10px', '20px']
  */
 export function parseDualUnit(input: string | number, unit: string = 'px'): [string, string] {
-  const parts = typeof input === 'number' ? [input, input] : input.trim().split(/\s+/)
+  const parts = typeof input === 'number' ? [input, input] : splitUnit(input)
   const [unit1, unit2] = parts.length === 1 ? [parts[0], parts[0]] : parts
 
   return [parseUnit(unit1, unit), parseUnit(unit2, unit)]
@@ -67,7 +73,7 @@ export function parseDualUnit(input: string | number, unit: string = 'px'): [str
  * parseQuadUnit('10px 20px') // ['10px', '20px', '10px', '20px']
  */
 export function parseQuadUnit(input: string | number, unit: string = 'px'): [string, string, string, string] {
-  const parts = typeof input === 'number' ? [input, input, input, input] : input.trim().split(/\s+/)
+  const parts = typeof input === 'number' ? [input, input, input, input] : splitUnit(input)
   const process = () => {
     switch (parts.length) {
       case 1:
@@ -90,8 +96,7 @@ export function parseQuadUnit(input: string | number, unit: string = 'px'): [str
  * @param {string} input 輸入的字串
  * @returns {Record<string, string>} 解析後的物件
  * @example
- * parseRWD('md:20 sm:15 10') // { default: '10px', md: '20px', sm: '15px' }
- * parseRWD('var(--pd40)') // { default: 'var(--pd40)' }
+ * parseRWD('5 xl:4 lg:3 md:2') // { default: '5', xl: '4', lg: '3', md: '2' }
  */
 export function parseRWD(input: string): Record<string, string> {
   const result: Record<string, string> = {}
@@ -119,4 +124,41 @@ export function parseJustify(input: string): string {
     evenly: 'space-evenly',
   }
   return map[input] ?? input
+}
+
+/**
+ * 分割`CSS`單位
+ * @param input 輸入的字串
+ * @returns `CSS`單位的陣列
+ */
+function splitUnit(input: string): string[] {
+  const normalize = input.trim().replace(/\s+/g, ' ')
+  const result: string[] = []
+  let bracket = 0
+  let temp = ''
+  for (const t of normalize) {
+    switch (t) {
+      case '(':
+        temp += t
+        bracket++
+        break
+      case ')':
+        temp += t
+        bracket--
+        break
+      case ' ':
+        if (bracket > 0) {
+          temp += t
+        } else {
+          result.push(temp)
+          temp = ''
+        }
+        break
+      default:
+        temp += t
+        break
+    }
+  }
+  result.push(temp)
+  return result
 }

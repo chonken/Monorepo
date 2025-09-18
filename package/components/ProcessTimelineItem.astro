@@ -1,24 +1,91 @@
 ---
 import type { LayoutProps } from '../type/layout'
 import { mergeClasses } from '../utils'
+// 暫時不用Grid，太容易爆字數
+// import Grid from './Grid.astro'
 
 export interface ProcessTimelineItemProps extends LayoutProps {
+  reverse?: boolean
 }
 interface Props extends ProcessTimelineItemProps {}
-const {element = 'li', class: className = '', ...rest } = Astro.props
+const { element = 'li', class: className = '', reverse = false, ...rest } = Astro.props
 
 const Element = element as keyof HTMLElement
-const styleList = {}
-const classList = mergeClasses(className, ['ch-li-ptt', 'ch-layout'])
+const classList = mergeClasses(className, ['ch-li-ptt', 'ch-layout', reverse ? 'reverse' : ''])
 ---
 
-<Element class:list={classList} style={styleList} {...rest}>
-  <div class="ch-icon"><slot name="icon" /></div>
+<Element class:list={classList} {...rest}>
+  <div class="ch-li-ptt-l">
+    <slot />
+    <slot name="left" />
+  </div>
+  <div class="ch-li-ptt-i"><slot name="icon"><div class="ch-li-ptt-d"></div></slot></div>
+  <div class="ch-li-ptt-r">
+    <slot name="right" />
+  </div>
 </Element>
 
 <style lang="scss" is:global>
+  @use '../config/breakpoint' as bp;
   .ch-li-ptt {
     display: grid;
     grid-template-columns: 1fr max-content 1fr;
+    align-items: var(--itm);
+    margin-block: 0 !important;
+    padding-block: 0 !important;
+    gap: var(--xgap);
+  }
+  :where(.ch-ptt) > .ch-li-ptt:nth-of-type(even),
+  .ch-li-ptt:where(.reverse) {
+    direction: rtl;
+  }
+  .ch-li-ptt-l,
+  .ch-li-ptt-r {
+    margin-block: var(--ygap);
+  }
+  .ch-li-ptt-l {
+    text-align: end;
+  }
+  .ch-li-ptt-d {
+    width: var(--dot-s);
+    height: var(--dot-s);
+    border-radius: 50%;
+    background-color: var(--dot-bgc);
+    flex-shrink: 0;
+  }
+  .ch-li-ptt-i {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: stretch;
+    &::before,
+    &::after {
+      content: '';
+      border-left: 1px solid #f2b81a;
+      flex-grow: 1;
+    }
+    &::before {
+      max-height: var(--dt);
+    }
+  }
+
+  @each $size, $value in bp.$breakpoint {
+    @media (max-width: $value) {
+      .mob-#{$size} > .ch-li-ptt {
+        grid-template-columns: max-content 1fr;
+        direction: ltr;
+        & > .ch-li-ptt-l {
+          text-align: start;
+          margin-block-end: 0;
+        }
+        & > .ch-li-ptt-i {
+          order: -1;
+          grid-row: span 2;
+          &::before {
+            max-height: var(--mob-dt);
+          }
+        }
+      }
+    }
   }
 </style>

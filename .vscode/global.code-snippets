@@ -146,17 +146,17 @@
   "as-fk": {
     "scope": "astro",
     "prefix": "as-fk",
-    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Content from '@components/Content/index.astro'", "import SidePadding from '@layouts/SidePadding.astro'", "---\n", "<YkFk>", "\t", "</YkFk>\n", "<style is:global>", "\t", "</style>"]
+    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Content from '@components/Content.astro'", "import SidePadding from '@layouts/SidePadding.astro'", "---\n", "<YkFk>", "\t", "</YkFk>\n", "<style is:global>", "\t", "</style>"]
   },
   "as-fk-index": {
     "scope": "astro",
     "prefix": "as-fk-index",
-    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Content from '@components/Content/index.astro'", "import SidePadding from '@layouts/SidePadding.astro'", "---\n", "<YkFk h2={[]}>", "\t", "</YkFk>\n", "<style is:global>", "\t", "</style>"]
+    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Content from '@components/Content.astro'", "import SidePadding from '@layouts/SidePadding.astro'", "---\n", "<YkFk h2={[]}>", "\t", "</YkFk>\n", "<style is:global>", "\t", "</style>"]
   },
   "as-demo": {
     "scope": "astro",
     "prefix": "as-demo",
-    "body": ["---", "import $1 from './index.astro'", "\t", "export const props = {}", "export const slots = ['default']", "export const keywords = []", "export const categrory = []\n", "const data = Astro.props.data['image']?.[0] ?? {}", "---", "\t", "<$1 class=''>", "\t", "</$1>\n", "<style>", "\t", "</style>"]
+    "body": ["---", "import Component from '@components/$1.astro'", "import config from '../config.json'", "import content from '../../content/demo.json'\n", "export const id = '$2'", "export const { keywords, category } = config['components'][id]", "export const props = {}", "export const slots = ['default']", "const data = content['image_txt']?.[0] ?? {}", "---", "\t", "<Component class=''>", "\t", "</Component>\n", "<style>", "\t", "</style>"]
   },
   "side-padding": {
     "scope": "astro",

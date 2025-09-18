@@ -1,5 +1,5 @@
 ---
-import { layouts } from '../../utiles/AsyncImportDemo.js'
+import { layouts } from '../../utils/AsyncImportDemo.js'
 
 export async function getStaticPaths() {
   const layouts = import.meta.glob('../../demo/layouts/*.astro', { eager: true })

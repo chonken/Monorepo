@@ -5,37 +5,37 @@ interface Props {
 import { mergeClasses } from '../utils'
 const { class: className = '', ...rest } = Astro.props
 
-const classList = mergeClasses(className, ['ch-li-i-l']).join(' ')
+const classList = mergeClasses(className, ['ch-illi'])
 ---
 
-<li class={classList} {...rest}>
-  <div class="ch-icon"><slot name="icon" /></div>
-  <div class="ch-txt">
-    <div class="ch-title"><slot name="title" /></div>
+<li class:list={classList} {...rest}>
+  <div class="ch-illi-i"><slot name="icon" /></div>
+  <div class="ch-illi-x">
+    <div class="ch-illi-t"><slot name="title" /></div>
     <slot />
   </div>
 </li>
 
 <style is:global>
-  .ch-li-i-l {
+  .ch-illi {
     display: flex;
   }
-  .ch-li-i-l .ch-icon {
+  .ch-illi-i {
     position: relative;
     z-index: 2;
     flex-shrink: 0;
   }
-  .ch-li-i-l .ch-icon img {
+  .ch-illi-i img {
     display: block;
     height: calc(var(--ih) * 2) !important;
   }
-  .ch-li-i-l .ch-txt {
+  .ch-illi-x {
     position: relative;
     padding-left: var(--gap);
     flex-grow: 1;
     z-index: 1;
   }
-  .ch-li-i-l .ch-title {
+  .ch-illi-t {
     position: relative;
     display: flex;
     align-items: center;
@@ -43,7 +43,7 @@ const classList = mergeClasses(className, ['ch-li-i-l']).join(' ')
     line-height: 1.5;
     height: var(--ih);
   }
-  .ch-li-i-l .ch-title::after {
+  .ch-illi-t::after {
     content: '';
     position: absolute;
     bottom: 0;

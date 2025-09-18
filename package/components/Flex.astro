@@ -1,6 +1,7 @@
 ---
 import type { LayoutProps } from '../type/layout'
 import { mergeClasses, parseJustify, parseMultiUnit } from '../utils'
+import '../styles/global.scss'
 
 export interface FlexProps extends LayoutProps {
   wrap?: boolean
@@ -12,10 +13,11 @@ export interface FlexProps extends LayoutProps {
 }
 interface Props extends FlexProps {}
 
-const { element = 'div', id, class: className = '', wrap = false, item = 'stretch', justify = 'start', gap = '0', reverse = false, flexReverse = false, mobile = 'none', mobileItem = 'center', mobileJustify = 'center', mobileReverse = false, ...rest } = Astro.props
+const { element = 'div', id, class: className = '', style = {}, wrap = false, item = 'stretch', justify = 'start', gap = '0', reverse = false, flexReverse = false, mobile = 'none', mobileItem = 'center', mobileJustify = 'center', mobileReverse = false, ...rest } = Astro.props
 
 const Element = element as keyof HTMLElement
 const styleList: Record<string, string> = {
+  ...style,
   '--wrp': wrap ? 'wrap' : 'nowrap',
   '--itm': item,
   '--jst': parseJustify(justify),
@@ -31,7 +33,6 @@ const classList = mergeClasses(className, ['ch-flex', 'ch-layout', reverse ? 're
 </Element>
 
 <style lang="scss" is:global>
-  @use '../styles/global.scss';
   @use '../config/breakpoint' as bp;
   .ch-flex {
     display: flex;

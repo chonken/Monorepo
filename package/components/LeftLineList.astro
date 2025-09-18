@@ -1,8 +1,9 @@
 ---
-import { mergeClasses, parseUnit, parseMultiUnit } from '../utils'
-interface Props {
+import type { ElementProps } from '../type/element'
+import { mergeClasses, parseUnit } from '../utils'
+
+export interface LeftLineListProps extends ElementProps {
   element?: 'ul' | 'ol'
-  class?: string
   dotTop?: string
   dotColor?: string
   dotWidth?: string
@@ -13,26 +14,37 @@ interface Props {
   lineDotWidth?: string
   lineDotColor?: string
   lineDotCircle?: boolean
+  trimStart?: boolean
+  trimEnd?: boolean
 }
-const { class: className = '', element = 'ul', dotTop = 'auto', dotColor = '#878787', dotWidth = '10px', dotCircle = false, lineGap = '5px', lineWidth = '1px', lineColor = '#878787', lineDotWidth = '5px', lineDotColor = '#878787', lineDotCircle = false, ...rest } = Astro.props
+interface Props extends LeftLineListProps {}
 
-const Component = element
+const { element = 'ul', id, class: className = '', dotTop = 'auto', dotColor = '#878787', dotWidth = '10px', dotCircle = false, lineGap = '5px', lineWidth = '1px', lineColor = '#878787', lineDotWidth = '5px', lineDotColor = '#878787', lineDotCircle = false, trimStart = false, trimEnd = false, ...rest } = Astro.props
+
+const Element = element as keyof HTMLElement
 
 const styleList = {
   '--dt': parseUnit(dotTop),
   '--dw': parseUnit(dotWidth),
   '--dr': dotCircle ? '50%' : '0',
   '--dc': dotColor,
-  '--l-gap': parseMultiUnit(lineGap),
+  '--l-gap': parseUnit(lineGap),
   '--lw': parseUnit(lineWidth),
   '--lc': lineColor,
   '--l-dw': parseUnit(lineDotWidth),
   '--l-dc': lineDotColor,
   '--l-dr': lineDotCircle ? '50%' : '0',
 }
-const classList = mergeClasses(className, ['']).join(' ')
+const classList = mergeClasses(className, ['ch-lll'])
 ---
 
-<Component class={classList} style={styleList} {...rest}>
+<Element element={element} id={id} class:list={classList} style={styleList} {...rest}>
   <slot />
-</Component>
+</Element>
+
+<style is:global>
+  .ch-lll.ch-ts > .ch-llli:first-of-type > .ch-llli-m .ch-llli-l:first-child,
+  .ch-lll.ch-te > .ch-llli:last-of-type > .ch-llli-m .ch-llli-l:last-child {
+    opacity: 0;
+  }
+</style>

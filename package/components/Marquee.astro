@@ -35,7 +35,7 @@ const classList = mergeClasses(className, ['ch-mar', `ch-dir-${move}`])
   .ch-mar {
     display: flex;
     overflow: hidden;
-    & .ch-item {
+    & > .ch-item {
       max-width: unset;
       height: 100%;
       animation: marquee var(--sec) linear infinite;
@@ -45,14 +45,14 @@ const classList = mergeClasses(className, ['ch-mar', `ch-dir-${move}`])
     &.ch-dir-down {
       justify-content: end;
     }
-    &.ch-dir-left .ch-item > *,
-    &.ch-dir-right .ch-item > * {
+    &.ch-dir-left > .ch-item > *,
+    &.ch-dir-right > .ch-item > * {
       height: 100% !important;
     }
     &.ch-dir-up,
     &.ch-dir-down {
       flex-direction: column;
-      & .ch-item * {
+      & > .ch-item * {
         width: 100%;
       }
     }

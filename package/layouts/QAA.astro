@@ -11,8 +11,8 @@ const { selector, group = false, firstOpen = false, activeOnly = false } = Astro
 <script define:vars={{ s: selector, g: group, f: firstOpen, a: activeOnly }}>
   if (g) {
     $(function () {
+      $(`${s} dd`).hide()
       if (f) {
-        $(`${s} dd`).hide()
         $(`${s} dt:nth-of-type(1)`).addClass('active').next('dd').show()
       }
       $(s).on('click', 'dt', function () {
@@ -22,8 +22,8 @@ const { selector, group = false, firstOpen = false, activeOnly = false } = Astro
     })
   } else {
     $(function () {
+      $(`${s} dd`).hide()
       if (f) {
-        $(`${s} dd`).hide()
         $(`${s} dl:nth-of-type(1)`).addClass('active').find('dd').show()
       }
       $(s).on('click', 'dt', function () {
