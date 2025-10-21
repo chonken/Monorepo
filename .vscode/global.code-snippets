@@ -146,12 +146,12 @@
   "as-fk": {
     "scope": "astro",
     "prefix": "as-fk",
-    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Content from '@components/Content.astro'", "import SidePadding from '@layouts/SidePadding.astro'", "---\n", "<YkFk>", "\t", "</YkFk>\n", "<style is:global>", "\t", "</style>"]
+    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Debug from '@components/Debug.astro'", "---\n", "<YkFk>", "\t", "</YkFk>", "<Debug/>\n", "<style is:global>", "\t", "</style>"]
   },
   "as-fk-index": {
     "scope": "astro",
     "prefix": "as-fk-index",
-    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Content from '@components/Content.astro'", "import SidePadding from '@layouts/SidePadding.astro'", "---\n", "<YkFk h2={[]}>", "\t", "</YkFk>\n", "<style is:global>", "\t", "</style>"]
+    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Debug from '@components/Debug.astro'", "---\n", "<YkFk h2={[]}>", "\t", "</YkFk>", "<Debug/>\n", "<style is:global>", "\t", "</style>"]
   },
   "as-demo": {
     "scope": "astro",

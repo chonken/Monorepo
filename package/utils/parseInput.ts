@@ -27,7 +27,7 @@ export function mergeClasses(exist: string | string[], current: string | string[
  * parseUnit('var(--pd40)') // 'var(--pd40)'
  */
 export function parseUnit(value: string | number, unit: string = 'px'): string {
-  return typeof value === 'number' || /^-?\d+$/.test(value) ? `${value + unit}` : String(value)
+  return typeof value === 'number' || /^-?(?:\d+\.?\d*|\.\d+)$/.test(value) ? `${value + unit}` : String(value)
 }
 
 /**

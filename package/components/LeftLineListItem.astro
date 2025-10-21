@@ -20,7 +20,17 @@ const classList = mergeClasses(className, ['ch-llli'])
   }
   <div class="ch-llli-m">
     <div class="ch-llli-l"></div>
-    <div class="ch-dot"><slot name="marker" /></div>
+    {
+      Astro.slots.has('marker') ? (
+        <div class="ch-llli-i">
+          <slot name="marker" />
+        </div>
+      ) : (
+        <div class="ch-dot">
+          <slot name="marker" />
+        </div>
+      )
+    }
     <div class="ch-llli-l"></div>
   </div>
   <div class="ch-txt"><slot /></div>

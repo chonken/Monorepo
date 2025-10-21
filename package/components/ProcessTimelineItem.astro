@@ -29,13 +29,13 @@ const classList = mergeClasses(className, ['ch-li-ptt', 'ch-layout', reverse ? '
   @use '../config/breakpoint' as bp;
   .ch-li-ptt {
     display: grid;
-    grid-template-columns: 1fr max-content 1fr;
+    grid-template-columns: minmax(0, 1fr) max-content minmax(0, 1fr);
     align-items: var(--itm);
     margin-block: 0 !important;
     padding-block: 0 !important;
     gap: var(--xgap);
   }
-  :where(.ch-ptt) > .ch-li-ptt:nth-of-type(even),
+  :where(.ch-ptt.odd-reverse) > .ch-li-ptt:nth-of-type(even),
   .ch-li-ptt:where(.reverse) {
     direction: rtl;
   }

@@ -4,14 +4,15 @@ import { mergeClasses, parseUnit } from '../utils'
 
 export interface LeftLineListProps extends ElementProps {
   element?: 'ul' | 'ol'
+  gap?: string // 以後再說
   dotTop?: string
   dotColor?: string
-  dotWidth?: string
+  dotSize?: string
   dotCircle?: boolean
   lineGap?: string
   lineWidth?: string
   lineColor?: string
-  lineDotWidth?: string
+  lineDotSize?: string
   lineDotColor?: string
   lineDotCircle?: boolean
   trimStart?: boolean
@@ -19,23 +20,23 @@ export interface LeftLineListProps extends ElementProps {
 }
 interface Props extends LeftLineListProps {}
 
-const { element = 'ul', id, class: className = '', dotTop = 'auto', dotColor = '#878787', dotWidth = '10px', dotCircle = false, lineGap = '5px', lineWidth = '1px', lineColor = '#878787', lineDotWidth = '5px', lineDotColor = '#878787', lineDotCircle = false, trimStart = false, trimEnd = false, ...rest } = Astro.props
+const { element = 'ul', id, class: className = '', dotTop = 'auto', dotColor = '#878787', dotSize = '10px', dotCircle = false, lineGap = '5px', lineWidth = '1px', lineColor = '#878787', lineDotSize = '5px', lineDotColor = '#878787', lineDotCircle = false, trimStart = false, trimEnd = false, ...rest } = Astro.props
 
 const Element = element as keyof HTMLElement
 
 const styleList = {
   '--dt': parseUnit(dotTop),
-  '--dw': parseUnit(dotWidth),
+  '--dw': parseUnit(dotSize),
   '--dr': dotCircle ? '50%' : '0',
   '--dc': dotColor,
   '--l-gap': parseUnit(lineGap),
   '--lw': parseUnit(lineWidth),
   '--lc': lineColor,
-  '--l-dw': parseUnit(lineDotWidth),
+  '--l-dw': parseUnit(lineDotSize),
   '--l-dc': lineDotColor,
   '--l-dr': lineDotCircle ? '50%' : '0',
 }
-const classList = mergeClasses(className, ['ch-lll'])
+const classList = mergeClasses(className, ['ch-lll', trimStart ? 'ch-ts' : '', trimEnd ? 'ch-te' : ''])
 ---
 
 <Element element={element} id={id} class:list={classList} style={styleList} {...rest}>

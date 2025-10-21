@@ -1,0 +1,10 @@
+---
+/**
+ * Astro 一個詭異的打包BUG，當只引入YongKingFuck.astro時，打包後的樣式順序會是錯的
+ * 會變成先打包當前的樣式後，再往下引入YongKingFuck的樣式
+ * 造成normalize.css中重製公司的白痴設定會覆蓋到當前寫的樣式
+ * 但引入其他astro檔案時，順序就會正常
+ */
+---
+
+<slot />
