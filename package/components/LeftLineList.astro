@@ -1,10 +1,11 @@
 ---
 import type { ElementProps } from '../type/element'
-import { mergeClasses, parseUnit } from '../utils'
+import { mergeClasses, parseUnit, parseDualUnit } from '../utils'
 
 export interface LeftLineListProps extends ElementProps {
   element?: 'ul' | 'ol'
-  gap?: string // 以後再說
+  item?: 'stretch' | 'start' | 'center' | 'end'
+  gap?: string | number
   dotTop?: string
   dotColor?: string
   dotSize?: string
@@ -20,12 +21,64 @@ export interface LeftLineListProps extends ElementProps {
 }
 interface Props extends LeftLineListProps {}
 
-const { element = 'ul', id, class: className = '', dotTop = 'auto', dotColor = '#878787', dotSize = '10px', dotCircle = false, lineGap = '5px', lineWidth = '1px', lineColor = '#878787', lineDotSize = '5px', lineDotColor = '#878787', lineDotCircle = false, trimStart = false, trimEnd = false, ...rest } = Astro.props
+const { element = 'ul', id, class: className = '', item = 'stretch', gap = '0', dotTop, dotColor = '#878787', dotSize = '10px', dotCircle = false, lineGap = '5px', lineWidth = '1px', lineColor = '#878787', lineDotSize = '5px', lineDotColor = '#878787', lineDotCircle = false, trimStart = false, trimEnd = false, ...rest } = Astro.props
 
 const Element = element as keyof HTMLElement
 
+// 解析並處理gap
+const [rowGap, columnGap] = parseDualUnit(gap, 'px')
+
+// 處理對齊
+let rpdt = ''
+let rpdb = ''
+switch (item) {
+  case 'stretch':
+  case 'start':
+    rpdt = '0px'
+    rpdb = rowGap
+    break
+  case 'center':
+    rpdt = `calc(${rowGap} / 2)`
+    rpdb = `calc(${rowGap} / 2)`
+    break
+  case 'end':
+    rpdt = rowGap
+    rpdb = '0px'
+    break
+}
+let dT = 'auto'
+let dt = ''
+let db = ''
+if (dotTop) {
+  if (dotTop === 'auto') {
+    dt = `calc(${rowGap} / 2)`
+    db = `calc(${rowGap} / 2)`
+  } else {
+    dt = parseUnit(dotTop)
+    db = `calc(${rowGap} - ${parseUnit(dotTop)})`
+  }
+} else {
+  switch (item) {
+    case 'stretch':
+    case 'start':
+      dT = '0px'
+      break
+    case 'end':
+      dT = '100%'
+      break
+  }
+  dt = rpdt
+  db = rpdb
+}
+
 const styleList = {
-  '--dt': parseUnit(dotTop),
+  '--itm': item,
+  '--cgap': columnGap,
+  '--rpd-t': rpdt,
+  '--rpd-b': rpdb,
+  '--d-t': dt,
+  '--d-b': db,
+  '--dt': parseUnit(dT),
   '--dw': parseUnit(dotSize),
   '--dr': dotCircle ? '50%' : '0',
   '--dc': dotColor,
@@ -35,17 +88,12 @@ const styleList = {
   '--l-dw': parseUnit(lineDotSize),
   '--l-dc': lineDotColor,
   '--l-dr': lineDotCircle ? '50%' : '0',
+  '--ts': trimStart ? 0 : 1,
+  '--te': trimEnd ? 0 : 1,
 }
-const classList = mergeClasses(className, ['ch-lll', trimStart ? 'ch-ts' : '', trimEnd ? 'ch-te' : ''])
+const classList = mergeClasses(className, ['ch-lll'])
 ---
 
-<Element element={element} id={id} class:list={classList} style={styleList} {...rest}>
+<Element id={id} class:list={classList} style={styleList} {...rest}>
   <slot />
 </Element>
-
-<style is:global>
-  .ch-lll.ch-ts > .ch-llli:first-of-type > .ch-llli-m .ch-llli-l:first-child,
-  .ch-lll.ch-te > .ch-llli:last-of-type > .ch-llli-m .ch-llli-l:last-child {
-    opacity: 0;
-  }
-</style>

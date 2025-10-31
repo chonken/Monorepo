@@ -36,9 +36,9 @@ export function parseUnit(value: string | number, unit: string = 'px'): string {
  * @param {string} [unit='px'] 默認單位
  * @returns {string} 轉換後的單位值
  * @example
- * parseUnit(10) // ['10px']
- * parseUnit('10') // ['10px']
- * parseUnit('var(--pd40) 0') // ['var(--pd40) 0px']
+ * parseMultiUnit(10) // ['10px']
+ * parseMultiUnit('10') // ['10px']
+ * parseMultiUnit('var(--pd40) 0') // ['var(--pd40) 0px']
  */
 export function parseMultiUnit(input: string | number, unit: string = 'px'): string[] {
   const parts = typeof input === 'number' ? [input + ''] : splitUnit(input)

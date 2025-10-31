@@ -151,7 +151,7 @@
   "as-fk-index": {
     "scope": "astro",
     "prefix": "as-fk-index",
-    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Debug from '@components/Debug.astro'", "---\n", "<YkFk h2={[]}>", "\t", "</YkFk>", "<Debug/>\n", "<style is:global>", "\t", "</style>"]
+    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Debug from '@components/Debug.astro'", "---\n", "<YkFk keywords={[]}>", "\t", "</YkFk>", "<Debug/>\n", "<style is:global>", "\t", "</style>"]
   },
   "as-demo": {
     "scope": "astro",

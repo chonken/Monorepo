@@ -8,22 +8,18 @@ interface Props {
   marginBlock?: string | number
   paddingBlock?: string | number
   aside?: 'left' | 'right'
-  space?: 'normal' | 'wide' | 'narrow'
+  paddingInline?: string | number
+  minPaddingInline?: string | number
 }
 import { mergeClasses, parseUnit, parseMultiUnit } from '../utils'
-const { id, class: className = '', maxWidth = '1400', aside = 'left', mobile = 'lg', mobileFill = false, space = 'normal', paddingBlock = '0', marginBlock = '0', ...rest } = Astro.props
-
-const spaceMap = {
-  normal: '5%',
-  wide: '2.5%',
-  narrow: '10%',
-}
+const { id, class: className = '', maxWidth = '1400', aside = 'left', mobile = 'lg', mobileFill = false, paddingInline = '5%', paddingBlock = '0', marginBlock = '0', minPaddingInline = '25px', ...rest } = Astro.props
 
 const styleList = {
   '--mw': parseUnit(maxWidth, 'px'),
   '--pdb': parseMultiUnit(paddingBlock, 'px').join(' '),
   '--mgb': parseMultiUnit(marginBlock, 'px').join(' '),
-  '--sp': spaceMap[space] ?? '',
+  '--pdi': parseMultiUnit(paddingInline, 'px').join(' '),
+  '--mpdi': parseMultiUnit(minPaddingInline, 'px').join(' '),
 }
 const classList = mergeClasses(className, ['ch-asp', `ch-pd${aside[0]}`, ...(mobile === 'none' ? [] : [`mob-${mobile}`, `${mobileFill ? 'mob-fill' : ''}`])]).join(' ')
 ---
@@ -40,10 +36,10 @@ const classList = mergeClasses(className, ['ch-asp', `ch-pd${aside[0]}`, ...(mob
     padding-block: var(--pdb);
   }
   .ch-pdl {
-    padding-inline-start: calc(max(50% - var(--mw) / 2, max(var(--sp), 25px))) !important;
+    padding-inline-start: calc(max(50% - var(--mw) / 2, max(var(--pdi), var(--mpdi)))) !important;
   }
   .ch-pdr {
-    padding-inline-end: calc(max(50% - var(--mw) / 2, max(var(--sp), 25px))) !important;
+    padding-inline-end: calc(max(50% - var(--mw) / 2, max(var(--pdi), var(--mpdi)))) !important;
   }
 
   // 手動設定和對應尺寸
@@ -57,7 +53,7 @@ const classList = mergeClasses(className, ['ch-asp', `ch-pd${aside[0]}`, ...(mob
   @each $size, $mobile in $map {
     @media (max-width: bp.size($size)) {
       #{$mobile}:is(.ch-pdl, .ch-pdr) {
-        padding-inline: max(var(--sp), 25px) !important;
+        padding-inline: max(var(--pdi), var(--mpdi)) !important;
       }
       #{$mobile}.mob-fill:is(.ch-pdl, .ch-pdr) {
         padding-inline: 0 !important;

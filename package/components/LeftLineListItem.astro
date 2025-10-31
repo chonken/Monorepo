@@ -13,7 +13,7 @@ const classList = mergeClasses(className, ['ch-llli'])
 <li id={id} class:list={classList} {...rest}>
   {
     Astro.slots.has('icon') && (
-      <div class="ch-llli-i">
+      <div class="ch-llli-g">
         <slot name="icon" />
       </div>
     )
@@ -26,9 +26,7 @@ const classList = mergeClasses(className, ['ch-llli'])
           <slot name="marker" />
         </div>
       ) : (
-        <div class="ch-dot">
-          <slot name="marker" />
-        </div>
+        <div class="ch-llli-d" />
       )
     }
     <div class="ch-llli-l"></div>
@@ -39,11 +37,16 @@ const classList = mergeClasses(className, ['ch-llli'])
 <style is:global>
   .ch-llli {
     display: flex;
+    align-items: var(--itm);
     margin-block: 0 !important;
     padding-block: 0 !important;
+    column-gap: var(--cgap);
   }
-  :is(.ch-llli-i, .ch-llli-m) {
+  :is(.ch-llli-g, .ch-llli-i, .ch-llli-m) {
     flex-shrink: 0;
+  }
+  .ch-llli-g {
+    padding-block: var(--rpd-t) var(--rpd-b);
   }
   .ch-llli-m {
     display: flex;
@@ -52,7 +55,7 @@ const classList = mergeClasses(className, ['ch-llli'])
     gap: var(--l-gap);
     align-self: stretch !important;
   }
-  .ch-dot {
+  .ch-llli-d {
     width: var(--dw);
     height: var(--dw);
     border-radius: var(--dr);
@@ -64,7 +67,13 @@ const classList = mergeClasses(className, ['ch-llli'])
     flex-grow: 1;
   }
   .ch-llli-l:first-child {
+    min-height: var(--d-t);
+    height: var(--dt);
     max-height: var(--dt);
+  }
+  .ch-llli-l:last-child {
+    min-height: var(--d-b);
+    height: var(--d-b);
   }
   .ch-llli-l::after {
     position: absolute;
@@ -84,6 +93,13 @@ const classList = mergeClasses(className, ['ch-llli'])
     top: calc(2.5px * -1);
   }
   .ch-txt {
+    padding-block: var(--rpd-t) var(--rpd-b);
     flex-grow: 1;
+  }
+  .ch-llli:first-of-type > .ch-llli-m .ch-llli-l:first-child {
+    opacity: var(--ts);
+  }
+  .ch-llli:last-of-type > .ch-llli-m .ch-llli-l:last-child {
+    opacity: var(--te);
   }
 </style>

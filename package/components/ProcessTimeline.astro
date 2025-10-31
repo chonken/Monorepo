@@ -26,19 +26,12 @@ const styleList = {
   '--mob-dt': mobileItem === 'center' ? 'auto' : '0',
   '--dot-s': '20px',
   '--dot-bgc': '#F2B81A',
+  '--ts': trimStart ? 0 : 1,
+  '--te': trimEnd ? 0 : 1,
 }
-const classList = mergeClasses(className, ['ch-ptt', evenReverse ? 'odd-reverse' : '', trimStart ? 'ch-ts' : '', trimEnd ? 'ch-te' : '', mobile === 'none' ? '' : `mob-${mobile}`])
+const classList = mergeClasses(className, ['ch-ptt', evenReverse ? 'odd-reverse' : '', mobile === 'none' ? '' : `mob-${mobile}`])
 ---
 
 <Element class:list={classList} style={styleList} {...rest}>
   <slot />
 </Element>
-
-<style lang="scss" is:global>
-  .ch-ptt.ch-ts > .ch-li-ptt:first-of-type > .ch-li-ptt-i::before {
-    opacity: 0;
-  }
-  .ch-ptt.ch-te > .ch-li-ptt:last-of-type > .ch-li-ptt-i::after {
-    opacity: 0;
-  }
-</style>

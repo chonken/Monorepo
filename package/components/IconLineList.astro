@@ -11,7 +11,7 @@ interface Props {
 import { mergeClasses, parseUnit } from '../utils'
 const { class: className = '', element = 'ul', gap = '40px', iconHeight, mobile = 'none', mobileGap = '20px', mobileIconHeight = '', ...rest } = Astro.props
 
-const Component = element
+const Element = element as keyof HTMLElement
 
 const styleList = {
   '--gap': parseUnit(gap, 'px'),
@@ -22,9 +22,9 @@ const styleList = {
 const classList = mergeClasses(className, ['ch-ill'])
 ---
 
-<Component class:list={classList} style={styleList} {...rest}>
+<Element class:list={classList} style={styleList} {...rest}>
   <slot />
-</Component>
+</Element>
 
 <style lang="scss" is:global>
   // 沒寫

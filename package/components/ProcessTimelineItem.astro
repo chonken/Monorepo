@@ -68,6 +68,12 @@ const classList = mergeClasses(className, ['ch-li-ptt', 'ch-layout', reverse ? '
       max-height: var(--dt);
     }
   }
+  .ch-li-ptt:first-of-type > .ch-li-ptt-i::before {
+    opacity: var(--ts);
+  }
+  .ch-li-ptt:last-of-type > .ch-li-ptt-i::after {
+    opacity: var(--te);
+  }
 
   @each $size, $value in bp.$breakpoint {
     @media (max-width: $value) {

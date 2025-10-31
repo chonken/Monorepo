@@ -2,23 +2,19 @@
 interface Props {
   id?: string
   class?: string
-  space?: 'normal' | 'wide' | 'narrow'
   paddingBlock?: string
   marginBlock?: string
+  paddingInline?: string | number
+  minPaddingInline?: string | number
 }
 import { mergeClasses, parseMultiUnit } from '../utils'
-const { id, class: className = '', paddingBlock = '0', marginBlock = '0', space = 'normal', ...rest } = Astro.props
-
-const spaceMap = {
-  normal: '5%',
-  wide: '2.5%',
-  narrow: '10%',
-}
+const { id, class: className = '', paddingBlock = '0', marginBlock = '0', paddingInline = '5%', minPaddingInline = '25px', ...rest } = Astro.props
 
 const styleList = {
-  '--sp': spaceMap[space] ?? '',
   '--pdb': parseMultiUnit(paddingBlock, 'px').join(' '),
   '--mgb': parseMultiUnit(marginBlock, 'px').join(' '),
+  '--pdi': parseMultiUnit(paddingInline, 'px').join(' '),
+  '--mpdi': parseMultiUnit(minPaddingInline, 'px').join(' '),
 }
 const classList = mergeClasses(className, ['ch-spd']).join(' ')
 ---
@@ -31,6 +27,6 @@ const classList = mergeClasses(className, ['ch-spd']).join(' ')
   .ch-spd {
     margin-block: var(--mgb);
     padding-block: var(--pdb);
-    padding-inline: max(var(--sp), 25px) !important;
+    padding-inline: max(var(--pdi), var(--mpdi)) !important;
   }
 </style>
