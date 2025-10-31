@@ -75,8 +75,11 @@ const classList = mergeClasses(className, ['ch-li-ptt', 'ch-layout', reverse ? '
     opacity: var(--te);
   }
 
-  @each $size, $value in bp.$breakpoint {
-    @media (max-width: $value) {
+  // 手動設定尺寸
+  $map: md, sm, xs, 2xs;
+
+  @each $size in $map {
+    @media (max-width: bp.size($size)) {
       .mob-#{$size} > .ch-li-ptt {
         grid-template-columns: max-content 1fr;
         direction: ltr;

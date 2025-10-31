@@ -31,10 +31,11 @@ const classList = mergeClasses(className, ['ch-llli'])
     }
     <div class="ch-llli-l"></div>
   </div>
-  <div class="ch-txt"><slot /></div>
+  <div class="ch-llli-t"><slot /></div>
 </li>
 
-<style is:global>
+<style lang="scss" is:global>
+  @use '../config/breakpoint' as bp;
   .ch-llli {
     display: flex;
     align-items: var(--itm);
@@ -73,7 +74,6 @@ const classList = mergeClasses(className, ['ch-llli'])
   }
   .ch-llli-l:last-child {
     min-height: var(--d-b);
-    height: var(--d-b);
   }
   .ch-llli-l::after {
     position: absolute;
@@ -92,14 +92,42 @@ const classList = mergeClasses(className, ['ch-llli'])
     content: '';
     top: calc(2.5px * -1);
   }
-  .ch-txt {
+  .ch-llli-t {
     padding-block: var(--rpd-t) var(--rpd-b);
     flex-grow: 1;
   }
+  .ch-llli:first-of-type > .ch-llli-t {
+    padding-top: 0;
+  }
+  .ch-llli:last-of-type > .ch-llli-t {
+    padding-bottom: 0;
+  }
   .ch-llli:first-of-type > .ch-llli-m .ch-llli-l:first-child {
+    min-height: auto;
     opacity: var(--ts);
   }
   .ch-llli:last-of-type > .ch-llli-m .ch-llli-l:last-child {
+    min-height: auto;
     opacity: var(--te);
+  }
+
+  // 手動設定尺寸
+  $map: md, sm, xs, 2xs;
+
+  @each $size in $map {
+    @media (max-width: bp.size($size)) {
+      .mob-#{$size} > .ch-llli {
+        &:nth-of-type(n) {
+          flex-direction: column;
+          align-items: center;
+        }
+        & > .ch-llli-m .ch-llli-l {
+          display: none;
+        }
+        & > .ch-llli-t {
+          padding-top: var(--cgap);
+        }
+      }
+    }
   }
 </style>

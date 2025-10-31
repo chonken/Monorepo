@@ -18,10 +18,11 @@ export interface LeftLineListProps extends ElementProps {
   lineDotCircle?: boolean
   trimStart?: boolean
   trimEnd?: boolean
+  mobile?: 'md' | 'sm' | 'xs' | '2xs' | 'none'
 }
 interface Props extends LeftLineListProps {}
 
-const { element = 'ul', id, class: className = '', item = 'stretch', gap = '0', dotTop, dotColor = '#878787', dotSize = '10px', dotCircle = false, lineGap = '5px', lineWidth = '1px', lineColor = '#878787', lineDotSize = '5px', lineDotColor = '#878787', lineDotCircle = false, trimStart = false, trimEnd = false, ...rest } = Astro.props
+const { element = 'ul', id, class: className = '', item = 'stretch', gap = '40', dotTop, dotColor = '#878787', dotSize = '10px', dotCircle = false, lineGap = '5px', lineWidth = '1px', lineColor = '#878787', lineDotSize = '5px', lineDotColor = '#878787', lineDotCircle = false, trimStart = false, trimEnd = false, mobile = 'none', ...rest } = Astro.props
 
 const Element = element as keyof HTMLElement
 
@@ -50,6 +51,7 @@ let dT = 'auto'
 let dt = ''
 let db = ''
 if (dotTop) {
+  dT = parseUnit(dotTop)
   if (dotTop === 'auto') {
     dt = `calc(${rowGap} / 2)`
     db = `calc(${rowGap} / 2)`
@@ -91,7 +93,7 @@ const styleList = {
   '--ts': trimStart ? 0 : 1,
   '--te': trimEnd ? 0 : 1,
 }
-const classList = mergeClasses(className, ['ch-lll'])
+const classList = mergeClasses(className, ['ch-lll', mobile === 'none' ? '' : `mob-${mobile}`])
 ---
 
 <Element id={id} class:list={classList} style={styleList} {...rest}>
