@@ -43,7 +43,7 @@ const classList = mergeClasses(className, ['ch-flex', 'ch-layout', reverse ? 're
   }
 
   @each $size, $value in bp.$breakpoint {
-    @media (max-width: $value) {
+    @media (max-width: #{$value}px) {
       .ch-flex:is(.mob-inherit.main-mob-#{$size}, .mob-#{$size}) {
         flex-direction: column;
         &:where(.mob-re) {

@@ -1,16 +1,19 @@
 @use 'sass:map';
 
 $breakpoint: (
-  3xl: 1600px,
-  2xl: 1440px,
-  xl: 1280px,
-  lg: 1024px,
-  md: 768px,
-  sm: 576px,
-  xs: 480px,
-  2xs: 375px,
+  3xl: 1600,
+  2xl: 1440,
+  xl: 1280,
+  lg: 1024,
+  md: 768,
+  sm: 576,
+  xs: 480,
+  2xs: 375,
 );
 
-@function size($key) {
+@function value($key) {
   @return map.get($breakpoint, $key);
+}
+@function size($key) {
+  @return #{value($key)}px;
 }

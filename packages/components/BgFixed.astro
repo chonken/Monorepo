@@ -21,13 +21,12 @@ const classList = mergeClasses(className, ['ch-bgf'])
 
 <style lang="scss" is:global>
   @use '../config/breakpoint' as bp;
-  @use 'sass:map';
 
   .ch-bgf {
     min-height: var(--h);
     background: var(--url) center / cover fixed;
   }
-  @media (max-width: map.get(bp.$breakpoint,md)) {
+  @media (max-width: bp.size(md)) {
     .ch-bgf {
       background-attachment: local;
     }

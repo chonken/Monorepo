@@ -80,7 +80,7 @@ if (gridTemplateRows !== 'none') {
   }
 
   @each $size, $value in bp.$breakpoint {
-    @media (max-width: $value) {
+    @media (max-width: #{$value}px) {
       .ch-grid.mob-#{$size} {
         &.ch-tem-c {
           grid-template-columns: var(--col-#{$size});

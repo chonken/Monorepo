@@ -46,7 +46,7 @@ const classList = mergeClasses(className, ['ch-grd']).join(' ')
   }
 
   @each $size, $value in bp.$breakpoint {
-    @media (max-width: $value) {
+    @media (max-width: #{$value}px) {
       .ch-grd-ctr.ch-fixed {
         max-width: calc((var(--mw) - var(--cgap, 0) * max(var(--col) - 1, 0)) / var(--col) * var(--col-#{$size}) + (var(--col-#{$size}) - 1) * var(--cgap, 0));
       }

@@ -9,6 +9,9 @@ const keywords = Astro.props.keywords || []
 ---
 
 <BaseModule root="opsl" isIndex={isIndex} isDev={isDev} keywords={isIndex ? keywords : undefined}>
+  <Fragment slot="demo">
+    <!-- menu.css custom.css 放這裡 -->
+  </Fragment>
   <Fragment slot="head">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,8 +20,10 @@ const keywords = Astro.props.keywords || []
   <slot />
 </BaseModule>
 
-<style is:global>
-  /* -- reset module8 -- */
+<style lang="scss" is:global>
+  @use 'sass:math';
+  @use '@config/breakpoint' as bp;
+  // reset module8
   .edit,
   .show_content,
   .main_part {
@@ -42,54 +47,94 @@ const keywords = Astro.props.keywords || []
   .animated15 {
     animation: none;
   }
-  /* -- reset module8 end -- */
 
+  // 字體大小
+  $font-size: 18;
+
+  // 字體大小基礎占比
+  @function base-ratio($value) {
+    // 參數設置
+    $min: 16;
+    $max: 80;
+    $upper: 0.8;
+    $lower: 0.2;
+    $power: 2;
+
+    // 超過區間
+    @if $value < $min {
+      @return $upper;
+    } @else if $value > $max {
+      @return $lower;
+    }
+
+    @return $lower + ($upper - $lower) * (1 - math.pow(math.div(($value - $min), ($max - $min)), $power));
+  }
   .opsl {
-    --f18: 18px;
-    --pd40: 40px;
-    --pd60: 60px;
-    --pd80: 80px;
-    --pd100: 100px;
-    --pd150: 150px;
-    --pd200: 200px;
-    --pd250: 250px;
-    --pd300: 300px;
-    --pd400: 400px;
+    --f_base: 1rem;
+    // 先取一個基礎值(--f_base * 占比)，值越小基礎值占比越大，剩餘換算成vw補齊
+    @each $size in $font-size {
+      // 縮放區間
+      $lg: bp.value(2xl);
+      $sm: bp.value(sm);
+      // 相對於--f_base的基礎值比例
+      $fbase: math.div(math.round(math.div($size, 16) * base-ratio($size) * 100), 100);
+      // vw補齊剩餘空間
+      $fvw: math.div(math.round(math.div($size * (1 - base-ratio($size)), $lg) * 10000), 100);
+      // 最小值
+      $fmin: math.round($fbase * 16 + math.div($sm * $fvw, 100));
+
+      --f#{$size}: clamp(#{$fmin}px, calc(var(--f_base) * #{$fbase} + #{$fvw}vw), #{$size}px);
+    }
+    --pd20: 1.25rem;
+    --pd30: 1.875rem;
+    --pd40: 2.5rem;
+    --pd60: 3.75rem;
+    --pd80: 5rem;
+    --pd100: 6.25rem;
+    --pd150: 9.375rem;
+    --pd200: 12.5rem;
+    --pd250: 15.625rem;
+    --pd300: 18.75rem;
+    --pd400: 25rem;
 
     font-size: var(--f18);
     font-family: 'Microsoft JhengHei', serif;
+    overflow: hidden;
     line-height: 1.8;
     letter-spacing: 0;
   }
 
   @media (max-width: 1024px) {
     .opsl {
-      --pd40: 40px;
-      --pd60: 60px;
-      --pd80: 70px;
-      --pd100: 80px;
-      --pd150: 120px;
-      --pd200: 160px;
-      --pd250: 200px;
-      --pd300: 240px;
-      --pd400: 300px;
+      --pd20: 1.25rem;
+      --pd30: 1.875rem;
+      --pd40: 2.5rem;
+      --pd60: 3.75rem;
+      --pd80: 4.375rem;
+      --pd100: 5rem;
+      --pd150: 7.5rem;
+      --pd200: 10rem;
+      --pd250: 12.5rem;
+      --pd300: 15rem;
+      --pd400: 18.75rem;
     }
   }
   @media (max-width: 768px) {
     .opsl {
-      --pd40: 30px;
-      --pd60: 50px;
-      --pd80: 60px;
-      --pd100: 60px;
-      --pd150: 100px;
-      --pd200: 100px;
-      --pd250: 150px;
-      --pd300: 150px;
-      --pd400: 200px;
+      --pd20: 0.94rem;
+      --pd30: 1.25rem;
+      --pd40: 1.875rem;
+      --pd60: 3.125rem;
+      --pd80: 3.75rem;
+      --pd100: 3.75rem;
+      --pd150: 6.25rem;
+      --pd200: 6.25rem;
+      --pd250: 9.375rem;
+      --pd300: 9.375rem;
+      --pd400: 12.5rem;
     }
   }
 
-  /*Animations*/
   [data-animate-in] {
     opacity: 0;
     transition:
@@ -98,28 +143,27 @@ const keywords = Astro.props.keywords || []
   }
   [data-animate-in='up'] {
     transform: translate3d(0, 10%, 0);
-  } /*由下往上*/
+  }
   [data-animate-in='left'] {
     transform: translate3d(-5%, 0, 0);
-  } /*由左往右*/
+  }
   [data-animate-in='right'] {
     transform: translate3d(5%, 0, 0);
-  } /*由右往左*/
+  }
   [data-animate-in='down'] {
     transform: translate3d(0, -10%, 0);
-  } /*由上往下*/
+  }
   [data-animate-in='fadeIn'] {
     transform: translate3d(0, 0, 0);
-  } /*淡入*/
+  }
   [data-animate-in='scaleIn'] {
     transform: scale(0.3);
-  } /*放大淡入*/
+  }
   [data-animate-in='rotateIn'] {
     transform: scale(0.3) rotate(-10deg);
-  } /*放大淡入*/
+  }
   [data-animate-in].in-view {
     opacity: 1;
     transform: translate3d(0, 0, 0) rotate(0deg);
   }
-  /*Animations-end*/
 </style>

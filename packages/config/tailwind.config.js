@@ -1,4 +1,4 @@
-import breakpoint from './breakpoint'
+import breakpoint from './breakpoint.json'
 
 export default {
   theme: {
