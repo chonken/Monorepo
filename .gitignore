@@ -1,22 +1,30 @@
+# 採默認排除所有檔案
 **
 
-!.vscode
-!.vscode/**
-!/package
-!/package/**
-/package/docs/**
-!/package/docs/src
-!/package/docs/src/**
-!/package/docs/astro.config.mjs
-!/package/docs/package.json
-!/package/docs/tailwind.config.mjs
-!/package/docs/tsconfig.json
-
+# 必要的檔案
 !.gitignore
-!.npmrc
-!base-astro.config.mts
+!LICENSE
+!README.md
 !package-lock.json
 !package.json
 !pnpm-lock.yaml
 !pnpm-workspace.yaml
-!tsconfig.json
+!.npmrc
+
+# 指定避免被排除的名單
+!.vscode
+!.vscode/**
+!packages
+!packages/**
+packages/docs/**
+!packages/docs/src
+!packages/docs/src/**
+!packages/docs/astro.config.mjs
+!packages/docs/package.json
+!packages/docs/tailwind.config.mjs
+!packages/docs/tsconfig.json
+!apps
+!scripts
+!scripts/**
+!saves
+!saves/**

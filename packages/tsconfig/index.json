@@ -1,0 +1,19 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "files": [],
+  "references": [{ "path": "../components" }, { "path": "../layouts" }, { "path": "../utils" }],
+  "compilerOptions": {
+    "declaration": true,
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["../components/*"],
+      "@layouts/*": ["../layouts/*"],
+      "@styles/*": ["../styles/*"],
+      "@utils": ["../utils"],
+      "@config/*": ["../config/*"],
+      "@tailwind": ["../styles/tailwind.css"]
+    },
+    "types": ["astro/client"]
+  }
+}

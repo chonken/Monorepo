@@ -5,6 +5,11 @@
   "author": "",
   "license": "ISC",
   "type": "module",
+  "packageManager": "pnpm@10.20.0",
+  "scripts": {
+    "setup": "node scripts/setup.js",
+    "copy": "node scripts/new_client.js"
+  },
   "dependencies": {
     "astro": "^5.12.7"
   },

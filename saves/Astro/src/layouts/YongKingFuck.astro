@@ -1,0 +1,125 @@
+---
+interface Props {
+  keywords?: string[]
+}
+import BaseModule from '@layouts/baseModule.astro'
+const isIndex = Astro.url.pathname.endsWith('/index') || Astro.url.pathname === '/'
+const isDev = import.meta.env.MODE === 'development'
+const keywords = Astro.props.keywords || []
+---
+
+<BaseModule root="opsl" isIndex={isIndex} isDev={isDev} keywords={isIndex ? keywords : undefined}>
+  <Fragment slot="head">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC:wght@200..900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
+  </Fragment>
+  <slot />
+</BaseModule>
+
+<style is:global>
+  /* -- reset module8 -- */
+  .edit,
+  .show_content,
+  .main_part {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: auto !important;
+    padding: 0px !important;
+  }
+  .pageIndex .main_part {
+    border: none !important;
+  }
+  .path,
+  .banner {
+    display: none;
+  }
+  .edit_part {
+    max-width: 100%;
+    margin: auto;
+    padding: 0;
+  }
+  .animated15 {
+    animation: none;
+  }
+  /* -- reset module8 end -- */
+
+  .opsl {
+    --f18: 18px;
+    --pd40: 40px;
+    --pd60: 60px;
+    --pd80: 80px;
+    --pd100: 100px;
+    --pd150: 150px;
+    --pd200: 200px;
+    --pd250: 250px;
+    --pd300: 300px;
+    --pd400: 400px;
+
+    font-size: var(--f18);
+    font-family: 'Microsoft JhengHei', serif;
+    line-height: 1.8;
+    letter-spacing: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .opsl {
+      --pd40: 40px;
+      --pd60: 60px;
+      --pd80: 70px;
+      --pd100: 80px;
+      --pd150: 120px;
+      --pd200: 160px;
+      --pd250: 200px;
+      --pd300: 240px;
+      --pd400: 300px;
+    }
+  }
+  @media (max-width: 768px) {
+    .opsl {
+      --pd40: 30px;
+      --pd60: 50px;
+      --pd80: 60px;
+      --pd100: 60px;
+      --pd150: 100px;
+      --pd200: 100px;
+      --pd250: 150px;
+      --pd300: 150px;
+      --pd400: 200px;
+    }
+  }
+
+  /*Animations*/
+  [data-animate-in] {
+    opacity: 0;
+    transition:
+      transform 0.8s ease,
+      opacity 0.8s ease;
+  }
+  [data-animate-in='up'] {
+    transform: translate3d(0, 10%, 0);
+  } /*由下往上*/
+  [data-animate-in='left'] {
+    transform: translate3d(-5%, 0, 0);
+  } /*由左往右*/
+  [data-animate-in='right'] {
+    transform: translate3d(5%, 0, 0);
+  } /*由右往左*/
+  [data-animate-in='down'] {
+    transform: translate3d(0, -10%, 0);
+  } /*由上往下*/
+  [data-animate-in='fadeIn'] {
+    transform: translate3d(0, 0, 0);
+  } /*淡入*/
+  [data-animate-in='scaleIn'] {
+    transform: scale(0.3);
+  } /*放大淡入*/
+  [data-animate-in='rotateIn'] {
+    transform: scale(0.3) rotate(-10deg);
+  } /*放大淡入*/
+  [data-animate-in].in-view {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  /*Animations-end*/
+</style>
