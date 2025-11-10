@@ -5,10 +5,22 @@
     "body": ["@media (max-width: ${1|1600,1440,1280,1024,768,576,480,375|}px) {$2}"],
     "description": "RWD"
   },
-  "css-font-variables": {
+  "css-font-custom": {
     "scope": "css",
     "prefix": "fs",
     "body": ["font-size: var(--f${1:18});"],
+    "description": "CSS Variables"
+  },
+  "css-font-12": {
+    "scope": "css",
+    "prefix": "f12",
+    "body": ["font-size: var(--f12);"],
+    "description": "CSS Variables"
+  },
+  "css-font-14": {
+    "scope": "css",
+    "prefix": "f14",
+    "body": ["font-size: var(--f14);"],
     "description": "CSS Variables"
   },
   "css-font-16": {

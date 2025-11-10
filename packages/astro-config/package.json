@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "files": [
-    "index.mts"
+    "index.mjs"
   ],
   "exports": {
-    ".": "./index.mts"
+    ".": "./index.mjs"
   }
 }

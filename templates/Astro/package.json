@@ -1,7 +1,7 @@
 {
   "name": "client",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -9,6 +9,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "*"
+    "astro": "*",
+    "@repo/astro-config": "workspace:*",
+    "@repo/tsconfig": "workspace:*"
   }
 }

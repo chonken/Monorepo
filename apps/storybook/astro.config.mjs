@@ -1,4 +1,4 @@
-import base from '../../base-astro.config.mts'
+import base from '@repo/astro-config'
 import { defineConfig } from 'astro/config'
 import devtoolsJson from 'vite-plugin-devtools-json'
 import tailwindcss from '@tailwindcss/vite'

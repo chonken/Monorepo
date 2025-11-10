@@ -9,8 +9,8 @@ export default defineConfig({
     port: 4321,
   },
   build: {
-    inlineStylesheets: 'always' as const,
-    format: 'file' as const,
+    inlineStylesheets: 'always',
+    format: 'file',
   },
   vite: {
     plugins: [

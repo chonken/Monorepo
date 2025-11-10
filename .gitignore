@@ -1,30 +1,7 @@
-# 採默認排除所有檔案
-**
-
-# 必要的檔案
-!.gitignore
-!LICENSE
-!README.md
-!package-lock.json
-!package.json
-!pnpm-lock.yaml
-!pnpm-workspace.yaml
-!.npmrc
-
-# 指定避免被排除的名單
-!.vscode
-!.vscode/**
-!packages
-!packages/**
-packages/docs/**
-!packages/docs/src
-!packages/docs/src/**
-!packages/docs/astro.config.mjs
-!packages/docs/package.json
-!packages/docs/tailwind.config.mjs
-!packages/docs/tsconfig.json
-!apps
-!scripts
-!scripts/**
-!saves
-!saves/**
+node_modules/
+.pnpm-store/
+apps/*
+!apps/storybook/
+!apps/storybook/**
+apps/storybook/node_modules/
+apps/storybook/.astro/

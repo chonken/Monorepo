@@ -4,18 +4,18 @@
       "title": "標題",
       "subtitle": "副標題",
       "text": ["內文1", "內文2"],
-      "image": "/src/content/images/奴隸主.jpg"
+      "image": "/images/奴隸主.jpg"
     }
   ],
   "image": [
     {
-      "image": "/src/content/images/奴隸主.jpg"
+      "image": "/images/奴隸主.jpg"
     }
   ],
   "button": [
     {
       "text": "了解更多+",
-      "icon": "/src/content/images/圖片",
+      "icon": "/images/圖片",
       "hover": "MORE"
     }
   ],
@@ -41,7 +41,7 @@
       "title": "標題",
       "subtitle": "副標題",
       "text": ["內文1", "內文2"],
-      "image": "/src/content/images/圖片"
+      "image": "/images/圖片"
     }
   ],
   "title": [

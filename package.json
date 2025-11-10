@@ -8,7 +8,9 @@
   "packageManager": "pnpm@10.20.0",
   "scripts": {
     "setup": "node scripts/setup.js",
-    "copy": "node scripts/new_client.js"
+    "copy": "node scripts/new_client.js",
+    "storybook": "node scripts/open_storybook.js",
+    "demo": "pnpm storybook"
   },
   "dependencies": {
     "astro": "^5.12.7"

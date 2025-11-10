@@ -1,6 +1,9 @@
 packages:
   - apps/**
-  - packages/*
+  - packages/**
+
+exclude:
+  - '**/dist'
 
 onlyBuiltDependencies:
   - '@tailwindcss/oxide'

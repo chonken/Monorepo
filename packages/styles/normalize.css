@@ -21,6 +21,9 @@
   font-weight: inherit;
   word-break: inherit;
 }
+.opsl hr {
+  height: auto;
+}
 @layer base {
   .opsl {
     position: relative;

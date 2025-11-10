@@ -5,7 +5,7 @@ import { execSync } from 'node:child_process'
 // 取得路徑
 const repoRoot = path.resolve(process.cwd())
 const callerCwd = process.env.INIT_CWD || process.cwd()
-const src = path.resolve(repoRoot, 'saves/Astro')
+const src = path.resolve(repoRoot, 'templates/Astro')
 const dst = path.resolve(callerCwd, 'Astro')
 
 // 安全檢查
@@ -27,12 +27,12 @@ try {
 }
 console.log('複製完成')
 
-// 安裝依賴
+// 安裝依賴與軟連結
 try {
   execSync('pnpm install', { stdio: 'inherit', shell: true })
 } catch (err) {
   console.error('安裝依賴失敗:', err.message)
-  console.warn('請手動執行 pnpm install ，否則軟連結失效。')
+  console.warn('請至根目錄手動執行 pnpm install ，否則軟連結失效。')
   process.exit(1)
 }
 console.log('專案初始化成功!')

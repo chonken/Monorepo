@@ -1,4 +1,5 @@
 ---
+import '@styles/normalize.css'
 import '@tailwind'
 import LayoutFrame from '../components/LayoutFrame.astro'
 import ThemeToggle from '../components/ThemeToggle.astro'
@@ -36,11 +37,11 @@ const list = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
-    <link rel="stylesheet" href="/src/style/main.css" />
+    <link rel="stylesheet" href="/src/styles/main.css" />
     <title>組件目錄</title>
   </head>
   <body class="dark">
-    <div class="ykfk flex w-full h-full text-lg text-[var(--text-main-1)] bg-[var(--bg-main-1)]">
+    <div class="opsl flex w-full h-full text-lg text-[var(--text-main-1)] bg-[var(--bg-main-1)]">
       <aside class="relative z-2 w-64 h-full shrink-0 bg-[var(--bg-main-2)]">
         <nav class="w-full h-full overflow-y-auto">
           {
