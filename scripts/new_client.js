@@ -1,10 +1,10 @@
-import fs from 'node:fs'
+import fs from 'fs-extra'
 import path from 'node:path'
 import { execSync } from 'node:child_process'
 
 // 取得路徑
-const repoRoot = path.resolve(process.cwd())
-const callerCwd = process.env.INIT_CWD || process.cwd()
+const repoRoot = process.cwd()
+const callerCwd = process.env.INIT_CWD || repoRoot
 const src = path.resolve(repoRoot, 'templates/Astro')
 const dst = path.resolve(callerCwd, 'Astro')
 
@@ -14,12 +14,12 @@ if (!fs.existsSync(src)) {
   process.exit(1)
 }
 if (!fs.existsSync(dst)) {
-  fs.mkdirSync(dst, { recursive: true })
+  fs.ensureDirSync(dst)
 }
 
 // 複製檔案
 try {
-  fs.cpSync(src, dst, { recursive: true, force: true })
+  fs.copySync(src, dst, { overwrite: true })
   process.chdir(repoRoot)
 } catch (err) {
   console.error('複製失敗:', err.message)

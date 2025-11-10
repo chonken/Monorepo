@@ -3,7 +3,8 @@ import { defineConfig } from 'astro/config'
 import devtoolsJson from 'vite-plugin-devtools-json'
 import tailwindcss from '@tailwindcss/vite'
 
-export default defineConfig({
+/** @type {import('astro').AstroUserConfig} */
+const config = {
   ...base,
   vite: {
     ...base.vite,
@@ -12,4 +13,6 @@ export default defineConfig({
   devToolbar: {
     enabled: false,
   },
-})
+}
+
+export default defineConfig(config)

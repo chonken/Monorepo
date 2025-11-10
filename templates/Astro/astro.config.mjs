@@ -1,7 +1,8 @@
 import { defineConfig } from 'astro/config'
 import base from '@repo/astro-config'
 
-export default defineConfig({
+/** @type {import('astro').AstroUserConfig} */
+const config = {
   ...base,
   vite: {
     ...base.vite,
@@ -10,4 +11,6 @@ export default defineConfig({
       // 個別專案內的vite插件
     ],
   },
-})
+}
+
+export default defineConfig(config)

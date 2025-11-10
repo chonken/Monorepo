@@ -11,6 +11,9 @@ importers:
       astro:
         specifier: ^5.12.7
         version: 5.12.7(@types/node@24.0.4)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.44.0)(sass-embedded@1.89.2)(typescript@5.8.3)(yaml@2.8.0)
+      fs-extra:
+        specifier: ^11.3.2
+        version: 11.3.2
     devDependencies:
       '@tailwindcss/vite':
         specifier: ^4.1.11
@@ -31,8 +34,14 @@ importers:
         specifier: ^3.1.0
         version: 3.1.0(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(lightningcss@1.30.1)(sass-embedded@1.89.2)(yaml@2.8.0))
 
-  apps/Astro:
+  apps/2025-10月/模組/客戶/Astro:
     dependencies:
+      '@repo/astro-config':
+        specifier: workspace:*
+        version: link:../../../../../packages/astro-config
+      '@repo/tsconfig':
+        specifier: workspace:*
+        version: link:../../../../../packages/tsconfig
       astro:
         specifier: '*'
         version: 5.12.7(@types/node@24.0.4)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.44.0)(sass-embedded@1.89.2)(typescript@5.8.3)(yaml@2.8.0)
@@ -915,8 +924,8 @@ packages:
   fontkit@2.0.4:
     resolution: {integrity: sha512-syetQadaUEDNdxdugga9CpEYVaQIxOwk7GlwZWWZ19//qW4zE5bknOKeMBDYAASwnpaSHKJITRLMF9m1fp3s6g==}
 
-  fs-extra@11.3.0:
-    resolution: {integrity: sha512-Z4XaCL6dUDHfP/jT25jJKMmtxvuwbkrD1vNSMFlo9lNLY2c5FHYSQgHPRZUjAB26TpDEoW9HCOgplrdbaPV/ew==}
+  fs-extra@11.3.2:
+    resolution: {integrity: sha512-Xr9F6z6up6Ws+NjzMCZc6WXg2YFRlrLP9NQDO3VQrWrfiojdhS56TzueT88ze0uBdCTwEIhQ3ptnmKeWGFAe0A==}
     engines: {node: '>=14.14'}
 
   fsevents@2.3.3:
@@ -2744,7 +2753,7 @@ snapshots:
       unicode-properties: 1.4.1
       unicode-trie: 2.0.0
 
-  fs-extra@11.3.0:
+  fs-extra@11.3.2:
     dependencies:
       graceful-fs: 4.2.11
       jsonfile: 6.1.0
@@ -3857,7 +3866,7 @@ snapshots:
   vite-plugin-static-copy@3.1.0(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(lightningcss@1.30.1)(sass-embedded@1.89.2)(yaml@2.8.0)):
     dependencies:
       chokidar: 3.6.0
-      fs-extra: 11.3.0
+      fs-extra: 11.3.2
       p-map: 7.0.3
       picocolors: 1.1.1
       tinyglobby: 0.2.14
