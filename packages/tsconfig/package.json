@@ -2,11 +2,10 @@
   "name": "@repo/tsconfig",
   "version": "0.0.0",
   "private": true,
-  "type": "module",
   "files": [
-    "index.json"
+    "tsconfig.json"
   ],
   "exports": {
-    ".": "./index.json"
+    ".": "./tsconfig.json"
   }
 }
