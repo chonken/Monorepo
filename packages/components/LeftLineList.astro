@@ -99,3 +99,9 @@ const classList = mergeClasses(className, ['ch-lll', mobile === 'none' ? '' : `m
 <Element id={id} class:list={classList} style={styleList} {...rest}>
   <slot />
 </Element>
+
+<style is:global>
+  .ch-lll {
+    overflow: hidden;
+  }
+</style>

@@ -43,6 +43,12 @@ const classList = mergeClasses(className, ['ch-llli'])
     padding-block: 0 !important;
     column-gap: var(--cgap);
   }
+  .ch-llli:first-of-type {
+    margin-top: calc(var(--rpd-t) * -1) !important;
+  }
+  .ch-llli:last-of-type {
+    margin-bottom: calc(var(--rpd-b) * -1) !important;
+  }
   :is(.ch-llli-g, .ch-llli-i, .ch-llli-m) {
     flex-shrink: 0;
   }
@@ -95,12 +101,6 @@ const classList = mergeClasses(className, ['ch-llli'])
   .ch-llli-t {
     padding-block: var(--rpd-t) var(--rpd-b);
     flex-grow: 1;
-  }
-  .ch-llli:first-of-type > .ch-llli-t {
-    padding-top: 0;
-  }
-  .ch-llli:last-of-type > .ch-llli-t {
-    padding-bottom: 0;
   }
   .ch-llli:first-of-type > .ch-llli-m .ch-llli-l:first-child {
     min-height: auto;
