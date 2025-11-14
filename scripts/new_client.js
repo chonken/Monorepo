@@ -36,3 +36,4 @@ try {
   process.exit(1)
 }
 console.log('專案初始化成功!')
+console.log('請至專案目錄執行 pnpm dev 。')
