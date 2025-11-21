@@ -1,5 +1,6 @@
 node_modules/
 .pnpm-store/
+.vscode/settings.json
 apps/*
 !apps/storybook/
 !apps/storybook/**
