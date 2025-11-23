@@ -8,8 +8,12 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "*",
     "@repo/astro-config": "workspace:*",
-    "@repo/tsconfig": "workspace:*"
+    "@repo/tsconfig": "workspace:*",
+    "astro": "*",
+    "vue": "^3.5.24"
+  },
+  "devDependencies": {
+    "@astrojs/vue": "^5.1.3"
   }
 }

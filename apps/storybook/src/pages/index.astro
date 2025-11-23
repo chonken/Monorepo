@@ -1,10 +1,12 @@
 ---
 import '@styles/normalize.css'
 import '@tailwind'
-import LayoutFrame from '../components/LayoutFrame.astro'
-import ThemeToggle from '../components/ThemeToggle.astro'
-import PropsTable from '../components/PropsTable.astro'
 import { layouts, components } from '../utils/AsyncImportDemo.js'
+import LayoutFrame from '../components/LayoutFrame.astro'
+import PropsTable from '../components/PropsTable.astro'
+import ThemeToggle from '../components/ThemeToggle.vue'
+import SearchBox from '../components/SearchBox.vue'
+import DirectoryList from '../components/DirectoryList.vue'
 
 function formatList(globObj: Record<string, () => Promise<unknown>>) {
   const entries = Object.entries(globObj)
@@ -13,7 +15,7 @@ function formatList(globObj: Record<string, () => Promise<unknown>>) {
       const component = await promise()
       return {
         path: path,
-        name: path.split('/').at(-1)?.split('.')[0],
+        name: path.split('/').at(-1)?.split('.')[0] ?? 'Unknown',
         Component: component.default,
         id: component.id,
         props: component.props,
@@ -26,8 +28,8 @@ function formatList(globObj: Record<string, () => Promise<unknown>>) {
 }
 
 const list = [
-  { title: 'Components', items: await formatList(components) },
-  { title: 'Layouts', items: await formatList(layouts) },
+  { category: 'Components', items: await formatList(components) },
+  { category: 'Layouts', items: await formatList(layouts) },
 ]
 ---
 
@@ -38,44 +40,72 @@ const list = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
     <link rel="stylesheet" href="/src/styles/main.css" />
-    <title>組件目錄</title>
+    <title>Storybook</title>
   </head>
   <body class="dark">
     <div class="opsl flex w-full h-full text-lg text-[var(--text-main-1)] bg-[var(--bg-main-1)]">
-      <aside class="relative z-2 w-64 h-full shrink-0 bg-[var(--bg-main-2)]">
-        <nav class="w-full h-full overflow-y-auto">
-          {
-            list.map((group) => (
-              <ul>
-                <li>
-                  <h1>{group.title}</h1>
-                  <ul>
-                    {group.items.map(({ name }) => (
-                      <li>{name}</li>
-                    ))}
-                  </ul>
-                </li>
-              </ul>
-            ))
-          }
+      <aside class="relative z-2 w-72 h-screen shrink-0 bg-[var(--bg-main-2)]">
+        <nav class="flex flex-col w-full h-full">
+          <div class="p-4 border-b border-[var(--border-main-1)]">
+            <h1 class="text-xl font-bold text-[var(--text-main-1)]">組件目錄</h1>
+            <SearchBox id="searchComponent2" class="mt-4" title="搜索元件" client:load />
+          </div>
+          <div class="p-4 overflow-y-auto">
+            {
+              list.map((group) => (
+                <Fragment>
+                  <div class="mt-4 mb-1 text-sm font-bold text-[var(--text-main-1)]">{group.category}</div>
+                  <DirectoryList
+                    items={group.items.map(({ name }) => ({
+                      href: '#component' + name,
+                      label: name,
+                    }))}
+                    scrollTarget="#main"
+                    client:load
+                  />
+                </Fragment>
+              ))
+            }
+            <DirectoryList
+              items={[
+                {
+                  href: 'aa',
+                  label: 'aa',
+                  children: [
+                    { href: 'aa1', label: 'aa1' },
+                    {
+                      href: 'aa2',
+                      label: 'aa2',
+                      children: [
+                        { href: 'aa21', label: 'aa21' },
+                        { href: 'aa22', label: 'aa22' },
+                      ],
+                    },
+                  ],
+                },
+              ]}
+              scrollTarget="#main"
+              client:load
+            />
+          </div>
         </nav>
       </aside>
-      <main class="relative z-1 flex flex-col w-0 h-full flex-1">
+      <main class="relative z-1 flex flex-col w-full min-w-0 h-full flex-1">
         <header class="sticky flex px-8 items-center top-0 z-2 w-full h-16 bg-[var(--bg-main-3)]">
-          <h1 class="absolute -z-1 inset-0 flex items-center justify-center font-bold text-center text-2xl">組件目錄</h1>
-          <ThemeToggle />
+          <h1 class="absolute -z-1 inset-0 flex items-center justify-center font-bold text-center text-2xl">Storybook</h1>
+          <ThemeToggle client:load />
         </header>
-        <div class="relative z-1 w-full h-full px-[5%] overflow-x-hidden overflow-y-auto">
+        <div id="main" class="relative z-1 w-full h-full px-[5%] overflow-x-hidden overflow-y-auto">
           <div class="w-full">
             {
               list.map((group) => (
                 <article>
-                  <h2 class="font-bold my-15 text-5xl">{group.title}</h2>
+                  <h2 class="font-bold my-15 text-5xl">{group.category}</h2>
                   {group.items.map(({ path, name, Component, props, slots, category, keywords }) => (
-                    <section class="mt-10">
+                    <section id={'component' + name} class="mt-10">
                       <h3 class="font-bold text-4xl">{name}</h3>
                       <small class="inline-block mt-4 px-3.5 py-0.5 text-sm italic rounded-lg bg-[var(--bg-elevated-4)]">{path}</small>
-                      {group.title === 'Layouts' ? (
+                      {group.category === 'Layouts' ? (
                         <LayoutFrame class="mt-10" name={name ?? ''} mobile={props['mobile']['type']} />
                       ) : (
                         <div class="mt-10">
@@ -95,6 +125,20 @@ const list = [
   </body>
 </html>
 
-<script></script>
+<script>
+  // const searchInput = document.querySelector('#searchComponent') as HTMLInputElement
+  // searchInput.oninput = () => {
+  //   const searchValue = searchInput.value
+  //   const elements = document.querySelectorAll('li')
+  //   for (const element of elements) {
+  //     if (element.textContent?.toLowerCase().includes(searchValue.toLowerCase())) {
+  //       element.style.display = 'revert'
+  //     } else {
+  //       element.style.display = 'none'
+  //     }
+  //   }
+  //   console.log(searchValue)
+  // }
+</script>
 
 <style></style>

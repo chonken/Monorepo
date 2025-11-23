@@ -3,11 +3,11 @@ import base from '@repo/astro-config'
 
 /** @type {import('astro').AstroUserConfig} */
 const config = {
-  ...base,
+  ...(base ?? {}),
   vite: {
-    ...base.vite,
+    ...(base.vite ?? {}),
     plugins: [
-      ...base.vite.plugins,
+      ...(base.vite.plugins ?? []),
       // 個別專案內的vite插件
     ],
   },

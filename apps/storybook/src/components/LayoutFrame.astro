@@ -1,18 +1,18 @@
 ---
-import { mergeClasses } from '@utils'
-import breakpoint from '@config/breakpoint.json'
-
 interface Props {
   class?: string
   name: string
   mobile?: string[]
 }
+import { mergeClasses } from '@utils'
+import breakpoint from '@config/breakpoint.json'
+
 const { class: className = '', name, mobile = [], ...rest } = Astro.props
 
-const classList = mergeClasses(className, ['']).join(' ')
+const classList = mergeClasses(className, [''])
 ---
 
-<div class={classList} {...rest}>
+<div class:list={classList} {...rest}>
   <ul class="flex flex-wrap justify-center gap-2">
     {
       ['1920', ...mobile].map((item) =>
