@@ -1,97 +1,94 @@
 ---
-import type { LayoutProps } from '../type/layout'
+import type { ElementProps } from '../type/element'
+import ListLine from './interface/_listLine.astro'
 import { mergeClasses } from '../utils'
 // 暫時不用Grid，太容易爆字數
 // import Grid from './Grid.astro'
 
-export interface ProcessTimelineItemProps extends LayoutProps {
+export interface ProcessTimelineItemProps extends ElementProps {
   reverse?: boolean
 }
 interface Props extends ProcessTimelineItemProps {}
-const { element = 'li', class: className = '', reverse = false, ...rest } = Astro.props
 
-const Element = element as keyof HTMLElement
-const classList = mergeClasses(className, ['ch-li-ptt', 'ch-layout', reverse ? 'reverse' : ''])
+const { id, class: className = '', reverse = false, ...rest } = Astro.props
+
+const classList = mergeClasses(className, ['ch-ptli', 'ch-layout', reverse ? 'reverse' : ''])
+const hasMarker = Astro.slots.has('marker')
 ---
 
-<Element class:list={classList} {...rest}>
-  <div class="ch-li-ptt-l">
-    <slot />
+<li id={id} class:list={classList} {...rest}>
+  <div class="ch-ptli-l">
     <slot name="left" />
   </div>
-  <div class="ch-li-ptt-i"><slot name="icon"><div class="ch-li-ptt-d"></div></slot></div>
-  <div class="ch-li-ptt-r">
+  <ListLine>
+    <slot name="marker" slot="marker">
+      <div class="ch-ptli-d"></div>
+    </slot>
+  </ListLine>
+  <div class="ch-ptli-r">
+    <slot />
     <slot name="right" />
   </div>
-</Element>
+</li>
 
 <style lang="scss" is:global>
   @use '../config/breakpoint' as bp;
-  .ch-li-ptt {
+  .ch-ptli {
     display: grid;
     grid-template-columns: minmax(0, 1fr) max-content minmax(0, 1fr);
     align-items: var(--itm);
     margin-block: 0 !important;
     padding-block: 0 !important;
-    gap: var(--xgap);
+    column-gap: var(--cgap);
   }
-  :where(.ch-ptt.odd-reverse) > .ch-li-ptt:nth-of-type(even),
-  .ch-li-ptt:where(.reverse) {
+  .ch-ptli:first-of-type {
+    margin-top: calc(var(--rpd-t) * -1) !important;
+  }
+  .ch-ptli:last-of-type {
+    margin-bottom: calc(var(--rpd-b) * -1) !important;
+  }
+  :where(.ch-ptl.odd-reverse) > .ch-ptli:nth-of-type(even),
+  .ch-ptli:where(.reverse) {
     direction: rtl;
   }
-  .ch-li-ptt-l,
-  .ch-li-ptt-r {
-    margin-block: var(--ygap);
+  .ch-ptli-l,
+  .ch-ptli-r {
+    padding-block: var(--rpd-t) var(--rpd-b);
   }
-  .ch-li-ptt-l {
-    text-align: end;
-  }
-  .ch-li-ptt-d {
-    width: var(--dot-s);
-    height: var(--dot-s);
-    border-radius: 50%;
-    background-color: var(--dot-bgc);
+  .ch-ptli-d {
+    width: var(--dw);
+    height: var(--dw);
+    border-radius: var(--dr);
+    background-color: var(--dc);
     flex-shrink: 0;
-  }
-  .ch-li-ptt-i {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-self: stretch;
-    &::before,
-    &::after {
-      content: '';
-      border-left: 1px solid #f2b81a;
-      flex-grow: 1;
-    }
-    &::before {
-      max-height: var(--dt);
-    }
-  }
-  .ch-li-ptt:first-of-type > .ch-li-ptt-i::before {
-    opacity: var(--ts);
-  }
-  .ch-li-ptt:last-of-type > .ch-li-ptt-i::after {
-    opacity: var(--te);
   }
 
   // 手動設定尺寸
-  $map: md, sm, xs, 2xs;
+  $map: lg, md, sm, xs, 2xs;
 
   @each $size in $map {
     @media (max-width: bp.size($size)) {
-      .mob-#{$size} > .ch-li-ptt {
+      .mob-#{$size} > .ch-ptli {
         grid-template-columns: max-content 1fr;
+        align-items: var(--mob-itm);
+        column-gap: 20px;
         direction: ltr;
-        & > .ch-li-ptt-l {
-          text-align: start;
-          margin-block-end: 0;
+        & > .ch-ptli-l {
+          padding-block-end: 0;
         }
-        & > .ch-li-ptt-i {
+        & > .ch-ptli-r {
+          padding-block-start: 0;
+        }
+        & > .ch-itfll-m {
           order: -1;
           grid-row: span 2;
-          &::before {
-            max-height: var(--mob-dt);
+          & .ch-itfll-l:first-child {
+            max-height: var(--mob-lt);
+            height: var(--mob-lt);
+          }
+          & .ch-itfll-l:last-child {
+            max-height: var(--mob-lb);
+            height: var(--mob-lb);
           }
         }
       }

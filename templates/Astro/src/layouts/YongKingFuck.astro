@@ -136,34 +136,63 @@ const keywords = Astro.props.keywords || []
   }
 
   [data-animate-in] {
-    opacity: 0;
+    --ani-move-pos: clamp(40px, 10%, 50vw);
+    --ani-move-nag: clamp(-40px, -10%, -50vw);
     transition:
+      opacity 0.8s ease,
       transform 0.8s ease,
-      opacity 0.8s ease;
+      clip-path 0.8s ease;
   }
   [data-animate-in='up'] {
-    transform: translate3d(0, 10%, 0);
+    opacity: 0;
+    transform: translate3d(0, var(--ani-move-pos), 0);
   }
   [data-animate-in='left'] {
-    transform: translate3d(-5%, 0, 0);
+    opacity: 0;
+    transform: translate3d(var(--ani-move-nag), 0, 0);
   }
   [data-animate-in='right'] {
-    transform: translate3d(5%, 0, 0);
+    opacity: 0;
+    transform: translate3d(var(--ani-move-pos), 0, 0);
   }
   [data-animate-in='down'] {
-    transform: translate3d(0, -10%, 0);
+    opacity: 0;
+    transform: translate3d(0, var(--ani-move-nag), 0);
   }
   [data-animate-in='fadeIn'] {
-    transform: translate3d(0, 0, 0);
+    opacity: 0;
   }
   [data-animate-in='scaleIn'] {
+    opacity: 0;
     transform: scale(0.3);
   }
   [data-animate-in='rotateIn'] {
+    opacity: 0;
     transform: scale(0.3) rotate(-10deg);
+  }
+  [data-animate-in='clip-up'] {
+    clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+  }
+  [data-animate-in='clip-down'] {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+  [data-animate-in='clip-left'] {
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  }
+  [data-animate-in='clip-right'] {
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+  }
+  .in-view:is([data-animate-in='clip-up'], [data-animate-in='clip-down'], [data-animate-in='clip-left'], [data-animate-in='clip-right']) {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+  [data-animate-in='clip-circle'] {
+    clip-path: circle(15% at 50% 50%);
+  }
+  .in-view:is([data-animate-in='clip-circle']) {
+    clip-path: circle(100% at 50% 50%);
   }
   [data-animate-in].in-view {
     opacity: 1;
-    transform: translate3d(0, 0, 0) rotate(0deg);
+    transform: none;
   }
 </style>

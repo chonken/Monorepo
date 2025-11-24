@@ -1,10 +1,11 @@
 ---
 import type { ElementProps } from '../type/element'
+import ListLine from './interface/_listLine.astro'
+import { mergeClasses } from '../utils'
 
 export interface LeftLineListItemProps extends ElementProps {}
 interface Props extends LeftLineListItemProps {}
 
-import { mergeClasses } from '../utils'
 const { id, class: className = '', ...rest } = Astro.props
 
 const classList = mergeClasses(className, ['ch-llli'])
@@ -18,19 +19,11 @@ const classList = mergeClasses(className, ['ch-llli'])
       </div>
     )
   }
-  <div class="ch-llli-m">
-    <div class="ch-llli-l"></div>
-    {
-      Astro.slots.has('marker') ? (
-        <div class="ch-llli-i">
-          <slot name="marker" />
-        </div>
-      ) : (
-        <div class="ch-llli-d" />
-      )
-    }
-    <div class="ch-llli-l"></div>
-  </div>
+  <ListLine>
+    <slot name="marker" slot="marker">
+      <div class="ch-llli-d"></div>
+    </slot>
+  </ListLine>
   <div class="ch-llli-t"><slot /></div>
 </li>
 
@@ -49,83 +42,47 @@ const classList = mergeClasses(className, ['ch-llli'])
   .ch-llli:last-of-type {
     margin-bottom: calc(var(--rpd-b) * -1) !important;
   }
-  :is(.ch-llli-g, .ch-llli-i, .ch-llli-m) {
+  :is(.ch-llli-g, .ch-llli-m) {
     flex-shrink: 0;
   }
   .ch-llli-g {
     padding-block: var(--rpd-t) var(--rpd-b);
   }
-  .ch-llli-m {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--l-gap);
-    align-self: stretch !important;
+  .ch-llli-t {
+    padding-block: var(--rpd-t) var(--rpd-b);
+    flex-grow: 1;
   }
   .ch-llli-d {
     width: var(--dw);
     height: var(--dw);
     border-radius: var(--dr);
     background-color: var(--dc);
-  }
-  .ch-llli-l {
-    position: relative;
-    border-left: var(--lw) solid var(--lc);
-    flex-grow: 1;
-  }
-  .ch-llli-l:first-child {
-    min-height: var(--d-t);
-    height: var(--dt);
-    max-height: var(--dt);
-  }
-  .ch-llli-l:last-child {
-    min-height: var(--d-b);
-  }
-  .ch-llli-l::after {
-    position: absolute;
-    left: calc((var(--lw) + var(--l-dw)) / -2);
-    width: var(--l-dw);
-    height: var(--l-dw);
-    border-radius: var(--l-dr);
-    background-color: var(--l-dc);
-    z-index: 1;
-  }
-  .ch-llli-l:first-child::after {
-    content: '';
-    bottom: calc(2.5px * -1);
-  }
-  .ch-llli-l:last-child::after {
-    content: '';
-    top: calc(2.5px * -1);
-  }
-  .ch-llli-t {
-    padding-block: var(--rpd-t) var(--rpd-b);
-    flex-grow: 1;
-  }
-  .ch-llli:first-of-type > .ch-llli-m .ch-llli-l:first-child {
-    min-height: auto;
-    opacity: var(--ts);
-  }
-  .ch-llli:last-of-type > .ch-llli-m .ch-llli-l:last-child {
-    min-height: auto;
-    opacity: var(--te);
+    flex-shrink: 0;
   }
 
   // 手動設定尺寸
-  $map: md, sm, xs, 2xs;
+  $map: lg, md, sm, xs, 2xs;
 
   @each $size in $map {
     @media (max-width: bp.size($size)) {
       .mob-#{$size} > .ch-llli {
-        &:nth-of-type(n) {
-          flex-direction: column;
-          align-items: center;
+        flex-direction: column;
+        align-items: center;
+        column-gap: 20px;
+        &:first-of-type,
+        &:last-of-type {
+          margin-block: 0 !important;
         }
-        & > .ch-llli-m .ch-llli-l {
+        & > .ch-itfll-m .ch-itfll-l {
           display: none;
         }
         & > .ch-llli-t {
-          padding-top: var(--cgap);
+          padding-block: 0 var(--cgap);
+        }
+        &:last-of-type {
+          & > .ch-llli-t {
+            padding-block: 0;
+          }
         }
       }
     }

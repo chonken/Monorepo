@@ -1,150 +1,150 @@
 {
   "css-media": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "media",
     "body": ["@media (max-width: ${1|1600,1440,1280,1024,768,576,480,375|}px) {$2}"],
     "description": "RWD"
   },
   "css-font-custom": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "fs",
     "body": ["font-size: var(--f${1:18});"],
     "description": "CSS Variables"
   },
   "css-font-12": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f12",
     "body": ["font-size: var(--f12);"],
     "description": "CSS Variables"
   },
   "css-font-14": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f14",
     "body": ["font-size: var(--f14);"],
     "description": "CSS Variables"
   },
   "css-font-16": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f16",
     "body": ["font-size: var(--f16);"],
     "description": "CSS Variables"
   },
   "css-font-18": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f18",
     "body": ["font-size: var(--f18);"],
     "description": "CSS Variables"
   },
   "css-font-20": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f20",
     "body": ["font-size: var(--f20);"],
     "description": "CSS Variables"
   },
   "css-font-22": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f22",
     "body": ["font-size: var(--f22);"],
     "description": "CSS Variables"
   },
-  "css-font-25": {
-    "scope": "css",
-    "prefix": "f25",
-    "body": ["font-size: var(--f25);"],
-    "description": "CSS Variables"
-  },
   "css-font-24": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f24",
     "body": ["font-size: var(--f24);"],
     "description": "CSS Variables"
   },
+  "css-font-25": {
+    "scope": "css,scss",
+    "prefix": "f25",
+    "body": ["font-size: var(--f25);"],
+    "description": "CSS Variables"
+  },
   "css-font-26": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f26",
     "body": ["font-size: var(--f26);"],
     "description": "CSS Variables"
   },
   "css-font-28": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f28",
     "body": ["font-size: var(--f28);"],
     "description": "CSS Variables"
   },
   "css-font-30": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f30",
     "body": ["font-size: var(--f30);"],
     "description": "CSS Variables"
   },
   "css-font-32": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f32",
     "body": ["font-size: var(--f32);"],
     "description": "CSS Variables"
   },
   "css-font-34": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f34",
     "body": ["font-size: var(--f34);"],
     "description": "CSS Variables"
   },
   "css-font-35": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f35",
     "body": ["font-size: var(--f35);"],
     "description": "CSS Variables"
   },
   "css-font-36": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f36",
     "body": ["font-size: var(--f36);"],
     "description": "CSS Variables"
   },
   "css-font-38": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f38",
     "body": ["font-size: var(--f38);"],
     "description": "CSS Variables"
   },
   "css-font-40": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f40",
     "body": ["font-size: var(--f40);"],
     "description": "CSS Variables"
   },
   "css-font-42": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f42",
     "body": ["font-size: var(--f42);"],
     "description": "CSS Variables"
   },
   "css-font-44": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f44",
     "body": ["font-size: var(--f44);"],
     "description": "CSS Variables"
   },
   "css-font-45": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f45",
     "body": ["font-size: var(--f45);"],
     "description": "CSS Variables"
   },
   "css-font-46": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f46",
     "body": ["font-size: var(--f46);"],
     "description": "CSS Variables"
   },
   "css-font-48": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f48",
     "body": ["font-size: var(--f48);"],
     "description": "CSS Variables"
   },
   "css-font-50": {
-    "scope": "css",
+    "scope": "css,scss",
     "prefix": "f50",
     "body": ["font-size: var(--f50);"],
     "description": "CSS Variables"

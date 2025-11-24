@@ -1,0 +1,51 @@
+<div class="ch-itfll-m">
+  <div class="ch-itfll-l"></div>
+  <slot name="marker" />
+  <div class="ch-itfll-l"></div>
+</div>
+
+<style is:global>
+  .ch-itfll-m {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--l-gap);
+    align-self: stretch !important;
+  }
+  .ch-itfll-l {
+    position: relative;
+    border-left: var(--lw) solid var(--lc);
+    flex-grow: 1;
+  }
+  .ch-itfll-l:first-child {
+    min-height: var(--d-t);
+    height: var(--dt);
+    max-height: var(--dt);
+  }
+  .ch-itfll-l:last-child {
+    min-height: var(--d-b);
+  }
+  .ch-itfll-l::after {
+    position: absolute;
+    left: calc((var(--lw) + var(--l-dw)) / -2);
+    width: var(--l-dw);
+    height: var(--l-dw);
+    border-radius: var(--l-dr);
+    background-color: var(--l-dc);
+    z-index: 1;
+  }
+  .ch-itfll-l:first-child::after {
+    content: '';
+    bottom: calc(2.5px * -1);
+  }
+  .ch-itfll-l:last-child::after {
+    content: '';
+    top: calc(2.5px * -1);
+  }
+  :first-of-type > .ch-itfll-m .ch-itfll-l:first-child {
+    opacity: var(--ts);
+  }
+  :last-of-type > .ch-itfll-m .ch-itfll-l:last-child {
+    opacity: var(--te);
+  }
+</style>

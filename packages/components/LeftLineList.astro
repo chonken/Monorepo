@@ -18,7 +18,7 @@ export interface LeftLineListProps extends ElementProps {
   lineDotCircle?: boolean
   trimStart?: boolean
   trimEnd?: boolean
-  mobile?: 'md' | 'sm' | 'xs' | '2xs' | 'none'
+  mobile?: 'lg' | 'md' | 'sm' | 'xs' | '2xs' | 'none'
 }
 interface Props extends LeftLineListProps {}
 
@@ -102,6 +102,6 @@ const classList = mergeClasses(className, ['ch-lll', mobile === 'none' ? '' : `m
 
 <style is:global>
   .ch-lll {
-    overflow: hidden;
+    overflow-y: clip;
   }
 </style>
