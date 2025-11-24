@@ -1,6 +1,6 @@
 <template>
   <div :class="mergeClasses(classList, ['relative', 'flex', 'items-center', 'cursor-text'])" data-input v-bind="$attrs" @click="onClickContainer">
-    <input ref="inputRef" :id="id" type="text" name="search" :placeholder="placeholder" class="p-3 outline-none" />
+    <input ref="inputRef" :id="id" type="text" name="search" :placeholder="placeholder" class="p-3 outline-none" @input="onInput" :value="modelValue" />
     <label :for="id" class="absolute top-3 left-3 transition-all border-l-0 border-transparent pointer-events-none">
       {{ title }}
     </label>
@@ -24,6 +24,7 @@ interface Props {
   class?: string
   title?: string
   placeholder?: string
+  modelValue: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -35,6 +36,16 @@ const { id, class: classList = '', title, placeholder } = props
 const inputRef = ref<HTMLInputElement | null>(null)
 const onClickContainer = () => {
   inputRef.value?.focus()
+}
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: string): void
+}>()
+
+// input 事件處理
+const onInput = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  emit('update:modelValue', target.value)
 }
 </script>
 
@@ -48,14 +59,16 @@ input:focus::placeholder {
   @apply text-[var(--text-main-1)] opacity-50;
 }
 
-input:focus ~ label {
+input:focus ~ label,
+input:not(:placeholder-shown) ~ label {
   @apply top-[-0.5em] text-xs border-l-2;
 }
 [data-input]:hover fieldset,
 input:focus ~ fieldset {
   @apply border-[var(--border-1)];
 }
-input:focus ~ fieldset legend {
+input:focus ~ fieldset legend,
+input:not(:placeholder-shown) ~ fieldset legend {
   @apply w-auto px-1.5;
 }
 </style>

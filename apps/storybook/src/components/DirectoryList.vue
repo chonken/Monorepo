@@ -32,7 +32,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   scrollTarget: null,
-  rootMargin: '-60px 0px 20% 0px',
+  rootMargin: '0px 0px -20% 0px',
 })
 const emit = defineEmits<{ (e: 'update:modelValue', id: string): void }>()
 const { items = [], class: classList = '' } = props
@@ -63,7 +63,8 @@ function onSelect(href: string) {
   active.value = hrefToId(href)
 }
 
-// 把IntersectionObserver改掉，滾輪不會觸發所有的元素，導致剛進畫面的元素被單獨偵測並覆蓋bestRatio，結果就是跳來跳去
+// IntersectionObserver
+const ratioMap = new Map<string, number>()
 let io: IntersectionObserver | null = null
 let rootEl: Element | null = null
 
@@ -83,16 +84,20 @@ function collectIds(list: Item[], out: string[] = []) {
 }
 
 function handleIO(entries: IntersectionObserverEntry[]) {
-  let bestId: string | null = null
-  let bestRatio = 0
   for (const e of entries) {
     const id = e.target.getAttribute('id')
     if (!id) continue
-    if (e.isIntersecting && e.intersectionRatio > bestRatio) {
+    ratioMap.set(id, e.intersectionRatio)
+  }
+  let bestId: string | null = null
+  let bestRatio = 0
+  for (const [id, ratio] of ratioMap.entries()) {
+    if (ratio > bestRatio) {
       bestId = id
-      bestRatio = e.intersectionRatio
+      bestRatio = ratio
     }
   }
+
   if (bestId) active.value = bestId
 }
 
