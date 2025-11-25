@@ -1,111 +1,51 @@
 ---
-import type { ElementProps } from '../type/element'
-import { mergeClasses, parseDualUnit, parseUnit } from '../utils'
+import { mergeClasses } from '../utils'
+import type { ListLineProps } from './interface/_listLine.astro'
+import ListLine from './interface/_listLine.astro'
 
-export interface ProcessTimelineProps extends ElementProps {
+export interface ProcessTimelineProps extends ListLineProps {
   element?: 'ol' | 'ul'
   evenReverse?: boolean
-  item?: 'stretch' | 'start' | 'center' | 'end'
-  gap?: string | number
-  dotTop?: string
-  dotColor?: string
-  dotSize?: string
-  dotCircle?: boolean
-  lineGap?: string
-  lineWidth?: string
-  lineColor?: string
-  lineDotSize?: string
-  lineDotColor?: string
-  lineDotCircle?: boolean
-  trimStart?: boolean
-  trimEnd?: boolean
-  mobile?: 'lg' | 'md' | 'sm' | 'xs' | '2xs' | 'none'
   mobileItem?: 'center' | 'start' | 'end'
 }
 interface Props extends ProcessTimelineProps {}
-const { id, element = 'ol', class: className = '', evenReverse = false, item = 'center', gap = '40', dotTop, dotColor = '#878787', dotSize = '10px', dotCircle = false, lineGap = '5px', lineWidth = '1px', lineColor = '#878787', lineDotSize = '5px', lineDotColor = '#878787', lineDotCircle = false, trimStart = false, trimEnd = false, mobile = 'none', mobileItem = 'start', ...rest } = Astro.props
 
-const Element = element as keyof HTMLElement
+const { class: className = '', evenReverse = false, mobileItem = 'start', style, ...rest } = Astro.props
 
-// 解析並處理gap
-const [rowGap, columnGap] = parseDualUnit(gap, 'px')
-
-// 處理對齊
-let rpdt = ''
-let rpdb = ''
-switch (item) {
-  case 'stretch':
-  case 'start':
-    rpdt = '0px'
-    rpdb = rowGap
-    break
-  case 'center':
-    rpdt = `calc(${rowGap} / 2)`
-    rpdb = `calc(${rowGap} / 2)`
-    break
-  case 'end':
-    rpdt = rowGap
-    rpdb = '0px'
-    break
+const defaults: ListLineProps = {
+  element: 'ol',
+  item: 'center',
+  gap: '40',
+  dotColor: '#878787',
+  dotSize: '10px',
+  dotCircle: false,
+  lineGap: '5px',
+  lineWidth: '1px',
+  lineColor: '#878787',
+  lineDotSize: '5px',
+  lineDotColor: '#878787',
+  lineDotCircle: false,
+  trimStart: false,
+  trimEnd: false,
+  mobile: 'md',
 }
-let dT = 'auto'
-let dt = ''
-let db = ''
-if (dotTop) {
-  dT = parseUnit(dotTop)
-  if (dotTop === 'auto') {
-    dt = `calc(${rowGap} / 2)`
-    db = `calc(${rowGap} / 2)`
-  } else {
-    dt = parseUnit(dotTop)
-    db = `calc(${rowGap} - ${parseUnit(dotTop)})`
-  }
-} else {
-  switch (item) {
-    case 'stretch':
-    case 'start':
-      dT = '0px'
-      break
-    case 'end':
-      dT = '100%'
-      break
-  }
-  dt = rpdt
-  db = rpdb
+
+const props: ListLineProps = {
+  ...defaults,
+  ...rest,
 }
 
 const styleList = {
-  '--itm': item,
-  '--cgap': columnGap,
-  '--rpd-t': rpdt,
-  '--rpd-b': rpdb,
-  '--d-t': dt,
-  '--d-b': db,
-  '--dt': parseUnit(dT),
-  '--dw': parseUnit(dotSize),
-  '--dr': dotCircle ? '50%' : '0',
-  '--dc': dotColor,
-  '--l-gap': parseUnit(lineGap),
-  '--lw': parseUnit(lineWidth),
-  '--lc': lineColor,
-  '--l-dw': parseUnit(lineDotSize),
-  '--l-dc': lineDotColor,
-  '--l-dr': lineDotCircle ? '50%' : '0',
-  '--ts': trimStart ? 0 : 1,
-  '--te': trimEnd ? 0 : 1,
-  '--mob-itm': mobileItem,
   '--mob-lt': mobileItem === 'center' ? 'auto' : mobileItem === 'start' ? 0 : 100,
   '--mob-lb': mobileItem === 'center' ? 'auto' : mobileItem === 'end' ? 0 : 100,
 }
-const classList = mergeClasses(className, ['ch-ptl', evenReverse ? 'odd-reverse' : '', mobile === 'none' ? '' : `mob-${mobile}`])
+const classList = mergeClasses(className, ['ch-ptl', evenReverse ? 'odd-reverse' : ''])
 ---
 
-<Element id={id} class:list={classList} style={styleList} {...rest}>
-  <slot />
-</Element>
+<ListLine class:list={classList} style={styleList} {...props}><slot /></ListLine>
 
 <style is:global>
   .ch-ptl {
-    overflow-y: clip;
+    overflow-block: clip;
   }
 </style>

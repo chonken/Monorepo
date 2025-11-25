@@ -1,6 +1,6 @@
 ---
 import type { ElementProps } from '../type/element'
-import ListLine from './interface/_listLine.astro'
+import ItemLine from './interface/_itemLine.astro'
 import { mergeClasses } from '../utils'
 
 export interface LeftLineListItemProps extends ElementProps {}
@@ -19,11 +19,15 @@ const classList = mergeClasses(className, ['ch-llli'])
       </div>
     )
   }
-  <ListLine>
-    <slot name="marker" slot="marker">
-      <div class="ch-llli-d"></div>
-    </slot>
-  </ListLine>
+  {
+    Astro.slots.has('marker') ? (
+      <ItemLine markerClass="ch-llli-m" lineClass="ch-llli-l">
+        <slot name="marker" slot="marker" />
+      </ItemLine>
+    ) : (
+      <ItemLine markerClass="ch-llli-m" lineClass="ch-llli-l" />
+    )
+  }
   <div class="ch-llli-t"><slot /></div>
 </li>
 
@@ -52,13 +56,6 @@ const classList = mergeClasses(className, ['ch-llli'])
     padding-block: var(--rpd-t) var(--rpd-b);
     flex-grow: 1;
   }
-  .ch-llli-d {
-    width: var(--dw);
-    height: var(--dw);
-    border-radius: var(--dr);
-    background-color: var(--dc);
-    flex-shrink: 0;
-  }
 
   // 手動設定尺寸
   $map: lg, md, sm, xs, 2xs;
@@ -73,7 +70,7 @@ const classList = mergeClasses(className, ['ch-llli'])
         &:last-of-type {
           margin-block: 0 !important;
         }
-        & > .ch-itfll-m .ch-itfll-l {
+        & > .ch-llli-m .ch-llli-l {
           display: none;
         }
         & > .ch-llli-t {

@@ -1,0 +1,65 @@
+---
+import { mergeClasses } from '../../utils'
+const { markerClass = '', lineClass = '', ...rest } = Astro.props
+---
+
+<div class:list={mergeClasses(markerClass, 'ch-itfil-m')} {...rest}>
+  <div class:list={mergeClasses(lineClass, 'ch-itfil-l')} {...rest}></div>
+  <slot name="marker">
+    <div class="ch-itfil-d"></div>
+  </slot>
+  <div class:list={mergeClasses(lineClass, 'ch-itfil-l')} {...rest}></div>
+</div>
+
+<style is:global>
+  .ch-itfil-m {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--l-gap);
+    align-self: stretch !important;
+  }
+  .ch-itfil-l {
+    position: relative;
+    border-left: var(--lw) solid var(--lc);
+    flex-grow: 1;
+  }
+  .ch-itfil-l:first-child {
+    min-height: var(--d-t);
+    height: var(--dt);
+    max-height: var(--dt);
+  }
+  .ch-itfil-l:last-child {
+    min-height: var(--d-b);
+  }
+  .ch-itfil-l::after {
+    position: absolute;
+    left: calc((var(--lw) + var(--l-dw)) / -2);
+    width: var(--l-dw);
+    height: var(--l-dw);
+    border-radius: var(--l-dr);
+    background-color: var(--l-dc);
+    z-index: 1;
+  }
+  .ch-itfil-l:first-child::after {
+    content: '';
+    bottom: calc(2.5px * -1);
+  }
+  .ch-itfil-l:last-child::after {
+    content: '';
+    top: calc(2.5px * -1);
+  }
+  :first-of-type > .ch-itfil-m .ch-itfil-l:first-child {
+    opacity: var(--ts);
+  }
+  :last-of-type > .ch-itfil-m .ch-itfil-l:last-child {
+    opacity: var(--te);
+  }
+  .ch-itfil-d {
+    width: var(--dw);
+    height: var(--dw);
+    border-radius: var(--dr);
+    background-color: var(--dc);
+    flex-shrink: 0;
+  }
+</style>

@@ -1,9 +1,7 @@
 ---
 import type { ElementProps } from '../type/element'
-import ListLine from './interface/_listLine.astro'
+import ItemLine from './interface/_itemLine.astro'
 import { mergeClasses } from '../utils'
-// 暫時不用Grid，太容易爆字數
-// import Grid from './Grid.astro'
 
 export interface ProcessTimelineItemProps extends ElementProps {
   reverse?: boolean
@@ -12,19 +10,22 @@ interface Props extends ProcessTimelineItemProps {}
 
 const { id, class: className = '', reverse = false, ...rest } = Astro.props
 
-const classList = mergeClasses(className, ['ch-ptli', 'ch-layout', reverse ? 'reverse' : ''])
-const hasMarker = Astro.slots.has('marker')
+const classList = mergeClasses(className, ['ch-ptli', reverse ? 'reverse' : ''])
 ---
 
 <li id={id} class:list={classList} {...rest}>
   <div class="ch-ptli-l">
     <slot name="left" />
   </div>
-  <ListLine>
-    <slot name="marker" slot="marker">
-      <div class="ch-ptli-d"></div>
-    </slot>
-  </ListLine>
+  {
+    Astro.slots.has('marker') ? (
+      <ItemLine markerClass="ch-ptli-m" lineClass="ch-ptli-n">
+        <slot name="marker" slot="marker" />
+      </ItemLine>
+    ) : (
+      <ItemLine markerClass="ch-ptli-m" lineClass="ch-ptli-n" />
+    )
+  }
   <div class="ch-ptli-r">
     <slot />
     <slot name="right" />
@@ -55,13 +56,6 @@ const hasMarker = Astro.slots.has('marker')
   .ch-ptli-r {
     padding-block: var(--rpd-t) var(--rpd-b);
   }
-  .ch-ptli-d {
-    width: var(--dw);
-    height: var(--dw);
-    border-radius: var(--dr);
-    background-color: var(--dc);
-    flex-shrink: 0;
-  }
 
   // 手動設定尺寸
   $map: lg, md, sm, xs, 2xs;
@@ -79,14 +73,14 @@ const hasMarker = Astro.slots.has('marker')
         & > .ch-ptli-r {
           padding-block-start: 0;
         }
-        & > .ch-itfll-m {
+        & > .ch-ptli-m {
           order: -1;
           grid-row: span 2;
-          & .ch-itfll-l:first-child {
+          & .ch-ptli-n:first-child {
             max-height: var(--mob-lt);
             height: var(--mob-lt);
           }
-          & .ch-itfll-l:last-child {
+          & .ch-ptli-n:last-child {
             max-height: var(--mob-lb);
             height: var(--mob-lb);
           }
