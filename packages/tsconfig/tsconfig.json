@@ -15,5 +15,6 @@
       "@tailwind": ["../styles/tailwind.css"]
     },
     "types": ["astro/client"]
-  }
+  },
+  "exclude": ["dist"]
 }

@@ -1,4 +1,3 @@
 {
-  "extends": "@repo/tsconfig",
-  "exclude": ["dist"]
+  "extends": "@repo/tsconfig"
 }

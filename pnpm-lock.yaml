@@ -21,6 +21,9 @@ importers:
       '@types/jquery':
         specifier: ^3.5.32
         version: 3.5.32
+      prettier:
+        specifier: ^3.7.0
+        version: 3.7.0
       sass-embedded:
         specifier: ^1.89.2
         version: 1.89.2
@@ -33,18 +36,6 @@ importers:
       vite-plugin-static-copy:
         specifier: ^3.1.0
         version: 3.1.0(vite@6.4.1(@types/node@24.0.4)(jiti@2.4.2)(lightningcss@1.30.1)(sass-embedded@1.89.2)(yaml@2.8.0))
-
-  apps/2025-10月/模組/客戶/Astro:
-    dependencies:
-      '@repo/astro-config':
-        specifier: workspace:*
-        version: link:../../../../../packages/astro-config
-      '@repo/tsconfig':
-        specifier: workspace:*
-        version: link:../../../../../packages/tsconfig
-      astro:
-        specifier: '*'
-        version: 5.12.7(@types/node@24.0.4)(jiti@2.4.2)(lightningcss@1.30.1)(rollup@4.44.0)(sass-embedded@1.89.2)(typescript@5.8.3)(yaml@2.8.0)
 
   apps/storybook:
     dependencies:
@@ -1770,6 +1761,11 @@ packages:
   postcss@8.5.6:
     resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
     engines: {node: ^10 || ^12 || >=14}
+
+  prettier@3.7.0:
+    resolution: {integrity: sha512-pBiBj/gjRY9Qpk1b7cDda6Rbwvkaggos779AHQ0Ek/odwDx6xG6DRBxtnp1QmxbuD7pAO8/SQ8vuhtGv9LoLWA==}
+    engines: {node: '>=14'}
+    hasBin: true
 
   pretty-ms@9.3.0:
     resolution: {integrity: sha512-gjVS5hOP+M3wMm5nmNOucbIrqudzs9v/57bWRHQWLYklXqoXKrVfYW2W9+glfGsqtPgpiz5WwyEEB+ksXIx3gQ==}
@@ -4419,6 +4415,8 @@ snapshots:
       nanoid: 3.3.11
       picocolors: 1.1.1
       source-map-js: 1.2.1
+
+  prettier@3.7.0: {}
 
   pretty-ms@9.3.0:
     dependencies:

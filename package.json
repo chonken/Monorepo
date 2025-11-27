@@ -10,7 +10,8 @@
     "setup": "node scripts/setup.js",
     "copy": "node scripts/new_client.js",
     "storybook": "node scripts/open_storybook.js",
-    "demo": "pnpm storybook"
+    "demo": "pnpm storybook",
+    "format": "node scripts/format.js"
   },
   "dependencies": {
     "astro": "^5.12.7",
@@ -19,6 +20,7 @@
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.11",
     "@types/jquery": "^3.5.32",
+    "prettier": "^3.7.0",
     "sass-embedded": "^1.89.2",
     "tailwindcss": "^4.1.11",
     "vite-plugin-devtools-json": "^0.4.1",
