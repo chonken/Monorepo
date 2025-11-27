@@ -2,12 +2,9 @@
 import '@styles/normalize.css'
 import '@tailwind'
 import { layouts, components } from '../utils/AsyncImportDemo.js'
-import Main from '../layouts/index.vue'
+import Main from '../layouts/Main.vue'
 import LayoutFrame from '../components/LayoutFrame.astro'
 import PropsTable from '../components/PropsTable.astro'
-import ThemeToggle from '../components/ThemeToggle.vue'
-import SearchBox from '../components/SearchBox.vue'
-import DirectoryList from '../components/DirectoryList.vue'
 
 function formatList(globObj: Record<string, () => Promise<unknown>>) {
   const entries = Object.entries(globObj)

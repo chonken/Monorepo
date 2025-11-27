@@ -11,11 +11,13 @@
     "copy": "node scripts/new_client.js",
     "storybook": "node scripts/open_storybook.js",
     "demo": "pnpm storybook",
-    "format": "node scripts/format.js"
+    "format": "node scripts/format.js",
+    "update:storybook": "node scripts/update_storybook.js"
   },
   "dependencies": {
     "astro": "^5.12.7",
-    "fs-extra": "^11.3.2"
+    "fs-extra": "^11.3.2",
+    "ts-morph": "^27.0.2"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.11",
