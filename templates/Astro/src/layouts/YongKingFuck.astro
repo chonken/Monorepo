@@ -57,7 +57,7 @@ const keywords = Astro.props.keywords || []
     $min: 16;
     $max: 80;
     $upper: 0.8;
-    $lower: 0.2;
+    $lower: 0;
     $power: 2;
 
     // 超過區間
@@ -81,7 +81,7 @@ const keywords = Astro.props.keywords || []
       // vw補齊剩餘空間
       $fvw: math.div(math.round(math.div($size * (1 - base-ratio($size)), $lg) * 10000), 100);
       // 最小值
-      $fmin: math.round($fbase * 16 + math.div($sm * $fvw, 100));
+      $fmin: math.min(math.round($fbase * 16 + math.div($sm * $fvw, 100)), 50);
 
       --f#{$size}: clamp(#{$fmin}px, calc(var(--f_base) * #{$fbase} + #{$fvw}vw), #{$size}px);
     }
@@ -91,6 +91,7 @@ const keywords = Astro.props.keywords || []
     --pd60: 3.75rem;
     --pd80: 5rem;
     --pd100: 6.25rem;
+    --pd125: 7.8125rem;
     --pd150: 9.375rem;
     --pd200: 12.5rem;
     --pd250: 15.625rem;
@@ -112,6 +113,7 @@ const keywords = Astro.props.keywords || []
       --pd60: 3.75rem;
       --pd80: 4.375rem;
       --pd100: 5rem;
+      --pd125: 6.25rem;
       --pd150: 7.5rem;
       --pd200: 10rem;
       --pd250: 12.5rem;
@@ -127,6 +129,7 @@ const keywords = Astro.props.keywords || []
       --pd60: 3.125rem;
       --pd80: 3.75rem;
       --pd100: 3.75rem;
+      --pd125: 4rem;
       --pd150: 6.25rem;
       --pd200: 6.25rem;
       --pd250: 9.375rem;

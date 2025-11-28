@@ -1,18 +1,23 @@
 ---
-import type { ButtonProps } from '../../type/button'
-import { mergeClasses } from '../../utils'
+import type { Btn01Props } from './Btn01.type'
+import { defaultProps } from './Btn01.type'
+import { mergeClasses } from '../../../utils'
 
-export interface Btn01Props extends ButtonProps {
-  shadow?: string
-}
 interface Props extends Btn01Props {}
 
-const { href = '#', class: className = '', color = '#fff', backgroundColor = '#2b4346', shadow = 'rgba(0, 0, 0, 0.3)', blank = false, ...rest } = Astro.props
+const { href = '#', class: className = '', ...args } = Astro.props
+const { color, backgroundColor, shadow, blank, ...rest } = args
+
+// 合併属性
+const props: Btn01Props = {
+  ...defaultProps,
+  ...args,
+}
 
 const styleList = {
-  '--clr': color,
-  '--bgc': backgroundColor,
-  '--shd': shadow,
+  '--clr': props.color,
+  '--bgc': props.backgroundColor,
+  '--shd': props.shadow,
 }
 const classList = mergeClasses(className, ['btn_type01'])
 ---

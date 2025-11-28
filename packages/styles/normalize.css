@@ -25,6 +25,9 @@
 .opsl hr {
   height: auto;
 }
+.opsl :is(h3, h4, h5, h6) {
+  line-height: 1.2;
+}
 @layer base {
   .opsl {
     position: relative;
@@ -38,14 +41,14 @@
     list-style: none;
     font: inherit;
     color: inherit;
-    transition: color 0.5s, background-color 0.5s, border-color 0.5s;
+    transition:
+      color 0.5s,
+      background-color 0.5s,
+      border-color 0.5s;
   }
   .opsl *::before,
   .opsl *::after {
     box-sizing: border-box;
-  }
-  .opsl :is(h3, h4, h5, h6) {
-    line-height: 1.4;
   }
   .opsl iframe {
     display: block;

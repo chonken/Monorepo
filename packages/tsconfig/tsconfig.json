@@ -7,8 +7,8 @@
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["../components/*"],
-      "@layouts/*": ["../layouts/*"],
+      "@components/*": ["../components/*", "../components/*/index.astro"],
+      "@layouts/*": ["../layouts/*", "../layouts/*/index.astro"],
       "@styles/*": ["../styles/*"],
       "@utils": ["../utils"],
       "@config/*": ["../config/*"],

@@ -1,4 +1,4 @@
-import type { ButtonProps } from '../../type/button'
+import type { ButtonProps } from '../../../type/button'
 
 export interface Btn01Props extends ButtonProps {
   shadow?: string
@@ -12,3 +12,6 @@ export const defaultProps: Btn01Props = {
   shadow: 'rgba(0, 0, 0, 0.3)',
   blank: false,
 }
+
+// 自動化生成storybook插槽資訊
+export const slots = ['default', 'icon']
