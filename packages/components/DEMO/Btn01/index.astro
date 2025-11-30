@@ -1,6 +1,6 @@
 ---
 import type { Btn01Props } from './Btn01.type'
-import { defaultProps } from './Btn01.type'
+import { id, defaultProps } from './Btn01.type'
 import { mergeClasses } from '../../../utils'
 
 interface Props extends Btn01Props {}
@@ -19,7 +19,7 @@ const styleList = {
   '--bgc': props.backgroundColor,
   '--shd': props.shadow,
 }
-const classList = mergeClasses(className, ['btn_type01'])
+const classList = mergeClasses(className, [id])
 ---
 
 <a href={href} class:list={classList} style={styleList} target={blank ? '_blank' : undefined} {...rest}>
