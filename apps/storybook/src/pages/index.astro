@@ -48,6 +48,7 @@ const tableOfContents = list.map((group) => ({
   <body class="dark">
     <div class="opsl flex w-full h-full text-lg text-[var(--text-main-1)] bg-[var(--bg-main-1)]">
       <Main data={tableOfContents} client:load>
+        <!-- 紀錄: 當其他框架組件使用 client:load 時，會將該框架的組件進行水合，刷新元素，導致slot中的astro組件的事件註冊無法採用刷新的元素 -->
         <div class="w-full">
           {
             list.map((group) => (
@@ -76,6 +77,10 @@ const tableOfContents = list.map((group) => ({
   </body>
 </html>
 
-<script></script>
+<script>
+  // 動態刷新組件
+  const html = fetch('render/Btn01').then((res) => res.text())
+  console.log(await html)
+</script>
 
 <style></style>

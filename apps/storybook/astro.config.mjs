@@ -15,6 +15,7 @@ const config = {
   devToolbar: {
     enabled: false,
   },
+  output: 'server',
 }
 
 export default defineConfig(config)
