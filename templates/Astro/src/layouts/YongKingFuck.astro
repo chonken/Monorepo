@@ -50,16 +50,18 @@ const keywords = Astro.props.keywords || []
 
   // 字體大小
   $font-size: 18;
+  // 參數設置
+  $min: 16; // 字體大小最小區間
+  $max: 80; // 字體大小最大區間
+  $upper: 0.8; // 超過最大區間後的比例
+  $lower: 0; // 低於最小區間後的比例
+  $power: 2; // 縮放指數
+  // 縮放區間
+  $lg: bp.value(2xl); // 縮放區間的最大尺寸
+  $sm: bp.value(sm); // 縮放區間的最小尺寸
 
   // 字體大小基礎占比
   @function base-ratio($value) {
-    // 參數設置
-    $min: 16;
-    $max: 80;
-    $upper: 0.8;
-    $lower: 0;
-    $power: 2;
-
     // 超過區間
     @if $value < $min {
       @return $upper;
@@ -73,9 +75,6 @@ const keywords = Astro.props.keywords || []
     --f_base: 1rem;
     // 先取一個基礎值(--f_base * 占比)，值越小基礎值占比越大，剩餘換算成vw補齊
     @each $size in $font-size {
-      // 縮放區間
-      $lg: bp.value(2xl);
-      $sm: bp.value(sm);
       // 相對於--f_base的基礎值比例
       $fbase: math.div(math.round(math.div($size, 16) * base-ratio($size) * 100), 100);
       // vw補齊剩餘空間
