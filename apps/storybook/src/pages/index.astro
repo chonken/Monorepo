@@ -3,9 +3,8 @@ import '@styles/normalize.css'
 import '@tailwind'
 import { layouts, components } from '../utils/AsyncImportDemo.js'
 import Main from '../layouts/Main.vue'
-// import LayoutFrame from '../components/LayoutFrame.vue'
-// import PropsTable from '../components/PropsTable.astro'
 import DisplatModules from '../layouts/DisplatModules.vue'
+import config from '../save/config.json' with { type: 'json' }
 
 function formatList(globObj: Record<string, () => Promise<unknown>>) {
   const entries = Object.entries(globObj)
@@ -37,7 +36,7 @@ const tableOfContents = list.map((group) => ({
 }))
 ---
 
-<!-- ruler看看能不能移到docs的components --><!-- [name].astro的Component可以用傳的 -->
+<!-- ruler看看能不能移到docs的components -->
 <html lang="zh-Hant-TW">
   <head>
     <meta charset="UTF-8" />
@@ -46,32 +45,11 @@ const tableOfContents = list.map((group) => ({
     <link rel="stylesheet" href="/src/styles/main.css" />
     <title>Storybook</title>
   </head>
-  <body class="dark">
+  <body class={config.theme}>
     <div class="opsl flex w-full h-full text-lg text-[var(--text-main-1)] bg-[var(--bg-main-1)]">
       <Main data={tableOfContents} client:load>
         <DisplatModules client:load />
         <!-- 紀錄: 當其他框架組件使用 client:load 時，會將該框架的組件進行水合，刷新元素，導致slot中的astro組件的事件註冊無法採用刷新的元素 -->
-        <!-- {
-          list.map((group) => (
-            <article>
-              <h2 class="font-bold my-15 text-5xl">{group.category}</h2>
-              {group.items.map(({ path, name, Component, props, slots, category, keywords }) => (
-                <section id={'component' + name} class="mt-10">
-                  <h3 class="font-bold text-4xl">{name}</h3>
-                  <small class="inline-block mt-4 px-3.5 py-0.5 text-sm italic rounded-lg bg-[var(--bg-elevated-4)]">{path}</small>
-                  {group.category === 'Layouts' ? (
-                    <LayoutFrame class="mt-10" name={name ?? ''} breakpoints={props['mobile']['type']} client:load />
-                  ) : (
-                    <div class="mt-10">
-                      <Component />
-                    </div>
-                  )}
-                  <PropsTable props={props} />
-                </section>
-              ))}
-            </article>
-          ))
-        } -->
       </Main>
     </div>
   </body>

@@ -3,17 +3,19 @@
 </template>
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { getSlotContent } from '../utils/slotFormatter.ts'
 
 interface Props {
   name: string
   props?: Record<string, unknown>
-  slots?: Record<string, string>
+  content?: string
 }
 const props = withDefaults(defineProps<Props>(), {})
-const { name, props: params, slots } = props
+const { name, props: params, content } = props
 
 const html = ref('')
 onMounted(async () => {
+  console.log(content && getSlotContent(content))
   html.value = await fetch(`render/${name}?href=#${name}`, {
     method: 'POST',
     headers: {
@@ -21,7 +23,7 @@ onMounted(async () => {
     },
     body: JSON.stringify({
       props: params,
-      slots,
+      slots: content && getSlotContent(content),
     }),
   }).then((res) => res.text())
 })

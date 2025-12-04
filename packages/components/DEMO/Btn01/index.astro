@@ -5,19 +5,17 @@ import { mergeClasses } from '../../../utils'
 
 interface Props extends Btn01Props {}
 
-const { href, class: className = '', ...args } = Astro.props
-const { color, backgroundColor, shadow, blank, ...rest } = args
-
 // 合併属性
 const props = {
   ...defaultProps,
-  ...args,
+  ...Astro.props,
 }
+const { href, class: className, color, backgroundColor, shadow, blank, ...rest } = props
 
 const styleList = {
-  '--clr': props.color,
-  '--bgc': props.backgroundColor,
-  '--shd': props.shadow,
+  '--clr': color,
+  '--bgc': backgroundColor,
+  '--shd': shadow,
 }
 const classList = mergeClasses(className, [id])
 ---

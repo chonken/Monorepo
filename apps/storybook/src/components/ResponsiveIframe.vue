@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import { mergeClasses } from '@utils'
-import breakpoint from '@config/breakpoint.json'
+import breakpoint from '@config/breakpoint.json' with { type: 'json' }
 
 type Breakpoints = {
   '3xl': string
@@ -49,6 +49,9 @@ const sizes = [...otherSize, ...breakpoints.filter((size) => size !== 'none')]
 // 之後改成設定預設值
 let last = otherSize[0]
 
+/**
+ * 調整iframe內容縮放
+ */
 function onResize() {
   const iframe = iframeRef.value
   const comp = compRef.value
@@ -76,6 +79,7 @@ function changePoint(sizes: Sizes) {
 }
 
 onMounted(() => {
+  // iframe高度自適應、調整尺寸、監聽視窗調整尺寸
   const iframe = iframeRef.value
   if (iframe) {
     window.addEventListener('message', (event) => {

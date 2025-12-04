@@ -1,0 +1,18 @@
+{
+  "ch-l-r": [
+    {
+      "name": "展示1",
+      "example": { "overlay": -200, "maxWidth": 1200, "center": true },
+      "content": "image_txt",
+      "description": {}
+    }
+  ],
+  "btn_type01": [
+    {
+      "name": "展示1",
+      "example": { "shadow": "#8888" },
+      "content": "button",
+      "description": {}
+    }
+  ]
+}

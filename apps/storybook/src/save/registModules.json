@@ -1,7 +1,7 @@
 {
   "ch-bgf": {
     "keywords": ["background", "fixed"],
-    "categorys": [],
+    "categorys": ["background"],
     "binding": []
   },
   "btn_type01": {
@@ -106,7 +106,7 @@
   },
   "ch-llli": {
     "keywords": [],
-    "categorys": [],
+    "categorys": [""],
     "binding": []
   }
 }

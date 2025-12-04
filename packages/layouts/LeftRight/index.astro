@@ -8,15 +8,12 @@ import Container from '../Container.astro'
 
 interface Props extends LeftRightProps {}
 
-const { element, class: className = '', ...args } = Astro.props
-
 // 合併属性
 const props = {
   ...defaultProps,
-  ...args,
+  ...Astro.props,
 }
-
-const { maxWidth, item, justify, gap: g, reverse, mobile, mobileItem, mobileJustify, mobileFit, mobileReverse, center, overlay: oly, contentWidth, contentDirection, ...rest } = props
+const { element, class: className = '', maxWidth, item, justify, gap: g, reverse, mobile, mobileItem, mobileJustify, mobileFit, mobileReverse, center, overlay: oly, contentWidth, contentDirection, ...rest } = props
 
 // 處理間距和疊層
 const [rowGap, cGap] = parseDualUnit(g, 'px')

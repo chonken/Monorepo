@@ -15,7 +15,7 @@
   "button": [
     {
       "text": "了解更多+",
-      "icon": "/images/圖片",
+      "icon": "",
       "hover": "MORE"
     }
   ],
@@ -36,7 +36,7 @@
       "text": ["內文1", "內文2"]
     }
   ],
-  "item-image": [
+  "item_image": [
     {
       "title": "標題",
       "subtitle": "副標題",

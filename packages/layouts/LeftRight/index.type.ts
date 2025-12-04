@@ -4,6 +4,7 @@ import type { ContainerProps } from '../Container.astro'
 export const id = 'ch-l-r'
 
 export interface LeftRightProps extends FlexProps, ContainerProps {
+  mobile?: '2xl' | 'xl' | 'lg' | 'md' | 'sm' | 'none'
   mobileFit?: boolean
   overlay?: string
   contentWidth?: string
@@ -12,6 +13,7 @@ export interface LeftRightProps extends FlexProps, ContainerProps {
 
 export const props = {
   element: 'div',
+  class: '',
   item: 'stretch' as const,
   justify: 'center' as const,
   gap: '40',
