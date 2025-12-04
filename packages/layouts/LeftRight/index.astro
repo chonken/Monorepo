@@ -1,18 +1,22 @@
 ---
-import { mergeClasses, parseUnit, parseDualUnit, isNegative, toNegative } from '../utils'
-import Content from '../components/Content.astro'
-import Flex, { type FlexProps } from '../components/Flex.astro'
-import Container, { type ContainerProps } from './Container.astro'
+import type { LeftRightProps } from './index.type'
+import { id, props as defaultProps } from './index.type'
+import { mergeClasses, parseUnit, parseDualUnit, isNegative, toNegative } from '../../utils'
+import Content from '../../components/Content.astro'
+import Flex from '../../components/Flex.astro'
+import Container from '../Container.astro'
 
-export interface LeftRightProps extends FlexProps, ContainerProps {
-  mobileFit?: boolean
-  overlay?: string
-  contentWidth?: string
-  contentDirection?: 'ltr' | 'rtl' | 'inherit'
-}
 interface Props extends LeftRightProps {}
 
-const { element, id, class: className = '', maxWidth, item = 'stretch', justify = 'center', gap: g = '40', reverse = false, mobile = 'lg', mobileItem = 'center', mobileJustify = 'center', mobileFit = false, mobileReverse, center = false, overlay: oly = '0', contentWidth = '600', contentDirection = 'ltr', ...rest } = Astro.props
+const { element, class: className = '', ...args } = Astro.props
+
+// 合併属性
+const props = {
+  ...defaultProps,
+  ...args,
+}
+
+const { maxWidth, item, justify, gap: g, reverse, mobile, mobileItem, mobileJustify, mobileFit, mobileReverse, center, overlay: oly, contentWidth, contentDirection, ...rest } = props
 
 // 處理間距和疊層
 const [rowGap, cGap] = parseDualUnit(g, 'px')
@@ -22,7 +26,7 @@ const colGap = overlay === '0px' ? cGap : '0px'
 const gap = `${rowGap} ${colGap}`
 
 const contentStyleList = {
-  display: 'contents',
+  'display': 'contents',
   '--oly': toNegative(parseUnit(oly, 'px')),
 }
 const classList = mergeClasses(className, ['ch-l-r', ...(mobile === 'none' ? [] : [mobileFit ? 'mob-fit' : ''])])
@@ -45,7 +49,7 @@ const classList = mergeClasses(className, ['ch-l-r', ...(mobile === 'none' ? [] 
 </Container>
 
 <style lang="scss" is:global>
-  @use '../config/breakpoint' as bp;
+  @use '../../config/breakpoint' as bp;
   .ch-l-r {
     & > * {
       position: relative;

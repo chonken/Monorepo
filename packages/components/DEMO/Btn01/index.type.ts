@@ -1,10 +1,12 @@
 import type { ButtonProps } from '../../../type/button'
 
+export const id = 'btn_type01'
+
 export interface Btn01Props extends ButtonProps {
   shadow?: string
 }
 
-export const defaultProps: Btn01Props = {
+export const props = {
   href: '#',
   class: '',
   color: '#fff',

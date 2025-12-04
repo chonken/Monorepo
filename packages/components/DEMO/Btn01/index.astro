@@ -1,15 +1,15 @@
 ---
-import type { Btn01Props } from './Btn01.type'
-import { id, defaultProps } from './Btn01.type'
+import type { Btn01Props } from './index.type'
+import { id, props as defaultProps } from './index.type'
 import { mergeClasses } from '../../../utils'
 
 interface Props extends Btn01Props {}
 
-const { href = '#', class: className = '', ...args } = Astro.props
+const { href, class: className = '', ...args } = Astro.props
 const { color, backgroundColor, shadow, blank, ...rest } = args
 
 // 合併属性
-const props: Btn01Props = {
+const props = {
   ...defaultProps,
   ...args,
 }

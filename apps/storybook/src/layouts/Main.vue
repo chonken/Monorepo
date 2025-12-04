@@ -14,12 +14,11 @@
     </nav>
   </aside>
   <main class="relative z-1 flex flex-col w-full min-w-0 h-full flex-1">
-    <header class="sticky flex px-8 items-center top-0 z-2 w-full h-16 bg-[var(--bg-main-3)]">
-      <h1 class="absolute -z-1 inset-0 flex items-center justify-center font-bold text-center text-2xl">Storybook</h1>
-      <ThemeToggle />
-    </header>
+    <Header />
     <div id="main" class="relative z-1 w-full h-full px-[5%] overflow-x-hidden overflow-y-auto">
-      <slot></slot>
+      <div class="w-full">
+        <slot></slot>
+      </div>
     </div>
   </main>
 </template>
@@ -27,7 +26,7 @@
 import { ref, computed } from 'vue'
 import DirectoryList from '../components/DirectoryList.vue'
 import SearchBox from '../components/SearchBox.vue'
-import ThemeToggle from '../components/ThemeToggle.vue'
+import Header from '../layouts/Header.vue'
 
 interface Props {
   data: Array<{
@@ -49,7 +48,7 @@ const filteredData = computed(() =>
   data.map((group) => ({
     category: group.category,
     items: group.items.filter((item) => item.label.toLowerCase().includes(searchTerm.value.toLowerCase())),
-  }))
+  })),
 )
 </script>
 <style lang=""></style>
