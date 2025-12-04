@@ -17,13 +17,14 @@
     <Header />
     <div id="main" class="relative z-1 w-full h-full px-[5%] overflow-x-hidden overflow-y-auto">
       <div class="w-full">
-        <slot></slot>
+        <DisplatModules />
       </div>
     </div>
   </main>
 </template>
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
+import DisplatModules from '../layouts/DisplatModules.vue'
 import DirectoryList from '../components/DirectoryList.vue'
 import SearchBox from '../components/SearchBox.vue'
 import Header from '../layouts/Header.vue'
