@@ -1,38 +1,8 @@
 ---
 import '@styles/normalize.css'
 import '@tailwind'
-import { layouts, components } from '../utils/AsyncImportDemo.js'
 import Main from '../layouts/Main.vue'
 import config from '../save/config.json' with { type: 'json' }
-
-function formatList(globObj: Record<string, () => Promise<unknown>>) {
-  const entries = Object.entries(globObj)
-  return Promise.all(
-    entries.map(async ([path, promise]: [string, any]) => {
-      const component = await promise()
-      return {
-        path: path,
-        name: path.split('/').at(-1)?.split('.')[0] ?? 'Unknown',
-        Component: component.default,
-        id: component.id,
-        props: component.props,
-        slots: component.slots,
-        category: component.category,
-        keywords: component.keywords,
-      }
-    })
-  )
-}
-
-const list = [
-  { category: 'Components', items: await formatList(components) },
-  { category: 'Layouts', items: await formatList(layouts) },
-]
-
-const tableOfContents = list.map((group) => ({
-  category: group.category,
-  items: group.items.map(({ name }) => ({ href: '#component' + name, label: name })),
-}))
 ---
 
 <!-- ruler看看能不能移到docs的components -->
@@ -47,7 +17,7 @@ const tableOfContents = list.map((group) => ({
   <body class={config.theme}>
     <div class="opsl flex w-full h-full text-lg text-[var(--text-main-1)] bg-[var(--bg-main-1)]">
       <!-- 紀錄: 當其他框架組件使用 client:load 時，會將該框架的組件進行水合，刷新元素，導致slot中的astro組件的事件註冊無法採用刷新的元素 -->
-      <Main data={tableOfContents} client:load></Main>
+      <Main client:load></Main>
     </div>
   </body>
 </html>

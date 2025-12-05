@@ -4,7 +4,7 @@
   <!-- <ResponsiveIframe v-if="structure === 'Layouts'" :name="name" />
   <DynamicComponent v-else="structure === 'Components'" :name="name" :props="{ color: 'red' }" :slots="{ default: '你好世界' }" /> -->
   <div>
-    <DynamicComponent v-for="demo in demos" :key="demo.name" :name="name" :props="demo.example" :content="demo.content" />
+    <DynamicComponent v-for="demo in demos" :key="demo.name" :name="name" :props="demo.example" :content="demo.content" :contentsStyle="demo.contents_style" />
   </div>
 </template>
 <script setup lang="ts">
@@ -15,6 +15,7 @@ type Demo = {
   name: string
   example: Record<string, unknown>
   content: string
+  contents_style: Record<string, string>
   description: Record<string, unknown>
 }
 interface Props {

@@ -9,21 +9,21 @@ interface Props {
   name: string
   props?: Record<string, unknown>
   content?: string
+  contentsStyle?: Record<string, string>
 }
 const props = withDefaults(defineProps<Props>(), {})
-const { name, props: params, content } = props
+const { name, props: params, content, contentsStyle } = props
 
 const html = ref('')
 onMounted(async () => {
-  console.log(content && getSlotContent(content))
-  html.value = await fetch(`render/${name}?href=#${name}`, {
+  html.value = await fetch(`render/${name}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       props: params,
-      slots: content && getSlotContent(content),
+      slots: content && (await getSlotContent(content, contentsStyle)),
     }),
   }).then((res) => res.text())
 })

@@ -2,8 +2,9 @@
   "ch-l-r": [
     {
       "name": "展示1",
-      "example": { "overlay": -200, "maxWidth": 1200, "center": true },
+      "example": { "justify": "between", "item": "end", "overlay": -200, "maxWidth": 1200, "center": true },
       "content": "image_txt",
+      "contents_style": {},
       "description": {}
     }
   ],
@@ -12,6 +13,7 @@
       "name": "展示1",
       "example": { "shadow": "#8888" },
       "content": "button",
+      "contents_style": {},
       "description": {}
     }
   ]
