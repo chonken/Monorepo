@@ -1,12 +1,16 @@
 ---
-interface Props {
-  src?: string
-  seconds?: string | number
-  move?: 'left' | 'right' | 'up' | 'down'
-  class?: string
+import type { BgMarqueeProps } from './index.type'
+import { id, props as defaultProps } from './index.type'
+import { mergeClasses } from '../../utils'
+
+interface Props extends BgMarqueeProps {}
+
+// 合併属性
+const props = {
+  ...defaultProps,
+  ...Astro.props,
 }
-import { mergeClasses } from '../utils'
-const { class: className = '', seconds = 20, move = 'left', src = '', ...rest } = Astro.props
+const { class: className, seconds, move, src, ...rest } = props
 
 const map = {
   left: [1, 0],
@@ -21,7 +25,7 @@ const styleList = {
   '--bgp': (hr === 0 ? '50%' : `calc(${hr * 100}% + ${hr * -100}vw)`) + (vr === 0 ? '50%' : ` calc(${vr * 100}% + ${vr * -100}vh)`),
   '--bg': `url(${src})`,
 }
-const classList = mergeClasses(className, ['ch-bgmar']).join(' ')
+const classList = mergeClasses(className, [id]).join(' ')
 ---
 
 <div class={classList} style={styleList} {...rest}>

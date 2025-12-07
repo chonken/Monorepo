@@ -1,0 +1,28 @@
+---
+import type { ProcessTimelineProps } from './index.type'
+import { id, props as defaultProps } from './index.type'
+import { mergeClasses } from '../../utils'
+import ListLine from '../interface/_listLine.astro'
+
+interface Props extends ProcessTimelineProps {}
+
+// 合併属性
+const props: ProcessTimelineProps = {
+  ...defaultProps,
+  ...Astro.props,
+}
+const { class: className = '', style, ...rest } = props
+
+const styleList = style ?? {}
+const classList = mergeClasses(className, [id])
+---
+
+<ListLine class:list={classList} style={styleList} {...rest}>
+  <slot />
+</ListLine>
+
+<style is:global>
+  .ch-lll {
+    overflow-block: hidden;
+  }
+</style>

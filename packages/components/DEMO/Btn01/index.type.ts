@@ -15,5 +15,4 @@ export const props = {
   blank: false,
 }
 
-// 自動化生成storybook插槽資訊
 export const slots = ['default', 'icon']

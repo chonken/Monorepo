@@ -28,5 +28,4 @@ export const props = {
   contentDirection: 'ltr' as const,
 }
 
-// 自動化生成storybook插槽資訊
 export const slots = ['default', 'image', 'content']

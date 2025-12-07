@@ -13,7 +13,7 @@ const props = {
   ...defaultProps,
   ...Astro.props,
 }
-const { element, class: className = '', maxWidth, item, justify, gap: g, reverse, mobile, mobileItem, mobileJustify, mobileFit, mobileReverse, center, overlay: oly, contentWidth, contentDirection, ...rest } = props
+const { element, class: className, maxWidth, item, justify, gap: g, reverse, mobile, mobileItem, mobileJustify, mobileFit, mobileReverse, center, overlay: oly, contentWidth, contentDirection, ...rest } = props
 
 // 處理間距和疊層
 const [rowGap, cGap] = parseDualUnit(g, 'px')

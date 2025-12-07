@@ -1,17 +1,22 @@
 ---
-import type { ElementProps } from '../type/element'
-import ItemLine from './interface/_itemLine.astro'
-import { mergeClasses } from '../utils'
+import type { LeftLineListItemProps } from './index.type'
+import { id, props as defaultProps } from './index.type'
+import ItemLine from '../interface/_itemLine.astro'
+import { mergeClasses } from '../../utils'
 
-export interface LeftLineListItemProps extends ElementProps {}
 interface Props extends LeftLineListItemProps {}
 
-const { id, class: className = '', ...rest } = Astro.props
+// 合併属性
+const props: LeftLineListItemProps = {
+  ...defaultProps,
+  ...Astro.props,
+}
+const { id: astroId, class: className = '', ...rest } = props
 
-const classList = mergeClasses(className, ['ch-llli'])
+const classList = mergeClasses(className, [id])
 ---
 
-<li id={id} class:list={classList} {...rest}>
+<li id={astroId} class:list={classList} {...rest}>
   {
     Astro.slots.has('icon') && (
       <div class="ch-llli-g">

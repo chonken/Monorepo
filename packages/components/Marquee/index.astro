@@ -1,14 +1,16 @@
 ---
-import type { ElementProps } from '../type/element'
-import { mergeClasses, parseUnit } from '../utils'
+import type { MarqueeProps } from './index.type'
+import { id, props as defaultProps } from './index.type'
+import { mergeClasses, parseUnit } from '../../utils'
 
-export interface MarqueeProps extends ElementProps {
-  seconds?: string | number
-  move?: 'left' | 'right' | 'up' | 'down'
-}
 interface Props extends MarqueeProps {}
 
-const { class: className = '', seconds = 20, move = 'left', ...rest } = Astro.props
+// 合併属性
+const props: MarqueeProps = {
+  ...defaultProps,
+  ...Astro.props,
+}
+const { class: className = '', seconds, move, ...rest } = props
 
 const map = {
   left: [-1, 0],
@@ -22,7 +24,7 @@ const styleList = {
   '--sec': parseUnit(seconds, 's'),
   '--tra': `translate(${hr * 100}%, ${vr * 100}%)`,
 }
-const classList = mergeClasses(className, ['ch-mar', `ch-dir-${move}`])
+const classList = mergeClasses(className, [id, `ch-dir-${move}`])
 ---
 
 <div class:list={classList} style={styleList} {...rest}>

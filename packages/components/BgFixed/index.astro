@@ -1,0 +1,38 @@
+---
+import type { BgFixedProps } from './index.type'
+import { id, props as defaultProps } from './index.type'
+import { mergeClasses, parseUnit } from '../../utils'
+
+interface Props extends BgFixedProps {}
+
+// 合併属性
+const props = {
+  ...defaultProps,
+  ...Astro.props,
+}
+const { src, class: className, minHeight, ...rest } = props
+
+const styleList = {
+  '--url': `url(${src})`,
+  '--h': parseUnit(minHeight, 'vw'),
+}
+const classList = mergeClasses(className, [id])
+---
+
+<div class:list={classList} style={styleList} {...rest}>
+  <slot />
+</div>
+
+<style lang="scss" is:global>
+  @use '../../config/breakpoint' as bp;
+
+  .ch-bgf {
+    min-height: var(--h);
+    background: var(--url) center / cover fixed;
+  }
+  @media (max-width: bp.size(md)) {
+    .ch-bgf {
+      background-attachment: local;
+    }
+  }
+</style>
