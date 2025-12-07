@@ -122,7 +122,6 @@ onMounted(() => {
         }
       }
       if (bestId) active.value = '#' + bestId
-      console.log(active.value)
     },
     {
       root: scrollRoot.value,

@@ -3,9 +3,9 @@
   <!-- 缺少展示用的資訊 -->
   <!-- <ResponsiveIframe v-if="structure === 'Layouts'" :name="name" />
   <DynamicComponent v-else="structure === 'Components'" :name="name" :props="{ color: 'red' }" :slots="{ default: '你好世界' }" /> -->
-  <div>
-    <DynamicComponent v-for="demo in demos" :key="demo.name" :name="name" :props="demo.example" :content="demo.content" :contentsStyle="demo.contents_style" />
-  </div>
+
+  <DynamicComponent v-if="demos.length > 0" v-for="demo in demos" :key="demo.name" :name="name" :props="demo.example" :content="demo.content" :contentsStyle="demo.contents_style" />
+  <DynamicComponent v-else :name="name" />
 </template>
 <script setup lang="ts">
 import ResponsiveIframe from '../components/ResponsiveIframe.vue'

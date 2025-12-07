@@ -1,4 +1,3 @@
-import { slots } from '@layouts/LeftRight/index.type'
 import content from '../save/content.json' with { type: 'json' }
 
 export async function getSlotContent(category: string, contentsStyle?: Record<string, string>): Promise<Record<string, string>> {

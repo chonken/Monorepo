@@ -16,5 +16,14 @@
       "contents_style": {},
       "description": {}
     }
+  ],
+  "ch-bgf": [
+    {
+      "name": "展示1",
+      "example": { "src": "/images/奴隸主.jpg" },
+      "content": "image",
+      "contents_style": {},
+      "description": {}
+    }
   ]
 }

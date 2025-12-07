@@ -35,7 +35,6 @@ const open = ref<boolean>(true)
 
 const onSelect = (href: string) => {
   active.value = href
-  console.log('click', href, active.value)
 }
 
 const elClose = (el: Element) => {
