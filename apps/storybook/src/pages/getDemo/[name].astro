@@ -2,17 +2,6 @@
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js'
 import { layouts } from '../../utils/AsyncImportDemo.js'
 
-// export async function getStaticPaths() {
-//   const layouts = import.meta.glob('../../demo/layouts/*.astro', { eager: true })
-//   const paths = Object.keys(layouts)
-//     .map((key) => {
-//       const match = key.match(/\/([^\/]+)\.astro$/)
-//       return match ? { params: { name: match[1] } } : null
-//     })
-//     .filter(Boolean)
-//   return paths
-// }
-
 const { name = '' } = Astro.params
 
 const componentKey = Object.keys(layouts).find((k) => k.includes(name))

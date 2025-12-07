@@ -6,26 +6,28 @@
         <SearchBox id="searchComponent2" v-model="searchTerm" class="mt-4" title="搜索元件" />
       </div>
       <div class="p-4 overflow-y-auto">
-        <div v-for="group in filteredData" :key="group.structure">
-          <div class="mt-4 mb-1 text-sm font-bold text-[var(--text-main-1)]">{{ group.structure }}</div>
-          <DirectoryList :items="group.items" :key="searchTerm" scrollTarget="#main" />
-        </div>
+        <template v-for="group in directoryTags" :key="group.structure">
+          <template v-if="group.items.length > 0">
+            <div class="mt-4 mb-1 text-sm font-bold text-[var(--text-main-1)]">{{ group.structure }}</div>
+            <!-- 紀錄: 目前是根據 IntersectionObserver 決定 active，會導致按後排目錄時，當目錄高度不夠，active不會是對應按鈕 -->
+            <DirectoryList :items="group.items" :active="active" />
+          </template>
+        </template>
       </div>
     </nav>
   </aside>
   <main class="relative z-1 flex flex-col w-full min-w-0 h-full flex-1">
     <Header />
-    <div id="main" class="relative z-1 w-full h-full px-[5%] overflow-x-hidden overflow-y-auto">
-      <div class="w-full">
-        <DisplatModules :list="list" />
-      </div>
+    <div ref="scrollRoot" class="relative z-1 w-full h-full px-[5%] pb-[10%] overflow-x-hidden overflow-y-auto">
+      <!-- 紀錄: 除了created和有before外，子組件的生命週期順序都先於父組件，所以雙方都在onMounted寫程式時，子組件onMounted的程式是不會有父組件在onMounted的更新，解法是子組件用watch監聽父組件的關鍵數據 -->
+      <DisplayModules :list="list" v-model:sections="sections" />
     </div>
   </main>
 </template>
 <script lang="ts" setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, onBeforeUnmount, watch } from 'vue'
 import { typeOfLayouts, typeOfComponents } from '../utils/AsyncImportDemo.js'
-import DisplatModules from '../layouts/DisplatModules.vue'
+import DisplayModules from './DisplayModules.vue'
 import DirectoryList from '../components/DirectoryList.vue'
 import SearchBox from '../components/SearchBox.vue'
 import Header from '../layouts/Header.vue'
@@ -33,19 +35,19 @@ import regist from '../save/registModules.json' with { type: 'json' }
 import demo from '../save/demo.json' with { type: 'json' }
 
 const list = ref<{ structure: string; items: any[] }[]>([])
-const searchTerm = ref('')
+const searchTerm = ref<string>('')
 const tableOfContents = ref<{ structure: string; items: any[] }[]>([])
+const scrollRoot = ref<HTMLElement | null>(null)
 
 const pathRegex = /^(\.\.\/)+|\/[^/]+$/g
 
-// 篩選關鍵字
-const filteredData = computed(() =>
+// 根據 searchTerm 更新篩選 items
+const directoryTags = computed(() =>
   tableOfContents.value.map((group) => ({
     structure: group.structure,
     items: group.items.filter((item) => item.label.toLowerCase().includes(searchTerm.value.toLowerCase())),
   })),
 )
-
 const formatList = (globObj: Record<string, () => Promise<unknown>>) => {
   const entries = Object.entries(globObj)
   return Promise.all(
@@ -65,7 +67,6 @@ const formatList = (globObj: Record<string, () => Promise<unknown>>) => {
     }),
   )
 }
-
 onMounted(async () => {
   list.value = [
     { structure: 'Components', items: await formatList(typeOfComponents) },
@@ -73,8 +74,63 @@ onMounted(async () => {
   ]
   tableOfContents.value = list.value.map((group) => ({
     structure: group.structure,
-    items: group.items.map(({ name }) => ({ href: '#component' + name, label: name })),
+    // items: group.items.map(({ name }) => ({ href: '#component' + name, label: name })),
+    items: [
+      ...group.items.map(({ name }) => ({ href: '#component' + name, label: name })),
+      {
+        href: '#a',
+        label: 'test1',
+        children: [
+          { href: '#a-1', label: 'test1-1' },
+          { href: '#a-2', label: 'test1-2' },
+        ],
+      },
+    ],
   }))
 })
+
+// IntersectionObserver 實現動態更新(不穩定)
+const active = ref<string>('')
+let observer: IntersectionObserver | null = null
+const ratioMap = new Map<string, number>()
+const sections = ref<HTMLElement[]>()
+watch(sections, (newSections, oldSections) => {
+  oldSections?.forEach((sec) => {
+    ratioMap.clear()
+    return observer?.unobserve(sec)
+  })
+  newSections?.forEach((sec) => {
+    ratioMap.set(sec.id, 0)
+    return observer?.observe(sec)
+  })
+})
+onMounted(() => {
+  observer = new IntersectionObserver(
+    (entries) => {
+      // 更新 ratioMap，取出占比最高的元素作為當前節點
+      for (const e of entries) {
+        const id = e.target.id
+        if (!id) continue
+        ratioMap.set(id, e.intersectionRatio)
+      }
+      let bestId: string | null = null
+      let bestRatio = 0
+      for (const [id, ratio] of ratioMap.entries()) {
+        if (ratio > bestRatio) {
+          bestId = id
+          bestRatio = ratio
+        }
+      }
+      if (bestId) active.value = '#' + bestId
+      console.log(active.value)
+    },
+    {
+      root: scrollRoot.value,
+      threshold: [0, 0.25, 0.5, 0.75, 1],
+    },
+  )
+})
+onBeforeUnmount(() => {
+  if (observer) observer.disconnect()
+})
 </script>
-<style lang=""></style>

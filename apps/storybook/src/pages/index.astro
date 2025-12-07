@@ -17,7 +17,7 @@ import config from '../save/config.json' with { type: 'json' }
   <body class={config.theme}>
     <div class="opsl flex w-full h-full text-lg text-[var(--text-main-1)] bg-[var(--bg-main-1)]">
       <!-- 紀錄: 當其他框架組件使用 client:load 時，會將該框架的組件進行水合，刷新元素，導致slot中的astro組件的事件註冊無法採用刷新的元素 -->
-      <Main client:load></Main>
+      <Main client:load />
     </div>
   </body>
 </html>
