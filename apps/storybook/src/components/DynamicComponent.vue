@@ -5,14 +5,19 @@
 import { onMounted, ref } from 'vue'
 import { getSlotContent } from '../utils/slotFormatter.ts'
 
+type Demo = {
+  name: string
+  example: Record<string, unknown>
+  content: string
+  contents_style: Record<string, string>
+  description: Record<string, string>
+}
 interface Props {
   name: string
-  props?: Record<string, unknown>
-  content?: string
-  contentsStyle?: Record<string, string>
+  demo?: Demo
 }
-const props = withDefaults(defineProps<Props>(), {})
-const { name, props: params, content, contentsStyle } = props
+const props = defineProps<Props>()
+const { name, demo: { example: params, content, contents_style: contentsStyle } = {} } = props
 
 const html = ref('')
 onMounted(async () => {

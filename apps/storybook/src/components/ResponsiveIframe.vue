@@ -37,7 +37,7 @@ interface Props {
   breakpoints?: (keyof Breakpoints)[]
   otherSize?: number[]
 }
-const props = withDefaults(defineProps<Props>(), {})
+const props = defineProps<Props>()
 const { class: className = '', name, breakpoints = [], otherSize = [1920] } = props
 const classList = mergeClasses(className, [''])
 

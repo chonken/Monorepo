@@ -16,7 +16,7 @@ import config from '../save/config.json' with { type: 'json' }
 interface Props {
   class?: string
 }
-const props = withDefaults(defineProps<Props>(), {})
+const props = defineProps<Props>()
 const { class: classList = '' } = props
 
 const themeBackgroud = ref<HTMLDivElement | null>(null)
