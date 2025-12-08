@@ -31,7 +31,7 @@ import DisplayModules from './DisplayModules.vue'
 import DirectoryList from '../components/DirectoryList.vue'
 import SearchBox from '../components/SearchBox.vue'
 import Header from '../layouts/Header.vue'
-import regist from '../save/registModules.json' with { type: 'json' }
+import classification from '../save/classification.json' with { type: 'json' }
 import demo from '../save/demo.json' with { type: 'json' }
 
 const list = ref<{ structure: string; items: any[] }[]>([])
@@ -60,8 +60,8 @@ const formatList = (globObj: Record<string, () => Promise<unknown>>) => {
         id: component.id,
         props: component.props,
         slots: component.slots,
-        categorys: regist[component.id as keyof typeof regist]?.categorys,
-        keywords: regist[component.id as keyof typeof regist]?.keywords,
+        categorys: classification[component.id as keyof typeof classification]?.categorys,
+        keywords: classification[component.id as keyof typeof classification]?.keywords,
         demos: demo[component.id as keyof typeof demo] ?? [],
       }
     }),
@@ -74,7 +74,6 @@ onMounted(async () => {
   ]
   tableOfContents.value = list.value.map((group) => ({
     structure: group.structure,
-    // items: group.items.map(({ name }) => ({ href: '#component' + name, label: name })),
     items: [
       ...group.items.map(({ name }) => ({ href: '#component' + name, label: name })),
       {

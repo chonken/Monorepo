@@ -2,27 +2,30 @@
   "ch-l-r": [
     {
       "name": "展示1",
+      "category": "image_txt",
       "example": { "justify": "between", "item": "end", "overlay": -200, "maxWidth": 1200, "center": true },
-      "content": "image_txt",
-      "contents_style": {},
+      "contents": {},
+      "styles": {},
       "description": {}
     }
   ],
   "btn_type01": [
     {
       "name": "展示1",
+      "category": "button",
       "example": { "shadow": "#8888" },
-      "content": "button",
-      "contents_style": {},
+      "contents": {},
+      "styles": {},
       "description": {}
     }
   ],
   "ch-bgf": [
     {
       "name": "展示1",
-      "example": { "src": "/images/奴隸主.jpg" },
-      "content": "image",
-      "contents_style": {},
+      "category": "background",
+      "example": {},
+      "contents": {},
+      "styles": {},
       "description": {}
     }
   ]

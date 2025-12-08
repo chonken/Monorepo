@@ -10,14 +10,8 @@
 <script setup lang="ts">
 import ResponsiveIframe from '../components/ResponsiveIframe.vue'
 import DynamicComponent from '../components/DynamicComponent.vue'
+import type { Demo } from '../types'
 
-type Demo = {
-  name: string
-  example: Record<string, unknown>
-  content: string
-  contents_style: Record<string, string>
-  description: Record<string, string>
-}
 interface Props {
   name: string
   demos: Demo[]

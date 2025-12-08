@@ -7,11 +7,7 @@
       "image": "/images/奴隸主.jpg"
     }
   ],
-  "image": [
-    {
-      "image": "/images/奴隸主.jpg"
-    }
-  ],
+  "image": ["/images/奴隸主.jpg"],
   "button": [
     {
       "text": "了解更多+",
@@ -19,22 +15,24 @@
       "hover": "MORE"
     }
   ],
-  "item": [
-    {
-      "title": "標題",
-      "subtitle": "副標題",
-      "text": ["內文1", "內文2"]
-    },
-    {
-      "title": "標題",
-      "subtitle": "副標題",
-      "text": ["內文1", "內文2"]
-    },
-    {
-      "title": "標題",
-      "subtitle": "副標題",
-      "text": ["內文1", "內文2"]
-    }
+  "items": [
+    [
+      {
+        "title": "標題",
+        "subtitle": "副標題",
+        "text": ["內文1", "內文2"]
+      },
+      {
+        "title": "標題",
+        "subtitle": "副標題",
+        "text": ["內文1", "內文2"]
+      },
+      {
+        "title": "標題",
+        "subtitle": "副標題",
+        "text": ["內文1", "內文2"]
+      }
+    ]
   ],
   "item_image": [
     {
@@ -51,25 +49,27 @@
     }
   ],
   "list": [
-    {
-      "marker": "",
-      "title": "標題",
-      "content": "內文"
-    },
-    {
-      "marker": "",
-      "title": "標題",
-      "content": "內文"
-    },
-    {
-      "marker": "",
-      "title": "標題",
-      "content": "內文"
-    },
-    {
-      "marker": "",
-      "title": "標題",
-      "content": "內文"
-    }
+    [
+      {
+        "marker": "",
+        "title": "標題",
+        "content": ["內文", "內文"]
+      },
+      {
+        "marker": "",
+        "title": "標題",
+        "content": ["內文", "內文"]
+      },
+      {
+        "marker": "",
+        "title": "標題",
+        "content": ["內文", "內文"]
+      },
+      {
+        "marker": "",
+        "title": "標題",
+        "content": ["內文", "內文"]
+      }
+    ]
   ]
 }
