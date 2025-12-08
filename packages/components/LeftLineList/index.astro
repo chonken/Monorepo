@@ -7,17 +7,16 @@ import ListLine from '../interface/_listLine.astro'
 interface Props extends ProcessTimelineProps {}
 
 // 合併属性
-const props: ProcessTimelineProps = {
+const props = {
   ...defaultProps,
   ...Astro.props,
 }
-const { class: className = '', style, ...rest } = props
+const { class: className = '', ...rest } = props
 
-const styleList = style ?? {}
 const classList = mergeClasses(className, [id])
 ---
 
-<ListLine class:list={classList} style={styleList} {...rest}>
+<ListLine class:list={classList} {...rest}>
   <slot />
 </ListLine>
 

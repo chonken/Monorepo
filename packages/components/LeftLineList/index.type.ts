@@ -4,9 +4,10 @@ export const id = 'ch-lll'
 
 export interface ProcessTimelineProps extends ListLineProps {}
 
-export const props: ProcessTimelineProps = {
+export const props = {
   element: 'ul',
-  item: 'stretch',
+  class: '',
+  item: 'stretch' as const,
   gap: '40',
   dotColor: '#878787',
   dotSize: '10px',
@@ -19,8 +20,7 @@ export const props: ProcessTimelineProps = {
   lineDotCircle: false,
   trimStart: false,
   trimEnd: false,
-  mobile: 'none',
-  class: '',
+  mobile: 'none' as const,
 }
 
 export const slots = ['default']

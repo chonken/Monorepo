@@ -7,10 +7,10 @@ export interface MarqueeProps extends ElementProps {
   move?: 'left' | 'right' | 'up' | 'down'
 }
 
-export const props: MarqueeProps = {
+export const props = {
   class: '',
   seconds: 20,
-  move: 'left',
+  move: 'left' as const,
 }
 
 export const slots = ['default']

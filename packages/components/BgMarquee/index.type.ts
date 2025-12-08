@@ -7,11 +7,11 @@ export interface BgMarqueeProps {
   class?: string
 }
 
-export const props: BgMarqueeProps = {
+export const props = {
   src: '',
-  seconds: 20,
-  move: 'left',
   class: '',
+  seconds: 20,
+  move: 'left' as const,
 }
 
 export const slots = ['default']

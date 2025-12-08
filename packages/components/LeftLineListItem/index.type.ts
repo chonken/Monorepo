@@ -4,7 +4,7 @@ export const id = 'ch-llli'
 
 export interface LeftLineListItemProps extends ElementProps {}
 
-export const props: LeftLineListItemProps = {
+export const props = {
   class: '',
 }
 
