@@ -51,10 +51,10 @@ const keywords = Astro.props.keywords || []
   // 字體大小
   $font-size: 18;
   // 參數設置
-  $min: 16; // 字體大小最小區間
+  $min: 14; // 字體大小最小區間
   $max: 80; // 字體大小最大區間
-  $upper: 0.8; // 超過最大區間後的比例
-  $lower: 0; // 低於最小區間後的比例
+  $upper: 0.8; // 最大基礎占比
+  $lower: 0; // 保底基礎占比
   $power: 2; // 縮放指數
   // 縮放區間
   $lg: bp.value(2xl); // 縮放區間的最大尺寸
