@@ -1,14 +1,15 @@
 import type { ListLineProps } from '../prototype/_listLine.astro'
 
-export const id = 'ch-lll'
+export const id = 'ch-tll'
 
-export interface LeftLineListProps extends ListLineProps {}
+export interface TopLineListProps extends ListLineProps {}
 
 export const props = {
-  element: 'ul',
+  element: 'ol',
   class: '',
-  item: 'stretch' as const,
-  gap: '40',
+  item: 'center' as const,
+  gap: '60 40',
+  itemGap: '20',
   dotColor: '#878787',
   dotSize: '10px',
   dotCircle: false,

@@ -1,0 +1,64 @@
+---
+import type { TopLineListItemProps } from './Item.type'
+import { id, props as defaultProps } from './Item.type'
+import ItemLine from '../prototype/_itemLine.astro'
+import { mergeClasses } from '../../utils'
+
+interface Props extends TopLineListItemProps {}
+
+// 合併属性
+const props = {
+  ...defaultProps,
+  ...Astro.props,
+}
+const { id: astroId, class: className = '', ...rest } = props
+
+const classList = mergeClasses(className, [id])
+---
+
+<li id={astroId} class:list={classList} {...rest}>
+  {
+    Astro.slots.has('icon') && (
+      <div class="ch-tlli-g">
+        <slot name="icon" />
+      </div>
+    )
+  }
+  {
+    Astro.slots.has('marker') ? (
+      <ItemLine listDirection="row" markerClass="ch-tlli-m" lineClass="ch-tlli-l">
+        <slot name="marker" slot="marker" />
+      </ItemLine>
+    ) : (
+      <ItemLine listDirection="row" markerClass="ch-tlli-m" lineClass="ch-tlli-l" />
+    )
+  }
+  <div class="ch-tlli-t"><slot /></div>
+</li>
+
+<style lang="scss" is:global>
+  @use '../../config/breakpoint' as bp;
+  .ch-tlli {
+    display: flex;
+    flex-direction: column;
+    align-items: var(--itm);
+    margin-inline: 0 !important;
+    padding-inline: 0 !important;
+    row-gap: var(--i-colGap);
+    flex-grow: 1;
+  }
+  :is(.ch-tlli-g, .ch-tlli-m) {
+    flex-shrink: 0;
+  }
+  .ch-tlli-g {
+    padding-inline: var(--t-pd-s) var(--t-pd-e);
+  }
+  .ch-tlli-t {
+    padding-inline: var(--t-pd-s) var(--t-pd-e);
+    flex-grow: 1;
+  }
+
+  // 手動設定尺寸
+  $map: lg, md, sm, xs, 2xs;
+  // 沒寫
+</style>

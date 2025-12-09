@@ -1,0 +1,89 @@
+---
+import type { ElementProps } from '../../type/element'
+import { mergeClasses, parseUnit, parseDualUnit } from '../../utils'
+
+export interface ListLineProps extends ElementProps {
+  item?: 'stretch' | 'start' | 'center' | 'end'
+  gap?: string | number
+  dotStart?: string
+  dotColor?: string
+  dotSize?: string
+  dotCircle?: boolean
+  lineGap?: string
+  lineWidth?: string
+  lineColor?: string
+  lineDotSize?: string
+  lineDotColor?: string
+  lineDotCircle?: boolean
+  trimStart?: boolean
+  trimEnd?: boolean
+  mobile?: 'lg' | 'md' | 'sm' | 'xs' | '2xs' | 'none'
+}
+interface Props extends ListLineProps {
+  listDirection?: 'row' | 'column'
+}
+
+const { id, element = 'ol', class: className = '', style, item = 'center', gap = '40', dotStart, dotColor = '#878787', dotSize = '10px', dotCircle = false, lineGap = '5px', lineWidth = '1px', lineColor = '#878787', lineDotSize = '5px', lineDotColor = '#878787', lineDotCircle = false, trimStart = false, trimEnd = false, mobile = 'none', listDirection = 'column', ...rest } = Astro.props
+
+const Element = element as keyof HTMLElement
+
+// 解析並處理gap
+const [rowGap, colGap] = parseDualUnit(gap, 'px')
+
+// 處理對齊
+const _gap = listDirection === 'column' ? rowGap : colGap
+const space = listDirection === 'column' ? colGap : rowGap
+// 文字區padding間隔
+const base = {
+  stretch: { start: '0px', end: _gap },
+  start: { start: '0px', end: _gap },
+  center: { start: `calc(${_gap} / 2)`, end: `calc(${_gap} / 2)` },
+  end: { start: _gap, end: '0px' },
+}[item]
+const { start: txtStartPad, end: txtEndPad } = base
+// 圖片區padding間隔
+let dT = 'auto'
+let dotStartPad = base.start
+let dotEndPad = base.end
+if (dotStart) {
+  dT = dotStart === 'auto' ? 'auto' : parseUnit(dotStart)
+  console.log(dT)
+  if (dotStart === 'auto') {
+    dotStartPad = `calc(${_gap} / 2)`
+    dotEndPad = `calc(${_gap} / 2)`
+  } else {
+    dotStartPad = parseUnit(dotStart)
+    dotEndPad = `calc(${_gap} - ${parseUnit(dotStart)})`
+  }
+} else {
+  if (item === 'end') dT = '100%'
+  if (item === 'stretch' || item === 'start') dT = '0px'
+}
+
+const styleList = {
+  '--itm': item,
+  '--cgap': space,
+  '--t-pd-s': txtStartPad,
+  '--t-pd-e': txtEndPad,
+  '--d-s': dotStartPad,
+  '--d-e': dotEndPad,
+  '--dt': parseUnit(dT),
+  '--dw': parseUnit(dotSize),
+  '--dr': dotCircle ? '50%' : '0',
+  '--dc': dotColor,
+  '--l-gap': parseUnit(lineGap),
+  '--lw': parseUnit(lineWidth),
+  '--lc': lineColor,
+  '--l-dw': parseUnit(lineDotSize),
+  '--l-dc': lineDotColor,
+  '--l-dr': lineDotCircle ? '50%' : '0',
+  '--ts': trimStart ? 0 : 1,
+  '--te': trimEnd ? 0 : 1,
+  ...style,
+}
+const classList = mergeClasses(className, [mobile === 'none' ? '' : `mob-${mobile}`])
+---
+
+<Element id={id} class:list={classList} style={styleList} {...rest}>
+  <slot />
+</Element>

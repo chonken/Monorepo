@@ -1,7 +1,7 @@
 ---
 import type { LeftLineListItemProps } from './index.type'
 import { id, props as defaultProps } from './index.type'
-import ItemLine from '../interface/_itemLine.astro'
+import ItemLine from '../prototype/_itemLine.astro'
 import { mergeClasses } from '../../utils'
 
 interface Props extends LeftLineListItemProps {}
@@ -46,19 +46,19 @@ const classList = mergeClasses(className, [id])
     column-gap: var(--cgap);
   }
   .ch-llli:first-of-type {
-    margin-top: calc(var(--rpd-t) * -1) !important;
+    margin-top: calc(var(--t-pd-s) * -1) !important;
   }
   .ch-llli:last-of-type {
-    margin-bottom: calc(var(--rpd-b) * -1) !important;
+    margin-bottom: calc(var(--t-pd-e) * -1) !important;
   }
   :is(.ch-llli-g, .ch-llli-m) {
     flex-shrink: 0;
   }
   .ch-llli-g {
-    padding-block: var(--rpd-t) var(--rpd-b);
+    padding-block: var(--t-pd-s) var(--t-pd-e);
   }
   .ch-llli-t {
-    padding-block: var(--rpd-t) var(--rpd-b);
+    padding-block: var(--t-pd-s) var(--t-pd-e);
     flex-grow: 1;
   }
 

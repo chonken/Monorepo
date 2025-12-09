@@ -1,6 +1,6 @@
 ---
 import type { ElementProps } from '../type/element'
-import ItemLine from './interface/_itemLine.astro'
+import ItemLine from './prototype/_itemLine.astro'
 import { mergeClasses } from '../utils'
 
 export interface ProcessTimelineItemProps extends ElementProps {
@@ -43,10 +43,10 @@ const classList = mergeClasses(className, ['ch-ptli', reverse ? 'reverse' : ''])
     column-gap: var(--cgap);
   }
   .ch-ptli:first-of-type {
-    margin-top: calc(var(--rpd-t) * -1) !important;
+    margin-top: calc(var(--t-pd-s) * -1) !important;
   }
   .ch-ptli:last-of-type {
-    margin-bottom: calc(var(--rpd-b) * -1) !important;
+    margin-bottom: calc(var(--t-pd-e) * -1) !important;
   }
   :where(.ch-ptl.odd-reverse) > .ch-ptli:nth-of-type(even),
   .ch-ptli:where(.reverse) {
@@ -54,7 +54,7 @@ const classList = mergeClasses(className, ['ch-ptli', reverse ? 'reverse' : ''])
   }
   .ch-ptli-l,
   .ch-ptli-r {
-    padding-block: var(--rpd-t) var(--rpd-b);
+    padding-block: var(--t-pd-s) var(--t-pd-e);
   }
 
   // 手動設定尺寸

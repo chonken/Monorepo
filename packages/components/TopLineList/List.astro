@@ -1,0 +1,37 @@
+---
+import type { TopLineListProps } from './List.type'
+import { id, props as defaultProps } from './List.type'
+import { mergeClasses, parseUnit } from '../../utils'
+import ListLine from '../prototype/_listLine.astro'
+
+interface Props extends TopLineListProps {
+  itemGap?: string | number
+  maxWidth?: string | number
+}
+
+// 合併属性
+const props = {
+  ...defaultProps,
+  ...Astro.props,
+}
+const { class: className = '', itemGap, maxWidth = '100%', ...rest } = props
+
+const styleList = {
+  '--mw': parseUnit(maxWidth, 'px'),
+  '--i-colGap': parseUnit(itemGap),
+}
+const classList = mergeClasses(className, [id])
+---
+
+<ListLine class:list={classList} style={styleList} listDirection="row" {...rest}>
+  <slot />
+</ListLine>
+
+<style is:global>
+  .ch-tll {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: var(--mw);
+    row-gap: var(--cgap);
+  }
+</style>
