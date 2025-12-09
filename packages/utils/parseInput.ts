@@ -1,13 +1,16 @@
 /**
  * 合併`class`並去重
- * @param {string | string[]} exist 已有的`class`字串或陣列，是陣列的話會直接合併
- * @param {string | string[]} current 目前輸入的`class`字串或陣列
+ * @param {string | string[] | undefined} exist 已有的`class`字串或陣列，是陣列的話會直接合併
+ * @param {string | string[] | undefined} current 目前輸入的`class`字串或陣列
  * @returns {string[]} 合併後的`class`陣列
  */
-export function mergeClasses(exist: string | string[], current: string | string[]): string[] {
-  const normalize = (v: string | string[]) => (Array.isArray(v) ? v : v.trim().split(/\s+/).filter(Boolean))
-  const merged = Array.from(new Set([...normalize(exist), ...normalize(current)]))
+export function mergeClasses(exist: string | string[] | undefined, current: string | string[] | undefined): string[] {
+  const normalize = (v: string | string[] | undefined) => (Array.isArray(v) ? v : v.trim().split(/\s+/).filter(Boolean))
+  const nexist = exist ? normalize(exist) : []
+  const ncurrent = current ? normalize(current) : []
+  const merged = Array.from(new Set([...nexist, ...ncurrent]))
 
+  // 如果 exist 是陣列的話，直接合併
   if (Array.isArray(exist)) {
     exist.length = 0
     exist.push(...merged)

@@ -14,7 +14,7 @@ const props = {
   ...defaultProps,
   ...Astro.props,
 }
-const { class: className = '', itemGap, maxWidth = '100%', ...rest } = props
+const { class: className, itemGap, maxWidth, ...rest } = props
 
 const styleList = {
   '--mw': parseUnit(maxWidth, 'px'),

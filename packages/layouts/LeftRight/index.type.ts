@@ -1,5 +1,5 @@
 import type { FlexProps } from '../../components/Flex.astro'
-import type { ContainerProps } from '../Container.astro'
+import { type ContainerProps, props as containerDefaultProps } from '../Container/index.type'
 
 export const id = 'ch-l-r'
 
@@ -12,6 +12,7 @@ export interface LeftRightProps extends FlexProps, ContainerProps {
 }
 
 export const props = {
+  ...containerDefaultProps,
   element: 'div',
   class: '',
   item: 'stretch' as const,

@@ -1,10 +1,10 @@
 ---
-import type { LeftRightProps } from './index.type'
-import { id, props as defaultProps } from './index.type'
+import { type LeftRightProps, id, props as defaultProps } from './index.type'
 import { mergeClasses, parseUnit, parseDualUnit, isNegative, toNegative } from '../../utils'
 import Content from '../../components/Content.astro'
 import Flex from '../../components/Flex.astro'
-import Container from '../Container.astro'
+import { containerStyleList, containerClassList } from '../Container/index.type'
+import '../../styles/container.scss'
 
 interface Props extends LeftRightProps {}
 
@@ -22,28 +22,24 @@ const overlay = o === '-0px' ? (isNegative(cGap) ? cGap : '0px') : o
 const colGap = overlay === '0px' ? cGap : '0px'
 const gap = `${rowGap} ${colGap}`
 
-const contentStyleList = {
-  'display': 'contents',
+const styleList = {
   '--oly': toNegative(parseUnit(oly, 'px')),
+  ...containerStyleList(maxWidth),
 }
-const classList = mergeClasses(className, ['ch-l-r', ...(mobile === 'none' ? [] : [mobileFit ? 'mob-fit' : ''])])
+const classList = mergeClasses(className, [id, ...(mobile === 'none' ? [] : [mobileFit ? 'mob-fit' : '']), ...containerClassList(center)])
 ---
 
-<Container element={element} id={id} maxWidth={maxWidth} center={center}>
-  <div style={contentStyleList}>
-    <Flex class:list={classList} gap={gap} item={item} justify={justify} reverse={reverse} mobile={mobile} mobileItem={mobileItem} mobileJustify={mobileJustify} mobileReverse={mobileReverse} {...rest}>
-      {Astro.slots.has('image') && <slot name="image" />}
-      <slot />
-      {
-        Astro.slots.has('content') && (
-          <Content width={contentWidth} direction={contentDirection}>
-            <slot name="content" />
-          </Content>
-        )
-      }
-    </Flex>
-  </div>
-</Container>
+<Flex class:list={classList} gap={gap} item={item} justify={justify} reverse={reverse} mobile={mobile} mobileItem={mobileItem} mobileJustify={mobileJustify} mobileReverse={mobileReverse} style={styleList} {...rest}>
+  {Astro.slots.has('image') && <slot name="image" />}
+  <slot />
+  {
+    Astro.slots.has('content') && (
+      <Content width={contentWidth} direction={contentDirection}>
+        <slot name="content" />
+      </Content>
+    )
+  }
+</Flex>
 
 <style lang="scss" is:global>
   @use '../../config/breakpoint' as bp;

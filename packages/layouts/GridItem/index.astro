@@ -1,0 +1,59 @@
+---
+import { type GridItemProps, id, props as defaultProps } from './index.type'
+import { mergeClasses, parseUnit, parseDualUnit, parseRWD, fullRWD, setRWD } from '../../utils'
+import Flex from '../../components/Flex.astro'
+import { containerStyleList, containerClassList } from '../Container/index.type'
+import '../../styles/container.scss'
+
+interface Props extends GridItemProps {}
+
+// 合併属性
+const props = {
+  ...defaultProps,
+  ...Astro.props,
+}
+const { element, class: className, maxWidth, item, justify, gap, col, center, ...rest } = props
+
+// RWD尺寸(由大到小排序)
+const sizes = ['3xl', '2xl', 'xl', 'lg', 'md', 'sm', 'xs', '2xs']
+
+// 解析gap
+const [_, colGap] = parseDualUnit(gap)
+// 解析col
+// bug 沒有默認的話，未指定的高尺寸會出錯，直到有指定
+const colMap = setRWD(fullRWD(parseRWD(col), sizes))
+
+const styleList: Record<string, string> = {
+  ...containerStyleList(maxWidth),
+  '--cgap': colGap || '0px',
+  ...colMap,
+}
+const classList = mergeClasses(className, [id, ...containerClassList(center)])
+console.log(styleList, classList)
+console.log(111)
+---
+
+<Flex element={element} class:list={classList} wrap item={item} justify={justify} gap={parseUnit(gap)} style={styleList} {...rest}><slot /></Flex>
+
+<style lang="scss" is:global>
+  @use '../../config/breakpoint' as bp;
+  .ch-gdi {
+    & > * {
+      max-width: calc((100% - var(--cgap, 0) * max(var(--col) - 1, 0)) / var(--col));
+    }
+  }
+  :where(.ch-gdi) > * {
+    width: 100%;
+  }
+
+  @each $size, $value in bp.$breakpoint {
+    @media (max-width: #{$value}px) {
+      .ch-gdi-ctr.ch-fixed {
+        max-width: calc((var(--mw) - var(--cgap, 0) * max(var(--col) - 1, 0)) / var(--col) * var(--col-#{$size}) + (var(--col-#{$size}) - 1) * var(--cgap, 0));
+      }
+      .ch-gdi > * {
+        max-width: calc((100% - var(--cgap, 0) * max(var(--col-#{$size}) - 1, 0)) / var(--col-#{$size}));
+      }
+    }
+  }
+</style>
