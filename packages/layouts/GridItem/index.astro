@@ -29,8 +29,6 @@ const styleList: Record<string, string> = {
   ...colMap,
 }
 const classList = mergeClasses(className, [id, ...containerClassList(center)])
-console.log(styleList, classList)
-console.log(111)
 ---
 
 <Flex element={element} class:list={classList} wrap item={item} justify={justify} gap={parseUnit(gap)} style={styleList} {...rest}><slot /></Flex>
