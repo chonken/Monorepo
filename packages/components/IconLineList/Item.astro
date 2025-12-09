@@ -2,7 +2,7 @@
 interface Props {
   class?: string
 }
-import { mergeClasses } from '../utils'
+import { mergeClasses } from '../../utils'
 const { class: className = '', ...rest } = Astro.props
 
 const classList = mergeClasses(className, ['ch-illi'])
@@ -27,7 +27,7 @@ const classList = mergeClasses(className, ['ch-illi'])
   }
   .ch-illi-i img {
     display: block;
-    height: calc(var(--ih) * 2) !important;
+    height: var(--ih) !important;
   }
   .ch-illi-x {
     position: relative;
@@ -39,9 +39,8 @@ const classList = mergeClasses(className, ['ch-illi'])
     position: relative;
     display: flex;
     align-items: center;
-    margin-bottom: calc((var(--ih) - 1.5em) / 2);
     line-height: 1.5;
-    height: var(--ih);
+    height: calc(var(--ih) / 2);
   }
   .ch-illi-t::after {
     content: '';

@@ -2,13 +2,13 @@
 interface Props {
   class?: string
   element?: 'ul' | 'ol'
-  mobile?: 'md' | 'sm' | 'xs' | '2xs' | 'none'
-  gap?: string | number
-  mobileGap?: string | number
+  gap?: string | number // 半成
   iconHeight: string | number
-  mobileIconHeight?: string | number
+  mobile?: 'md' | 'sm' | 'xs' | '2xs' | 'none'
+  mobileGap?: string | number // 未實裝
+  mobileIconHeight?: string | number // 未實裝
 }
-import { mergeClasses, parseUnit } from '../utils'
+import { mergeClasses, parseUnit } from '../../utils'
 const { class: className = '', element = 'ul', gap = '40px', iconHeight, mobile = 'none', mobileGap = '20px', mobileIconHeight = '', ...rest } = Astro.props
 
 const Element = element as keyof HTMLElement
