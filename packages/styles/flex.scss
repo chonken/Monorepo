@@ -1,4 +1,6 @@
 @use '../config/breakpoint' as bp;
+@use './layout.scss';
+
 .ch-flex {
   display: flex;
   flex-wrap: var(--wrp);

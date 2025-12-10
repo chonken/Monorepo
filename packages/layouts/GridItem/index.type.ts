@@ -10,6 +10,7 @@ export interface GridItemProps extends FlexProps, ContainerProps {
 export const props = {
   ...containerDefaultProps,
   ...flexDefaultProps,
+  wrap: true,
   justify: 'center' as const,
   gap: '60 40',
   col: '6 lg:4 md:3 sm:2 xs:1',

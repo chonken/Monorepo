@@ -1,6 +1,6 @@
 ---
 import { type GridItemProps, id, props as defaultProps } from './index.type'
-import { mergeClasses, parseUnit, parseDualUnit, parseRWD, fullRWD, setRWD } from '../../utils'
+import { mergeClasses, parseDualUnit, parseRWD, fullRWD, setRWD } from '../../utils'
 import { containerStyleList, containerClassList } from '../Container/index.type'
 import { flexClassList, flexStyleList } from '../../components/Flex/index.type'
 import '../../styles/container.scss'
@@ -13,8 +13,8 @@ const props = {
   ...defaultProps,
   ...Astro.props,
 }
-const { element, class: className, maxWidth, item, justify, gap, col, center, ...args } = props
-const { wrap, reverse, flexReverse, mobile, mobileItem, mobileJustify, mobileReverse, ...rest } = args
+const { element, class: className, maxWidth, item, wrap, justify, gap, col, center, ...args } = props
+const { reverse, flexReverse, mobile, mobileItem, mobileJustify, mobileReverse, ...rest } = args
 
 const Element = element as keyof HTMLElement
 
@@ -29,7 +29,7 @@ const colMap = setRWD(fullRWD(parseRWD(col), sizes))
 
 const styleList = {
   ...containerStyleList(maxWidth),
-  ...flexStyleList({ item, justify, gap }),
+  ...flexStyleList({ wrap, item, justify, gap }),
   '--cgap': colGap || '0px',
   ...colMap,
 }
@@ -54,10 +54,12 @@ const classList = mergeClasses(className, [id, ...containerClassList(center), ..
       .ch-gdi {
         $gap: var(--cgap, 0);
 
-        @if $value < bp.value('sm') {
-          $gap: 20px;
-        } @else if $value < bp.value('xs') {
+        @if $value <= bp.value('sm') {
           $gap: 10px;
+          column-gap: $gap;
+        } @else if $value <= bp.value('lg') {
+          $gap: 20px;
+          column-gap: $gap;
         }
 
         &.ch-fixed {
