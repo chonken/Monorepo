@@ -11,7 +11,7 @@ const props = {
   ...defaultProps,
   ...Astro.props,
 }
-const { class: className = '', ...rest } = props
+const { class: className, ...rest } = props
 
 const classList = mergeClasses(className, [id])
 ---

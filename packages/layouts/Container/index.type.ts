@@ -16,12 +16,12 @@ export const props = {
 
 export const slots = ['default']
 
-export const containerStyleList = (maxWidth) => {
+export const containerStyleList = (maxWidth: number | string) => {
   return {
     '--mw': parseUnit(maxWidth, 'px'),
   }
 }
 
-export const containerClassList = (center) => {
+export const containerClassList = (center: boolean) => {
   return [id, `${center ? 'ch-cen' : ''}`]
 }

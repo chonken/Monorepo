@@ -9,7 +9,6 @@ export interface BgFixedProps extends ElementProps {
 
 export const props = {
   src: '',
-  class: '',
   minHeight: '40vw',
 }
 

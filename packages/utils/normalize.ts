@@ -22,7 +22,7 @@ export function fullRWD(input: Record<string, string>, sizes: string[]): Record<
  * @returns {Record<string, string>} CSS 變數物件
  * @example
  * setRWD({ default: '5', xl: '4', lg: '3' });
- * // { col: '5', col-xl: '4', col-lg: '3' }
+ * // { '--col': '5', '--col-xl': '4', '--col-lg': '3' }
  */
 export function setRWD(colMap: Record<string, string>): Record<string, string> {
   return Object.fromEntries(Object.entries(colMap).map(([size, col]) => [`--col${size === 'default' ? '' : '-' + size}`, col]))

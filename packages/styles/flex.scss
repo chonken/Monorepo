@@ -1,0 +1,19 @@
+@use '../config/breakpoint' as bp;
+.ch-flex {
+  display: flex;
+  flex-wrap: var(--wrp);
+  &:where(.flex-re) {
+    flex-direction: row-reverse;
+  }
+}
+
+@each $size, $value in bp.$breakpoint {
+  @media (max-width: #{$value}px) {
+    .ch-flex:is(.mob-inherit.main-mob-#{$size}, .mob-#{$size}) {
+      flex-direction: column;
+      &:where(.mob-re) {
+        flex-direction: column-reverse;
+      }
+    }
+  }
+}
