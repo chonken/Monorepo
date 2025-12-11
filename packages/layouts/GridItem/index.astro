@@ -3,8 +3,6 @@ import { type GridItemProps, id, props as defaultProps } from './index.type'
 import { mergeClasses, parseDualUnit, parseRWD, fullRWD, setRWD } from '../../utils'
 import { containerStyleList, containerClassList } from '../Container/index.type'
 import { flexClassList, flexStyleList } from '../../components/Flex/index.type'
-import '../../styles/container.scss'
-import '../../styles/flex.scss'
 
 interface Props extends GridItemProps {}
 
@@ -40,6 +38,9 @@ const classList = mergeClasses(className, [id, ...containerClassList(center), ..
 
 <style lang="scss" is:global>
   @use '../../config/breakpoint' as bp;
+  @use '../../styles/container.scss';
+  @use '../../styles/flex.scss';
+
   .ch-gdi {
     & > * {
       max-width: calc((100% - var(--cgap, 0) * max(var(--col) - 1, 0)) / var(--col));
@@ -53,7 +54,6 @@ const classList = mergeClasses(className, [id, ...containerClassList(center), ..
     @media (max-width: #{$value}px) {
       .ch-gdi {
         $gap: var(--cgap, 0);
-
         @if $value <= bp.value('sm') {
           $gap: 10px;
           column-gap: $gap;
