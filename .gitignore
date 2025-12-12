@@ -1,5 +1,6 @@
 node_modules/
 .pnpm-store/
+temp/
 pnpm-lock.yaml
 apps/*
 !apps/storybook/

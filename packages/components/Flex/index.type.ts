@@ -1,5 +1,5 @@
 import type { LayoutProps } from '../../type/layout'
-import { mergeClasses, parseJustify, parseMultiUnit, parseStyle } from '../../utils'
+import { parseJustify, parseMultiUnit } from '../../utils'
 
 export const id = 'ch-flex'
 
@@ -27,17 +27,3 @@ export const props = {
 }
 
 export const slots = ['default']
-
-export const flexStyleList = ({ wrap, item, justify, gap, mobileItem, mobileJustify }: FlexProps = {}) => {
-  return {
-    '--wrp': wrap === true ? 'wrap' : wrap === false ? 'nowrap' : undefined,
-    '--itm': item,
-    '--jst': parseJustify(justify),
-    '--mob-itm': mobileItem,
-    '--mob-jst': parseJustify(mobileJustify),
-    '--gap': parseMultiUnit(gap, 'px').join(' '),
-  }
-}
-export const flexClassList = ({ reverse, flexReverse, mobile, mobileReverse }: FlexProps = props) => {
-  return [id, 'ch-layout', reverse ? 'reverse' : '', flexReverse ? 'flex-re' : '', ...(mobile === 'none' ? [] : [`mob-${mobile}`, mobileReverse ? 'mob-re' : ''])]
-}

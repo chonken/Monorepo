@@ -1,5 +1,4 @@
 import type { ElementProps } from '../../type/element'
-import { parseUnit } from '../../utils'
 
 export const id = 'ch-ctr'
 
@@ -15,13 +14,3 @@ export const props = {
 }
 
 export const slots = ['default']
-
-export const containerStyleList = (maxWidth: number | string) => {
-  return {
-    '--mw': parseUnit(maxWidth, 'px'),
-  }
-}
-
-export const containerClassList = (center: boolean) => {
-  return [id, `${center ? 'ch-cen' : ''}`]
-}
