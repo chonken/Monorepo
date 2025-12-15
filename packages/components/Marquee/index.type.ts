@@ -8,7 +8,6 @@ export interface MarqueeProps extends ElementProps {
 }
 
 export const props = {
-  class: '',
   seconds: 20,
   move: 'left' as const,
 }

@@ -1,6 +1,8 @@
+import type { ElementProps } from '../../type/element'
+
 export const id = 'ch-bgmar'
 
-export interface BgMarqueeProps {
+export interface BgMarqueeProps extends ElementProps {
   src?: string
   seconds?: string | number
   move?: 'left' | 'right' | 'up' | 'down'

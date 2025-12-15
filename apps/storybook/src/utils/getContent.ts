@@ -2,7 +2,7 @@ import content from '../save/content.json' with { type: 'json' }
 
 type Props = {
   props?: Record<string, string>
-  slots?: Record<string, string>
+  slots?: any
 }
 export default async function getContent(category: string, contentsStyle?: Record<string, string>, index?: number): Promise<Props> {
   switch (category) {
@@ -19,7 +19,7 @@ export default async function getContent(category: string, contentsStyle?: Recor
     case 'background':
       return {
         props: {
-          src: getData(content.image)
+          src: getData(content.image),
         },
       }
     case 'button':
@@ -38,7 +38,11 @@ export default async function getContent(category: string, contentsStyle?: Recor
     case 'title':
       return {}
     case 'list':
-      return {}
+      const list = getData(content.list)
+
+      return {
+        slots: await toList(list),
+      }
     default:
       return {}
   }
@@ -51,6 +55,7 @@ type Text = {
   style?: string
 }
 async function toTxt(props: Text): Promise<string> {
+  import('../components/display/Text.astro')
   const html = await fetch('render/self/Text', {
     method: 'POST',
     headers: {
@@ -68,6 +73,7 @@ type Image = {
   style?: string
 }
 async function toImage(props: Image): Promise<string> {
+  import('../components/display/Image.astro')
   const html = await fetch('render/self/Image', {
     method: 'POST',
     headers: {
@@ -78,6 +84,29 @@ async function toImage(props: Image): Promise<string> {
     }),
   }).then((res) => res.text())
   return html
+}
+
+type List = {
+  marker: string
+  title: string
+  content: string[]
+}
+async function toList(list: List[]): Promise<{ default: string; marker: string }[]> {
+  import('../components/display/List.astro')
+  const items = []
+  for (const { marker, title, content } of list) {
+    items.push({
+      default: await fetch('render/self/List', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ props: { title, content } }),
+      }).then((res) => res.text()),
+      marker,
+    })
+  }
+  return items
 }
 
 /**

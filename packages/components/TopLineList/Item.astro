@@ -11,12 +11,12 @@ const props = {
   ...defaultProps,
   ...Astro.props,
 }
-const { id: astroId, class: className = '', ...rest } = props
+const { id: elId, class: className = '', ...rest } = props
 
 const classList = mergeClasses(className, [id])
 ---
 
-<li id={astroId} class:list={classList} {...rest}>
+<li id={elId} class:list={classList} {...rest}>
   {
     Astro.slots.has('icon') && (
       <div class="ch-tlli-g">
@@ -55,6 +55,7 @@ const classList = mergeClasses(className, [id])
   }
   .ch-tlli-t {
     padding-inline: var(--t-pd-s) var(--t-pd-e);
+    width: 100%;
     flex-grow: 1;
   }
 

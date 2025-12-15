@@ -48,11 +48,14 @@ const directoryTags = computed(() =>
     items: group.items.filter((item) => item.label.toLowerCase().includes(searchTerm.value.toLowerCase())),
   })),
 )
+// 預先處理list，名稱、id重複警告，依賴組件合併，改用 ts-morph 才有完整屬性，原先的props改名成defaultPorps
+const processList = () => {}
 const formatList = (globObj: Record<string, () => Promise<unknown>>) => {
   const entries = Object.entries(globObj)
   return Promise.all(
     entries.map(async ([p, promise]: [string, any]) => {
       const component = await promise()
+      // list名稱問題
       const path = p.replace(pathRegex, '')
       return {
         path,

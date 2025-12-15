@@ -108,5 +108,10 @@
     "keywords": [],
     "categorys": [],
     "binding": []
+  },
+  "ch-tll": {
+    "keywords": ["top line", "水平列表", "頂線列表"],
+    "categorys": ["list"],
+    "binding": ["ch-tlli"]
   }
 }

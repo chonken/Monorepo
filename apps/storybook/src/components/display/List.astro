@@ -1,0 +1,22 @@
+---
+interface Props {
+  title?: string
+  content?: string[]
+  style?: string
+}
+const { title, content = [], style } = Astro.props
+---
+
+<div class="display_list" style={style}>
+  <h2>{title}</h2>
+  {content.map((item: string) => <p>{item}</p>)}
+</div>
+
+<style>
+  .display_list {
+    padding: 40px;
+    color: #333;
+    background-color: #eeea;
+    backdrop-filter: blur(5px);
+  }
+</style>

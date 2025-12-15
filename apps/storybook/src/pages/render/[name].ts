@@ -34,11 +34,12 @@ export const GET: APIRoute = async ({ params, url }) => {
 
 export const POST: APIRoute = async ({ request, params }) => {
   const { name = '' } = params
-  const { props, slots } = await request.json()
+  const { path = '', props, slots } = await request.json()
+  const fileName = name + path
 
   // 從 components 中找到對應的組件
-  const layoutKey = Object.keys(layouts).find((k) => k.includes(name))
-  const componentKey = Object.keys(components).find((k) => k.includes(name))
+  const layoutKey = Object.keys(layouts).find((k) => k.includes(fileName))
+  const componentKey = Object.keys(components).find((k) => k.includes(fileName))
   const loader = (layoutKey && layouts[layoutKey]) || (componentKey && components[componentKey])
   const Module = loader ? ((await loader()) as { default: AstroComponentFactory }).default : null
 
@@ -53,6 +54,6 @@ export const POST: APIRoute = async ({ request, params }) => {
       headers: { 'Content-Type': 'text/html' },
     })
   } else {
-    return new Response(`找不到組件: ${name}`, { status: 404 })
+    return new Response(`找不到組件: ${fileName}`, { status: 404 })
   }
 }
