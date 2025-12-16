@@ -3,221 +3,269 @@
     "scope": "css,scss",
     "prefix": "media",
     "body": ["@media (max-width: ${1|1600,1440,1280,1024,768,576,480,375|}px) {$2}"],
-    "description": "RWD"
+    "description": "RWD",
   },
   "css-font-custom": {
     "scope": "css,scss",
     "prefix": "fs",
     "body": ["font-size: var(--f${1:18});"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-12": {
     "scope": "css,scss",
     "prefix": "f12",
     "body": ["font-size: var(--f12);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-14": {
     "scope": "css,scss",
     "prefix": "f14",
     "body": ["font-size: var(--f14);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-16": {
     "scope": "css,scss",
     "prefix": "f16",
     "body": ["font-size: var(--f16);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-18": {
     "scope": "css,scss",
     "prefix": "f18",
     "body": ["font-size: var(--f18);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-20": {
     "scope": "css,scss",
     "prefix": "f20",
     "body": ["font-size: var(--f20);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-22": {
     "scope": "css,scss",
     "prefix": "f22",
     "body": ["font-size: var(--f22);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-24": {
     "scope": "css,scss",
     "prefix": "f24",
     "body": ["font-size: var(--f24);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-25": {
     "scope": "css,scss",
     "prefix": "f25",
     "body": ["font-size: var(--f25);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-26": {
     "scope": "css,scss",
     "prefix": "f26",
     "body": ["font-size: var(--f26);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-28": {
     "scope": "css,scss",
     "prefix": "f28",
     "body": ["font-size: var(--f28);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-30": {
     "scope": "css,scss",
     "prefix": "f30",
     "body": ["font-size: var(--f30);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-32": {
     "scope": "css,scss",
     "prefix": "f32",
     "body": ["font-size: var(--f32);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-34": {
     "scope": "css,scss",
     "prefix": "f34",
     "body": ["font-size: var(--f34);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-35": {
     "scope": "css,scss",
     "prefix": "f35",
     "body": ["font-size: var(--f35);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-36": {
     "scope": "css,scss",
     "prefix": "f36",
     "body": ["font-size: var(--f36);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-38": {
     "scope": "css,scss",
     "prefix": "f38",
     "body": ["font-size: var(--f38);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-40": {
     "scope": "css,scss",
     "prefix": "f40",
     "body": ["font-size: var(--f40);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-42": {
     "scope": "css,scss",
     "prefix": "f42",
     "body": ["font-size: var(--f42);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-44": {
     "scope": "css,scss",
     "prefix": "f44",
     "body": ["font-size: var(--f44);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-45": {
     "scope": "css,scss",
     "prefix": "f45",
     "body": ["font-size: var(--f45);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-46": {
     "scope": "css,scss",
     "prefix": "f46",
     "body": ["font-size: var(--f46);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-48": {
     "scope": "css,scss",
     "prefix": "f48",
     "body": ["font-size: var(--f48);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
   },
   "css-font-50": {
     "scope": "css,scss",
     "prefix": "f50",
     "body": ["font-size: var(--f50);"],
-    "description": "CSS Variables"
+    "description": "CSS Variables",
+  },
+  "css-space-custom": {
+    "scope": "css,scss",
+    "prefix": "--s",
+    "body": ["font-size: var(--f${1:18});"],
+    "description": "space",
+  },
+  "css-space-20": {
+    "scope": "css,scss",
+    "prefix": "--s20",
+    "body": ["var(--s20)"],
+    "description": "space",
+  },
+  "css-space-40": {
+    "scope": "css,scss",
+    "prefix": "--s40",
+    "body": ["var(--s40)"],
+    "description": "space",
+  },
+  "css-space-60": {
+    "scope": "css,scss",
+    "prefix": "--s60",
+    "body": ["var(--s60)"],
+    "description": "space",
+  },
+  "css-space-80": {
+    "scope": "css,scss",
+    "prefix": "--s80",
+    "body": ["var(--s80)"],
+    "description": "space",
+  },
+  "css-space-100": {
+    "scope": "css,scss",
+    "prefix": "--s100",
+    "body": ["var(--s100)"],
+    "description": "space",
+  },
+  "css-space-150": {
+    "scope": "css,scss",
+    "prefix": "--s150",
+    "body": ["var(--s150)"],
+    "description": "space",
+  },
+  "css-space-200": {
+    "scope": "css,scss",
+    "prefix": "--s200",
+    "body": ["var(--s200)"],
+    "description": "space",
   },
 
   "as": {
     "scope": "astro",
     "prefix": "as",
-    "body": ["---", "interface Props {", "\tclass?: string", "}", "import { mergeClasses } from '@utils'", "const { class: className = '', ...rest } = Astro.props\n", "const classList = mergeClasses(className, ['$1'])", "---\n", "<div class:list={classList} {...rest}>", "\t", "</div>\n", "<style is:global>", "\t", "</style>"]
+    "body": ["---", "interface Props {", "\tclass?: string", "}", "import { mergeClasses } from '@utils'", "const { class: className = '', ...rest } = Astro.props\n", "const classList = mergeClasses(className, ['$1'])", "---\n", "<div class:list={classList} {...rest}>", "\t", "</div>\n", "<style is:global>", "\t", "</style>"],
   },
   "as-fk": {
     "scope": "astro",
     "prefix": "as-fk",
-    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Debug from '@components/Debug.astro'", "---\n", "<YkFk>", "\t", "</YkFk>", "<Debug/>\n", "<style is:global>", "\t", "</style>"]
+    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Debug from '@components/Debug.astro'", "---\n", "<YkFk>", "\t", "</YkFk>", "<Debug/>\n", "<style is:global>", "\t", "</style>"],
   },
   "as-fk-index": {
     "scope": "astro",
     "prefix": "as-fk-index",
-    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Debug from '@components/Debug.astro'", "---\n", "<YkFk keywords={[]}>", "\t", "</YkFk>", "<Debug/>\n", "<style is:global>", "\t", "</style>"]
+    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Debug from '@components/Debug.astro'", "---\n", "<YkFk keywords={[]}>", "\t", "</YkFk>", "<Debug/>\n", "<style is:global>", "\t", "</style>"],
   },
   "as-demo": {
     "scope": "astro",
     "prefix": "as-demo",
-    "body": ["---", "import Component from '@components/$1.astro'", "import config from '../config.json'", "import content from '../../content/demo.json'\n", "export const id = '$2'", "export const { keywords, category } = config['components'][id]", "export const props = {}", "export const slots = ['default']", "const data = content['image_txt']?.[0] ?? {}", "---", "\t", "<Component class=''>", "\t", "</Component>\n", "<style>", "\t", "</style>"]
+    "body": ["---", "import Component from '@components/$1.astro'", "import config from '../config.json'", "import content from '../../content/demo.json'\n", "export const id = '$2'", "export const { keywords, category } = config['components'][id]", "export const props = {}", "export const slots = ['default']", "const data = content['image_txt']?.[0] ?? {}", "---", "\t", "<Component class=''>", "\t", "</Component>\n", "<style>", "\t", "</style>"],
   },
   "side-padding": {
     "scope": "astro",
     "prefix": "sidePadding",
-    "body": ["<SidePadding class='$1' space='${2|normal,wide,narrow|}' ${3|paddingBlock='',marginBlock=''|}>", "\t$4", "</SidePadding>"]
+    "body": ["<SidePadding class='$1' space='${2|normal,wide,narrow|}' ${3|paddingBlock='',marginBlock=''|}>", "\t$4", "</SidePadding>"],
   },
   "aside-padding": {
     "scope": "astro",
     "prefix": "asidePadding",
-    "body": ["<AsidePadding class='$1' maxWidth='${2:1400}' aside='${3|left,right|}' mobile='${4|lg,md,xl,2xl,none|}' ${5|mobileFill|} ${6|paddingBlock='',marginBlock=''|}>", "\t$7", "</AsidePadding>"]
+    "body": ["<AsidePadding class='$1' maxWidth='${2:1400}' aside='${3|left,right|}' mobile='${4|lg,md,xl,2xl,none|}' ${5|mobileFill|} ${6|paddingBlock='',marginBlock=''|}>", "\t$7", "</AsidePadding>"],
   },
   "container": {
     "scope": "astro",
     "prefix": "container",
-    "body": ["<Container class='$1' maxWidth='${2:1200}'>", "\t$3", "</Container>"]
+    "body": ["<Container class='$1' maxWidth='${2:1200}'>", "\t$3", "</Container>"],
   },
   "flex": {
     "scope": "astro",
     "prefix": "Flex",
-    "body": ["<Flex class='$1' gap='${2:40}' item='${3|center,stretch,start,end|}' justify='${4|center,between,start,end,around,evenly|}' mobile='${5|lg,xl,md,2xl,sm|}' ${6|reverse,flexReverse|} ${7| ,mobileReverse|}>", "\t$8", "</Flex>"]
+    "body": ["<Flex class='$1' gap='${2:40}' item='${3|center,stretch,start,end|}' justify='${4|center,between,start,end,around,evenly|}' mobile='${5|lg,xl,md,2xl,sm|}' ${6|reverse,flexReverse|} ${7| ,mobileReverse|}>", "\t$8", "</Flex>"],
   },
   "left-right": {
     "scope": "astro",
     "prefix": "leftRight",
-    "body": ["<LeftRight class='$1' ${2|gap='40',overlay='-80'|} item='${3|center,stretch,start,end|}' justify='${4|center,between,start,end,around,evenly|}' maxWidth='${5:1200}' mobile='${6|lg,xl,md,2xl,sm|}' ${7| ,reverse|} ${8| ,center|} ${9| ,mobileFit|} ${10| ,mobileReverse|}>", "\t$11", "</LeftRight>"]
+    "body": ["<LeftRight class='$1' ${2|gap='40',overlay='-80'|} item='${3|center,stretch,start,end|}' justify='${4|center,between,start,end,around,evenly|}' maxWidth='${5:1200}' mobile='${6|lg,xl,md,2xl,sm|}' ${7| ,reverse|} ${8| ,center|} ${9| ,mobileFit|} ${10| ,mobileReverse|}>", "\t$11", "</LeftRight>"],
   },
   "grid-item": {
     "scope": "astro",
     "prefix": "gridItem",
-    "body": ["<GridItem class='$1' col='${2|4 lg:3 sm:2 xs:1|}' gap='${3:30}' item='${4|stretch,start,center,end|}' justify='${5|center,between,start,end,around,evenly|}' maxWidth='${6:100%}' ${7| ,center|}>", "\t$8", "</GridItem>"]
+    "body": ["<GridItem class='$1' col='${2|4 lg:3 sm:2 xs:1|}' gap='${3:30}' item='${4|stretch,start,center,end|}' justify='${5|center,between,start,end,around,evenly|}' maxWidth='${6:100%}' ${7| ,center|}>", "\t$8", "</GridItem>"],
   },
   "button-swap": {
     "scope": "astro",
     "prefix": "btnSwap",
-    "body": ["<BtnSwap class='$1' href='#' backgroundColor='#000' color='#fff' ${2|blank|}>$3</BtnSwap>"]
+    "body": ["<BtnSwap class='$1' href='#' backgroundColor='#000' color='#fff' ${2|blank|}>$3</BtnSwap>"],
   },
   "image": {
     "scope": "astro",
     "prefix": "Img",
-    "body": ["<Img class='$1' src='$2'  ${3|scale|} ${4|cover|} />"]
+    "body": ["<Img class='$1' src='$2'  ${3|scale|} ${4|cover|} />"],
   },
   "background-fixed": {
     "scope": "astro",
     "prefix": "bgFixed",
-    "body": ["<BgFixed class='$1' src='$2' minHeight='$3vw'>", "\t$4", "</BgFixed>"]
+    "body": ["<BgFixed class='$1' src='$2' minHeight='$3vw'>", "\t$4", "</BgFixed>"],
   },
   "content": {
     "scope": "astro",
     "prefix": "content",
-    "body": ["<Content class='$1' width='$2' padding='$3'>", "\t", "</Content>"]
-  }
+    "body": ["<Content class='$1' width='$2' padding='$3'>", "\t", "</Content>"],
+  },
 }

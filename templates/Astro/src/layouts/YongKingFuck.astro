@@ -24,7 +24,22 @@ const keywords = Astro.props.keywords || []
   @use 'sass:math';
   @use '../config/index.scss' as config;
 
-  @include config.module8;
+  // reset module8
+  .edit,
+  .show_content,
+  .main_part {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: auto !important;
+    padding: 0px !important;
+  }
+  .pageIndex .main_part {
+    border: none !important;
+  }
+  .animated15 {
+    animation: none;
+  }
+  @include config.path_banner;
 
   // 字體大小基礎占比
   @function base-ratio($value, $min, $max, $lower, $upper, $power) {
