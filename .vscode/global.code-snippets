@@ -152,13 +152,19 @@
   "css-space-custom": {
     "scope": "css,scss",
     "prefix": "--s",
-    "body": ["font-size: var(--f${1:18});"],
+    "body": ["var(--f${1:40})"],
     "description": "space",
   },
   "css-space-20": {
     "scope": "css,scss",
     "prefix": "--s20",
     "body": ["var(--s20)"],
+    "description": "space",
+  },
+  "css-space-30": {
+    "scope": "css,scss",
+    "prefix": "--s30",
+    "body": ["var(--s30)"],
     "description": "space",
   },
   "css-space-40": {

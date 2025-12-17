@@ -1,6 +1,5 @@
 ---
-import type { LeftLineListItemProps } from './Item.type'
-import { id, props as defaultProps } from './Item.type'
+import { type LeftLineListItemProps, id, props as defaultProps } from './Item.type'
 import ItemLine from '../prototype/_itemLine.astro'
 import { mergeClasses } from '../../utils'
 
@@ -13,7 +12,7 @@ const props = {
 }
 const { id: astroId, class: className, ...rest } = props
 
-const classList = mergeClasses(className, [id])
+const classList = mergeClasses(className, id)
 ---
 
 <li id={astroId} class:list={classList} {...rest}>

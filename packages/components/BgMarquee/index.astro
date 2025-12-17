@@ -1,6 +1,5 @@
 ---
-import type { BgMarqueeProps } from './index.type'
-import { id, props as defaultProps } from './index.type'
+import { type BgMarqueeProps, id, props as defaultProps } from './index.type'
 import { mergeClasses } from '../../utils'
 
 interface Props extends BgMarqueeProps {}
@@ -25,10 +24,10 @@ const styleList = {
   '--bgp': (hr === 0 ? '50%' : `calc(${hr * 100}% + ${hr * -100}vw)`) + (vr === 0 ? '50%' : ` calc(${vr * 100}% + ${vr * -100}vh)`),
   '--bg': `url(${src})`,
 }
-const classList = mergeClasses(className, [id]).join(' ')
+const classList = mergeClasses(className, id)
 ---
 
-<div class={classList} style={styleList} {...rest}>
+<div class:list={classList} style={styleList} {...rest}>
   <slot />
 </div>
 

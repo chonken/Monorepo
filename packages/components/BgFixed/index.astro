@@ -1,6 +1,5 @@
 ---
-import type { BgFixedProps } from './index.type'
-import { id, props as defaultProps } from './index.type'
+import { type BgFixedProps, id, props as defaultProps } from './index.type'
 import { mergeClasses, parseUnit } from '../../utils'
 
 interface Props extends BgFixedProps {}
@@ -16,7 +15,7 @@ const styleList = {
   '--url': `url(${src})`,
   '--h': parseUnit(minHeight, 'vw'),
 }
-const classList = mergeClasses(className, [id])
+const classList = mergeClasses(className, id)
 ---
 
 <div class:list={classList} style={styleList} {...rest}>
