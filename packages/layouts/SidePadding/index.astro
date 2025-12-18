@@ -9,7 +9,7 @@ const props = {
   ...defaultProps,
   ...Astro.props,
 }
-const { element, class: className, maxWidthStart, maxWidthEnd, mobile, mobileFill, paddingInline, paddingBlock, marginBlock, minPaddingInline, ...rest } = props
+const { element, class: className, maxWidthStart, maxWidthEnd, mobile, mobileFill, paddingInline, paddingBlock, marginBlock, minPaddingInline, aside, ...rest } = props
 
 const Element = element as keyof HTMLElement
 
@@ -25,7 +25,7 @@ const styleList = {
   '--pdi': parseUnit(paddingInline, '%'),
   '--mpdi': parseUnit(minPaddingInline, 'px'),
 }
-const classList = mergeClasses(className, ['ch-spd', ...(mobile === 'none' ? [] : [`mob-${mobile}`, `${mobileFill ? 'mob-fill' : ''}`])])
+const classList = mergeClasses(className, ['ch-spd', `${aside === 'none' ? '' : 'ch-spd-' + aside[0]}`, ...(mobile === 'none' ? [] : [`mob-${mobile}`, `${mobileFill ? 'mob-fill' : ''}`])])
 ---
 
 <Element class:list={classList} style={styleList} {...rest}>
@@ -41,6 +41,12 @@ const classList = mergeClasses(className, ['ch-spd', ...(mobile === 'none' ? [] 
     padding-block: var(--pdb);
     padding-inline: calc(max(50% - var(--mws) / 2, var(--mpd))) calc(max(50% - var(--mwe) / 2, var(--mpd))) !important;
   }
+  .ch-spd.ch-spd-s {
+    padding-inline-start: 0 !important;
+  }
+  .ch-spd.ch-spd-e {
+    padding-inline-end: 0 !important;
+  }
 
   // 手動設定和對應尺寸
   $map: (
@@ -52,10 +58,10 @@ const classList = mergeClasses(className, ['ch-spd', ...(mobile === 'none' ? [] 
 
   @each $size, $mobile in $map {
     @media (max-width: bp.size($size)) {
-      #{$mobile}:is(.ch-pdl, .ch-pdr) {
+      #{$mobile}:is(.ch-spd-s, .ch-spd-e) {
         padding-inline: max(var(--pdi), var(--mpdi)) !important;
       }
-      #{$mobile}.mob-fill:is(.ch-pdl, .ch-pdr) {
+      #{$mobile}.mob-fill:is(.ch-spd-s, .ch-spd-e) {
         padding-inline: 0 !important;
       }
     }

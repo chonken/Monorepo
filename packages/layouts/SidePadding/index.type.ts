@@ -11,6 +11,7 @@ export interface SidePaddingProps extends ElementProps {
   paddingBlock?: string | number
   paddingInline?: string | number
   minPaddingInline?: string | number
+  aside?: 'start' | 'end' | 'none'
 }
 
 export const props = {
@@ -23,6 +24,7 @@ export const props = {
   marginBlock: '0',
   paddingInline: '5%',
   minPaddingInline: '0',
+  aside: 'none' as const,
 }
 
 export const slots = ['default']
