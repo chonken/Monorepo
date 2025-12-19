@@ -1,12 +1,12 @@
 import type { ElementProps } from '../../type/element'
 
-
 export const id = 'ch-rot'
 
 export interface RotateProps extends ElementProps {
   rotate?: string
-  seconds?: string
+  seconds?: string | number
   loop?: boolean
+  reverse?: boolean
 }
 
 export const props = {
@@ -14,6 +14,7 @@ export const props = {
   rotate: '15',
   seconds: '1',
   loop: false,
+  reverse: false,
 }
 
 export const slots = ['default']

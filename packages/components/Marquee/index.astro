@@ -1,5 +1,5 @@
 ---
-import {type MarqueeProps, id, props as defaultProps } from './index.type'
+import { type MarqueeProps, id, props as defaultProps } from './index.type'
 import { mergeClasses, parseUnit } from '../../utils'
 
 interface Props extends MarqueeProps {}
@@ -9,7 +9,7 @@ const props = {
   ...defaultProps,
   ...Astro.props,
 }
-const { class: className, seconds, move, ...rest } = props
+const { class: className, seconds, move, hover, ...rest } = props
 
 const map = {
   left: [-1, 0],
@@ -23,7 +23,7 @@ const styleList = {
   '--sec': parseUnit(seconds, 's'),
   '--tra': `translate(${hr * 100}%, ${vr * 100}%)`,
 }
-const classList = mergeClasses(className, [id, `ch-dir-${move}`])
+const classList = mergeClasses(className, [id, `ch-dir-${move}`, hover ? 'ch-hover' : '']).join(' ')
 ---
 
 <div class:list={classList} style={styleList} {...rest}>
@@ -58,6 +58,9 @@ const classList = mergeClasses(className, [id, `ch-dir-${move}`])
       & > .ch-item * {
         width: 100%;
       }
+    }
+    &.ch-hover:hover > .ch-item {
+      animation-play-state: paused;
     }
   }
   @keyframes marquee {
