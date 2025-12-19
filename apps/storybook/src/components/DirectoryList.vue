@@ -29,12 +29,17 @@ interface Props {
 }
 const props = defineProps<Props>()
 const active = defineModel<string>('active')
+const manual = defineModel<boolean>('manual')
 
 const items = toRef(props, 'items')
 const open = ref<boolean>(true)
 
 const onSelect = (href: string) => {
+  manual.value = true
   active.value = href
+  setTimeout(() => {
+    manual.value = false
+  }, 500)
 }
 
 const elClose = (el: Element) => {

@@ -13,7 +13,7 @@
         </li>
       </ul> -->
       <div class="mt-10">
-        <SwitchDemo :name="name" :demos="demos" />
+        <AsyncComp :name="name" :demos="demos" />
       </div>
       <!-- <PropsTable :props="props" /> -->
     </section>
@@ -21,8 +21,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, toRefs, watch, nextTick } from 'vue'
-import SwitchDemo from '../components/SwitchDemo.vue'
+import { ref, toRefs, watch, nextTick, defineAsyncComponent } from 'vue'
+
+const AsyncComp = defineAsyncComponent({
+  loader: () => import('../components/SwitchDemo.vue'),
+  // loadingComponent: ,
+  // errorComponent: ,
+  // timeout: 10000,
+})
 
 interface Props {
   list: { structure: string; items: any[] }[]

@@ -9,8 +9,8 @@
         <template v-for="group in directoryTags" :key="group.structure">
           <template v-if="group.items.length > 0">
             <div class="mt-4 mb-1 text-sm font-bold text-[var(--text-main-1)]">{{ group.structure }}</div>
-            <!-- 紀錄: 目前是根據 IntersectionObserver 決定 active，會導致按後排目錄時，當目錄高度不夠，active不會是對應按鈕 -->
-            <DirectoryList :items="group.items" :active="active" />
+            <!-- 紀錄: 目前是根據 IntersectionObserver 決定 active，會導致按後排目錄時，當目錄高度不夠，active不會是對應按鈕，解決方式是加上 manual 標記是否是手動點擊的，是的話就不更新 -->
+            <DirectoryList :items="group.items" v-model:active="active" v-model:manual="manual" />
           </template>
         </template>
       </div>
@@ -20,26 +20,22 @@
     <Header />
     <div ref="scrollRoot" class="relative z-1 w-full h-full px-[5%] pb-[10%] overflow-x-hidden overflow-y-auto">
       <!-- 紀錄: 除了created和有before外，子組件的生命週期順序都先於父組件，所以雙方都在onMounted寫程式時，子組件onMounted的程式是不會有父組件在onMounted的更新，解法是子組件用watch監聽父組件的關鍵數據 -->
-      <DisplayModules :list="list" v-model:sections="sections" />
+      <DisplayModules :list="info.list" v-model:sections="sections" />
     </div>
   </main>
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, computed, onBeforeUnmount, watch } from 'vue'
-import { typeOfLayouts, typeOfComponents } from '../utils/AsyncImportDemo.js'
 import DisplayModules from './DisplayModules.vue'
 import DirectoryList from '../components/DirectoryList.vue'
 import SearchBox from '../components/SearchBox.vue'
 import Header from '../layouts/Header.vue'
-import classification from '../save/classification.json' with { type: 'json' }
-import demo from '../save/demo.json' with { type: 'json' }
+import getInfo, { type Info } from '../utils/getInfo.js'
 
-const list = ref<{ structure: string; items: any[] }[]>([])
+const info = ref<Info>({ list: [], idMap: new Map(), nameMap: new Map() })
 const searchTerm = ref<string>('')
 const tableOfContents = ref<{ structure: string; items: any[] }[]>([])
 const scrollRoot = ref<HTMLElement | null>(null)
-
-const pathRegex = /^(\.\.\/)+|\/[^/]+$/g
 
 // 根據 searchTerm 更新篩選 items
 const directoryTags = computed(() =>
@@ -48,34 +44,10 @@ const directoryTags = computed(() =>
     items: group.items.filter((item) => item.label.toLowerCase().includes(searchTerm.value.toLowerCase())),
   })),
 )
-// 預先處理list，名稱、id重複警告，依賴組件合併，改用 ts-morph 才有完整屬性，原先的props改名成defaultPorps
-const processList = () => {}
-const formatList = (globObj: Record<string, () => Promise<unknown>>) => {
-  const entries = Object.entries(globObj)
-  return Promise.all(
-    entries.map(async ([p, promise]: [string, any]) => {
-      const component = await promise()
-      // list名稱問題
-      const path = p.replace(pathRegex, '')
-      return {
-        path,
-        name: path.split('/').at(-1) ?? 'Unknown',
-        id: component.id,
-        props: component.props,
-        slots: component.slots,
-        categorys: classification[component.id as keyof typeof classification]?.categorys,
-        keywords: classification[component.id as keyof typeof classification]?.keywords,
-        demos: demo[component.id as keyof typeof demo] ?? [],
-      }
-    }),
-  )
-}
+
 onMounted(async () => {
-  list.value = [
-    { structure: 'Components', items: await formatList(typeOfComponents) },
-    { structure: 'Layouts', items: await formatList(typeOfLayouts) },
-  ]
-  tableOfContents.value = list.value.map((group) => ({
+  info.value = await getInfo()
+  tableOfContents.value = info.value.list.map((group) => ({
     structure: group.structure,
     items: [
       ...group.items.map(({ name }) => ({ href: '#component' + name, label: name })),
@@ -91,8 +63,9 @@ onMounted(async () => {
   }))
 })
 
-// IntersectionObserver 實現動態更新(不穩定)
+// IntersectionObserver 實現動態更新
 const active = ref<string>('')
+const manual = ref<boolean>(false)
 let observer: IntersectionObserver | null = null
 const ratioMap = new Map<string, number>()
 const sections = ref<HTMLElement[]>()
@@ -123,7 +96,7 @@ onMounted(() => {
           bestRatio = ratio
         }
       }
-      if (bestId) active.value = '#' + bestId
+      if (!manual.value && bestId) active.value = '#' + bestId
     },
     {
       root: scrollRoot.value,
