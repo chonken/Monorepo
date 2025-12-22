@@ -222,7 +222,12 @@
   "as-demo": {
     "scope": "astro",
     "prefix": "as-demo",
-    "body": ["---", "import Component from '@components/$1.astro'", "import config from '../config.json'", "import content from '../../content/demo.json'\n", "export const id = '$2'", "export const { keywords, category } = config['components'][id]", "export const props = {}", "export const slots = ['default']", "const data = content['image_txt']?.[0] ?? {}", "---", "\t", "<Component class=''>", "\t", "</Component>\n", "<style>", "\t", "</style>"],
+    "body": ["---", "import { type $1, id, props as defaultProps } from './index.type'", "import { mergeClasses } from '../../utils'", "", "interface Props extends $1 {}", "", "// 合併属性", "const props = {", "  ...defaultProps,", "  ...Astro.props,", "}", "", "const { class: className, ...rest } = props", "", "const styleList = {}", "const classList = mergeClasses(className, id)", "---", "", "<div class:list={classList} style={styleList} {...rest}>", "  $2", "</div>", "", "<style lang='scss' is:global>", "  $3", "</style>"],
+  },
+  "ts-demo": {
+    "scope": "typescript",
+    "prefix": "ts-demo",
+    "body": ["import { ElementProps } from '../../type/element'", "", "export const id = '$1'", "", "export interface $2 extends ElementProps {", "  $3", "}", "", "export const props = {", "  $4", "}", "", "export const slots = ['default'$5]"],
   },
   "side-padding": {
     "scope": "astro",

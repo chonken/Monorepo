@@ -1,0 +1,53 @@
+---
+import { type ImgHoverTranslateProps, id, props as defaultProps } from './index.type'
+import { mergeClasses, parseUnit } from '../../utils'
+
+interface Props extends ImgHoverTranslateProps {}
+
+// 合併属性
+const props = {
+  ...defaultProps,
+  ...Astro.props,
+}
+
+const { class: className, src, width, height, seconds, ...rest } = props
+
+const styleList = {
+  '--apr': `${width} / ${height}`,
+  '--sec': parseUnit(seconds, 's'),
+}
+const classList = mergeClasses(className, id)
+---
+
+<div class:list={classList} style={styleList} {...rest}>
+  <img width={width} style="opacity: 0;" />
+  <div class="ch-iht-i"><img src={src} alt="" /></div>
+</div>
+
+<style lang="scss" is:global>
+  .ch-iht {
+    position: relative;
+    aspect-ratio: var(--apr);
+    overflow: hidden;
+    .ch-iht-i > img {
+      display: block;
+      transition: transform var(--sec);
+      max-width: unset;
+      height: 100% !important;
+    }
+    &:hover .ch-iht-i {
+      width: 0;
+    }
+    &:hover .ch-iht-i > img {
+      transform: translateX(-100%);
+    }
+  }
+  .ch-iht-i {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    transition: var(--sec);
+  }
+</style>

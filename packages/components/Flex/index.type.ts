@@ -1,5 +1,4 @@
 import type { LayoutProps } from '../../type/layout'
-import { parseJustify, parseMultiUnit } from '../../utils'
 
 export const id = 'ch-flex'
 
