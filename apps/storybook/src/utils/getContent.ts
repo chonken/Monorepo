@@ -15,7 +15,12 @@ export default async function getContent(category: string, contentsStyle?: Recor
         },
       }
     case 'image':
-      return {}
+      const image = getData(content.image)
+      return {
+        slots: {
+          default: await toImage({ src: image, style: contentsStyle?.['Image'] }),
+        },
+      }
     case 'background':
       return {
         props: {
@@ -32,6 +37,7 @@ export default async function getContent(category: string, contentsStyle?: Recor
         },
       }
     case 'item':
+      const item = getData(content.items)
       return {}
     case 'item_image':
       return {}
