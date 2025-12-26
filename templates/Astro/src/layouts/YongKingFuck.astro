@@ -42,50 +42,55 @@ const keywords = Astro.props.keywords || []
   }
   @include config.path_banner;
 
-  // 字體大小基礎占比
-  @function base-ratio($value, $min, $max, $lower, $upper, $power) {
+  // 字體大小基礎值
+  @function base($size, $min, $max, $upper, $lower, $power) {
+    @if $lower < math.div($min, $max) {
+      @error '下界值必須大於等於 $min / $max';
+    }
+    @if $upper > 1 {
+      @error '上界值必須小於等於 1';
+    }
+    @if $upper < $lower {
+      @error '上界值必須大於下界值';
+    }
+    $base-min: $min * $upper;
+    $base-max: $max * $lower;
     // 超過區間
-    @if $value < $min {
-      @return $upper;
-    } @else if $value > $max {
-      @return $lower;
+    @if $size < $min {
+      @return $size * $upper;
+    }
+    @if $size > $max {
+      @return $base-max;
     }
 
-    @return $lower + ($upper - $lower) * (1 - math.pow(math.div(($value - $min), ($max - $min)), $power));
+    $t: math.pow(math.div(($size - $min), ($max - $min)), $power);
+    $result: $base-min + ($base-max - $base-min) * $t;
+    @if $size < $result {
+      @error "power值過小，至少要讓字體大小:#{$size}大於算出來的基礎值#{$result}";
+    }
+    @return $result;
   }
+  @function round($value, $precision) {
+    $factor: math.pow(10, $precision);
+    @return math.div(math.round($value * $factor), $factor);
+  }
+  @mixin generate-sizes($prefix, $sizes, $min, $max, $upper, $lower, $power) {
+    --#{$prefix}base: 1rem;
+    @each $size in $sizes {
+      $base: base($size, $min, $max, $upper, $lower, $power);
+      // 相對於--*base 的比例
+      $ratio: round(math.div($base, 16), 2);
+      // vw 補齊剩餘空間
+      $vw: round(math.div($size - $base, config.$lg) * 100, 2);
+      // 最小值
+      $min-val: round($base + math.div(config.$sm * $vw, 100), 0);
+      --#{$prefix}#{$size}: clamp(#{$min-val}px, calc(var(--#{$prefix}base) * #{$ratio} + #{$vw}vw), #{$size}px);
+    }
+  }
+
   .opsl {
-    --base: 1rem;
-    // 先取一個基礎值(--base * 占比)，值越小基礎值占比越大，剩餘換算成vw補齊
-    @each $size in config.$font-size {
-      $ratio: base-ratio($size, config.$fmin, config.$fmax, config.$flower, config.$fupper, config.$fpower);
-      // 相對於--base的基礎值比例
-      $fbase: math.div(math.round(math.div($size, 16) * $ratio * 100), 100);
-      // vw補齊剩餘空間
-      $fvw: math.div(math.round(math.div($size * (1 - $ratio), config.$lg) * 10000), 100);
-      // 最小值
-      $fmin: math.min(math.round($fbase * 16 + math.div(config.$sm * $fvw, 100)), 50);
-
-      @if $fbase <= 0 {
-        --f#{$size}: clamp(#{$fmin}px, #{$fvw}vw, #{$size}px);
-      } @else {
-        --f#{$size}: clamp(#{$fmin}px, calc(var(--base) * #{$fbase} + #{$fvw}vw), #{$size}px);
-      }
-    }
-    @each $size in config.$space {
-      $ratio: base-ratio($size, config.$smin, config.$smax, config.$slower, config.$supper, config.$spower);
-      // 相對於--base的基礎值比例
-      $sbase: math.div(math.round(math.div($size, 16) * $ratio * 100), 100);
-      // vw補齊剩餘空間
-      $svw: math.div(math.round(math.div($size * (1 - $ratio), config.$lg) * 10000), 100);
-      // 最小值
-      $smin: math.round($sbase * 16 + math.div(config.$sm * $svw, 100));
-
-      @if $sbase <= 0 {
-        --s#{$size}: clamp(#{$smin}px, #{$svw}vw, #{$size}px);
-      } @else {
-        --s#{$size}: clamp(#{$smin}px, calc(var(--base) * #{$sbase} + #{$svw}vw), #{$size}px);
-      }
-    }
+    @include generate-sizes('f', config.$font-size, config.$fmin, config.$fmax, config.$fupper, config.$flower, config.$fpower);
+    @include generate-sizes('s', config.$space, config.$smin, config.$smax, config.$supper, config.$slower, config.$spower);
 
     @include config.opsl;
   }
