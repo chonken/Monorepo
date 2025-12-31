@@ -11,8 +11,7 @@
     "copy": "node scripts/new_client.js",
     "storybook": "node scripts/open_storybook.js",
     "demo": "pnpm storybook",
-    "format": "node scripts/format.js",
-    "update:storybook": "node scripts/update_storybook.js"
+    "format": "node scripts/format.js"
   },
   "dependencies": {
     "astro": "^5.16.5",
