@@ -1,5 +1,5 @@
-import { Project, SyntaxKind } from 'ts-morph'
-import { typeOfLayouts, typeOfComponents } from './AsyncImportDemo'
+import { Project } from 'ts-morph'
+import { typeOfLayouts, typeOfComponents } from '../registry/asyncImportDemo'
 import classification from '../save/classification.json' with { type: 'json' }
 import demo from '../save/demo.json' with { type: 'json' }
 
