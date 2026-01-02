@@ -1,19 +1,22 @@
 ---
-import type { ElementProps } from '../type/element'
-import ItemLine from './prototype/_itemLine.astro'
-import { mergeClasses } from '../utils'
+import { type ProcessTimelineItemProps, id, props as defaultProps } from './Item'
+import ItemLine from '../prototype/_itemLine.astro'
+import { mergeClasses } from '../../utils'
 
-export interface ProcessTimelineItemProps extends ElementProps {
-  reverse?: boolean
-}
 interface Props extends ProcessTimelineItemProps {}
 
-const { id, class: className = '', reverse = false, ...rest } = Astro.props
+// 合併属性
+const props = {
+  ...defaultProps,
+  ...Astro.props,
+}
 
-const classList = mergeClasses(className, ['ch-ptli', reverse ? 'reverse' : ''])
+const { class: className, reverse, ...rest } = props
+
+const classList = mergeClasses(className, [id, reverse ? 'reverse' : ''])
 ---
 
-<li id={id} class:list={classList} {...rest}>
+<li class:list={classList} {...rest}>
   <div class="ch-ptli-l">
     <slot name="left" />
   </div>
@@ -33,7 +36,7 @@ const classList = mergeClasses(className, ['ch-ptli', reverse ? 'reverse' : ''])
 </li>
 
 <style lang="scss" is:global>
-  @use '../config/breakpoint' as bp;
+  @use '../../config/breakpoint' as bp;
   .ch-ptli {
     display: grid;
     grid-template-columns: minmax(0, 1fr) max-content minmax(0, 1fr);

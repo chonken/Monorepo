@@ -1,24 +1,7 @@
 ---
-import type { ElementProps } from '../../type/element'
+import type ListLineProps from './ListLine.type'
 import { mergeClasses, parseUnit, parseDualUnit } from '../../utils'
 
-export interface ListLineProps extends ElementProps {
-  item?: 'stretch' | 'start' | 'center' | 'end'
-  gap?: string | number
-  dotStart?: string
-  dotColor?: string
-  dotSize?: string
-  dotCircle?: boolean
-  lineGap?: string
-  lineWidth?: string
-  lineColor?: string
-  lineDotSize?: string
-  lineDotColor?: string
-  lineDotCircle?: boolean
-  trimStart?: boolean
-  trimEnd?: boolean
-  mobile?: 'lg' | 'md' | 'sm' | 'xs' | '2xs' | 'none'
-}
 interface Props extends ListLineProps {
   listDirection?: 'row' | 'column'
 }
@@ -61,7 +44,6 @@ if (dotStart) {
 }
 
 const styleList = {
-  '--itm': item,
   '--cgap': space,
   '--t-pd-s': txtStartPad,
   '--t-pd-e': txtEndPad,

@@ -11,12 +11,15 @@ const props = {
   ...defaultProps,
   ...Astro.props,
 }
-const { class: className, ...rest } = props
+const { class: className, item, ...rest } = props
 
+const styleList = {
+  '--itm': item,
+}
 const classList = mergeClasses(className, [id])
 ---
 
-<ListLine class:list={classList} {...rest}>
+<ListLine class:list={classList} style={styleList} item={item} {...rest}>
   <slot />
 </ListLine>
 

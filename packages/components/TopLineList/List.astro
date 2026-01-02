@@ -1,37 +1,59 @@
 ---
 import type { TopLineListProps } from './List.type'
 import { id, props as defaultProps } from './List.type'
-import { mergeClasses, parseUnit } from '../../utils'
+import { fullRWD, mergeClasses, parseDualUnit, parseRWD, setRWD } from '../../utils'
 import ListLine from '../prototype/_listLine.astro'
+import { containerStyleList, containerClassList } from '../../layouts/Container/props'
 
-interface Props extends TopLineListProps {
-  itemGap?: string | number
-  maxWidth?: string | number
-}
+interface Props extends TopLineListProps {}
 
 // 合併属性
 const props = {
   ...defaultProps,
   ...Astro.props,
 }
-const { class: className, itemGap, maxWidth, ...rest } = props
+const { element, class: className, maxWidth, gap, col, center, ...rest } = props
+
+// RWD尺寸(由大到小排序)
+const sizes = ['3xl', '2xl', 'xl', 'lg', 'md', 'sm', 'xs', '2xs']
+
+// 解析gap
+const [_, colGap] = parseDualUnit(gap)
+// 解析col
+const colMap = setRWD(fullRWD(parseRWD(col), sizes))
 
 const styleList = {
-  '--mw': parseUnit(maxWidth, 'px'),
-  '--i-colGap': parseUnit(itemGap),
+  ...containerStyleList(maxWidth),
+  '--rgap': colGap || '0px',
+  ...colMap,
 }
-const classList = mergeClasses(className, [id])
+const classList = mergeClasses(className, [id, ...containerClassList(center)])
 ---
 
 <ListLine class:list={classList} style={styleList} listDirection="row" {...rest}>
   <slot />
 </ListLine>
 
-<style is:global>
+<style lang="scss" is:global>
+  @use '../../config/breakpoint' as bp;
+  @use '../../styles/container.scss';
+
   .ch-tll {
     display: flex;
     flex-wrap: wrap;
     max-width: var(--mw);
-    row-gap: var(--cgap);
+    row-gap: var(--rgap);
+    & > * {
+      max-width: calc(100% / var(--col));
+    }
+  }
+  @each $size, $value in bp.$breakpoint {
+    @media (max-width: #{$value}px) {
+      .ch-tll {
+        & > * {
+          max-width: calc(100% / var(--col-#{$size}));
+        }
+      }
+    }
   }
 </style>

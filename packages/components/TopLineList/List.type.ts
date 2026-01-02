@@ -1,15 +1,16 @@
-import type { ListLineProps } from '../prototype/_listLine.astro'
+import ListLineProps from '../prototype/ListLine.type'
+import { type ContainerProps, props as containerDefaultProps } from '../../layouts/Container/index.type'
 
 export const id = 'ch-tll'
 
-export interface TopLineListProps extends ListLineProps {}
+export interface TopLineListProps extends ListLineProps, ContainerProps {}
 
 export const props = {
+  ...containerDefaultProps,
   element: 'ol',
-  class: '',
+  col: '5 lg:3 xs:2',
   item: 'center' as const,
   gap: '60 40',
-  itemGap: '20',
   dotColor: '#878787',
   dotSize: '10px',
   dotCircle: false,
@@ -21,7 +22,7 @@ export const props = {
   lineDotCircle: false,
   trimStart: false,
   trimEnd: false,
-  mobile: 'none' as const,
+  center: false,
 }
 
 export const slots = ['default']

@@ -1,0 +1,30 @@
+---
+import { type ProcessTimelineProps, id, props as defaultProps } from './List'
+import { mergeClasses } from '../../utils'
+import ListLine from '../prototype/_listLine.astro'
+
+interface Props extends ProcessTimelineProps {}
+
+// 合併属性
+const props = {
+  ...defaultProps,
+  ...Astro.props,
+}
+
+const { class: className, item, evenReverse = false, mobileItem = 'start', ...rest } = props
+
+const styleList = {
+  '--itm': item,
+  '--mob-lt': mobileItem === 'center' ? 'auto' : mobileItem === 'start' ? 0 : 100,
+  '--mob-lb': mobileItem === 'center' ? 'auto' : mobileItem === 'end' ? 0 : 100,
+}
+const classList = mergeClasses(className, [id, evenReverse ? 'odd-reverse' : ''])
+---
+
+<ListLine class:list={classList} style={styleList} item={item} {...rest}><slot /></ListLine>
+
+<style is:global>
+  .ch-ptl {
+    overflow: hidden;
+  }
+</style>

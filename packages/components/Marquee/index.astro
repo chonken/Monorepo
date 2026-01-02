@@ -9,7 +9,7 @@ const props = {
   ...defaultProps,
   ...Astro.props,
 }
-const { class: className, seconds, move, hover, ...rest } = props
+const { class: className, seconds, move, hover, src, ...rest } = props
 
 const map = {
   left: [-1, 0],
@@ -27,8 +27,12 @@ const classList = mergeClasses(className, [id, `ch-dir-${move}`, hover ? 'ch-hov
 ---
 
 <div class:list={classList} style={styleList} {...rest}>
-  <div class="ch-item"><slot /></div>
-  <div class="ch-item"><slot /></div>
+  <div class="ch-item">
+    {Astro.slots.has('default') ? <slot /> : <img src={src} alt="" />}
+  </div>
+  <div class="ch-item">
+    {Astro.slots.has('default') ? <slot /> : <img src={src} alt="" />}
+  </div>
 </div>
 
 <style lang="scss" is:global>

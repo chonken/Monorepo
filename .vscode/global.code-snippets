@@ -227,7 +227,7 @@
   "ts-demo": {
     "scope": "typescript",
     "prefix": "ts-demo",
-    "body": ["import { ElementProps } from '../../type/element'", "", "export const id = '$1'", "", "export interface $2 extends ElementProps {", "  $3", "}", "", "export const props = {", "  $4", "}", "", "export const slots = ['default'$5]"],
+    "body": ["import { ElementProps } from '../../types'", "", "export const id = '$1'", "", "export interface $2 extends ElementProps {", "  $3", "}", "", "export const props = {", "  $4", "}", "", "export const slots = ['default'$5]"],
   },
   "side-padding": {
     "scope": "astro",

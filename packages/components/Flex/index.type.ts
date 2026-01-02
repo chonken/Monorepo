@@ -1,4 +1,4 @@
-import type { LayoutProps } from '../../type/layout'
+import type { LayoutProps } from '../../types'
 
 export const id = 'ch-flex'
 

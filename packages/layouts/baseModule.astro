@@ -1,13 +1,12 @@
 ---
 interface Props {
-  root?: string
   isDev?: boolean
   isIndex?: boolean
   keywords?: string[]
 }
-import '../styles/normalize.css'
-const { root = '', isDev = false, isIndex = false, keywords = [] } = Astro.props
+const { isDev = false, isIndex = false, keywords = [] } = Astro.props
 ---
+
 {
   isDev ? (
     <html lang="zh-Hant">
@@ -24,32 +23,124 @@ const { root = '', isDev = false, isIndex = false, keywords = [] } = Astro.props
         <script is:inline src="https://pic03.eapple.com.tw/yk_js_web/jquery-1.11.3.min.js" />
         <script is:inline src="https://pic03.eapple.com.tw/yk_js_web/scrollfade.js" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.css" />
-        
+
         <slot name="head" />
         <slot name="demo" />
       </head>
       <body>
-        <div class={root}>
+        <div class="opsl">
           <slot />
         </div>
       </body>
     </html>
   ) : (
-  <head>
-    <script is:inline src="https://pic03.eapple.com.tw/yk_js_web/scrollfade.js" />
-    <slot name="head" />
-  </head>
-  <div class={root}>
-    {isIndex && (
-    <div class="key_words">
-      <h2>{keywords[0]}</h2>
-      <h3>{keywords[1]}</h3>
-      <h4>{keywords[2]}</h4>
-      <h5>{keywords[3]}</h5>
-      <h6>{keywords[4]}</h6>
-    </div>
-    )}
-    <slot />
-  </div>
+    <Fragment>
+      <head>
+        <script is:inline src="https://pic03.eapple.com.tw/yk_js_web/scrollfade.js" />
+        <slot name="head" />
+      </head>
+      <div class="opsl">
+        {isIndex && (
+          <div class="key_words">
+            <h2>{keywords[0]}</h2>
+            <h3>{keywords[1]}</h3>
+            <h4>{keywords[2]}</h4>
+            <h5>{keywords[3]}</h5>
+            <h6>{keywords[4]}</h6>
+          </div>
+        )}
+        <slot />
+      </div>
+    </Fragment>
   )
 }
+
+<style is:global>
+  /* reset module8 */
+  .edit,
+  .edit_part,
+  .show_content,
+  .main_part {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: auto !important;
+    padding: 0px !important;
+  }
+  .pageIndex .main_part {
+    border: none !important;
+  }
+  .animated15 {
+    animation: none;
+  }
+  /* 隱藏關鍵字 */
+  .key_words {
+    padding: 0 !important;
+    height: 0 !important;
+    overflow: hidden;
+  }
+  .key_words :is(h2, h3, h4, h5, h6) {
+    color: #fff0;
+  }
+  /* 重製公司的白痴設定 */
+  .opsl,
+  .opsl :where(*:not(.fa-solid)) {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    word-break: inherit;
+  }
+  .opsl hr {
+    height: auto;
+  }
+  .opsl :is(h3, h4, h5, h6) {
+    line-height: 1.2;
+  }
+  @layer base {
+    .opsl {
+      position: relative;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .opsl,
+    .opsl * {
+      max-width: 100%;
+      text-decoration: none;
+      list-style: none;
+      font: inherit;
+      color: inherit;
+      transition:
+        color 0.5s,
+        background-color 0.5s,
+        border-color 0.5s;
+    }
+    .opsl *::before,
+    .opsl *::after {
+      box-sizing: border-box;
+    }
+    .opsl iframe {
+      display: block;
+    }
+    .opsl img {
+      vertical-align: middle;
+    }
+    .opsl table {
+      border-collapse: collapse;
+    }
+    .opsl a {
+      transition: 0.5s;
+    }
+    .opsl hr {
+      border-style: solid;
+      border-bottom: none;
+      border-right: none;
+    }
+  }
+</style>

@@ -8,7 +8,7 @@ const isDev = import.meta.env.MODE === 'development'
 const keywords = Astro.props.keywords || []
 ---
 
-<BaseModule root="opsl" isIndex={isIndex} isDev={isDev} keywords={isIndex ? keywords : undefined}>
+<BaseModule isIndex={isIndex} isDev={isDev} keywords={isIndex ? keywords : undefined}>
   <Fragment slot="demo">
     <!-- menu.css custom.css 放這裡 -->
   </Fragment>
@@ -24,22 +24,6 @@ const keywords = Astro.props.keywords || []
   @use 'sass:math';
   @use '../config/index.scss' as config;
 
-  // reset module8
-  .edit,
-  .edit_part,
-  .show_content,
-  .main_part {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: auto !important;
-    padding: 0px !important;
-  }
-  .pageIndex .main_part {
-    border: none !important;
-  }
-  .animated15 {
-    animation: none;
-  }
   @include config.path_banner;
 
   // 字體大小基礎值

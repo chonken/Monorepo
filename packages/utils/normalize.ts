@@ -1,13 +1,14 @@
 /**
  * 自動填滿空缺的RWD尺寸
  * @param {Record<string, string>} input
- * @param {string[]} sizes 
+ * @param {string[]} sizes
  * @returns {Record<string, string>}
  */
 export function fullRWD(input: Record<string, string>, sizes: string[]): Record<string, string> {
   const defalt: string = input['default'] ?? sizes.find((size) => input[size])
   input['default'] = defalt
 
+  // bug 沒有默認的話，未指定的高尺寸會出錯，直到有指定
   let last = input['default']
   for (const size of sizes) {
     last = input[size] ?? last

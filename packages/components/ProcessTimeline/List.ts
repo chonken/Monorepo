@@ -1,13 +1,17 @@
 import ListLineProps from '../prototype/ListLine.type'
 
-export const id = 'ch-lll'
+export const id = 'ch-ptl'
 
-export interface LeftLineListProps extends ListLineProps {}
+export interface ProcessTimelineProps extends ListLineProps {
+  element?: 'ol' | 'ul'
+  evenReverse?: boolean
+  mobileItem?: 'center' | 'start' | 'end'
+}
 
 export const props = {
-  element: 'ul',
   class: '',
-  item: 'stretch' as const,
+  element: 'ol',
+  item: 'center' as const,
   gap: '40',
   dotColor: '#878787',
   dotSize: '10px',
@@ -20,7 +24,9 @@ export const props = {
   lineDotCircle: false,
   trimStart: false,
   trimEnd: false,
-  mobile: 'none' as const,
+  mobile: 'md' as const,
+  evenReverse: false,
+  mobileItem: 'start',
 }
 
 export const slots = ['default']

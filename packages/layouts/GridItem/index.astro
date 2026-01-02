@@ -22,7 +22,6 @@ const sizes = ['3xl', '2xl', 'xl', 'lg', 'md', 'sm', 'xs', '2xs']
 // 解析gap
 const [_, colGap] = parseDualUnit(gap)
 // 解析col
-// bug 沒有默認的話，未指定的高尺寸會出錯，直到有指定
 const colMap = setRWD(fullRWD(parseRWD(col), sizes))
 
 const styleList = {

@@ -1,4 +1,4 @@
-import type { ButtonProps } from '../../../type/button'
+import type { ButtonProps } from '../../../types'
 
 export const id = 'btn_type01'
 
