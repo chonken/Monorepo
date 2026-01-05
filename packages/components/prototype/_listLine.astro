@@ -6,7 +6,7 @@ interface Props extends ListLineProps {
   listDirection?: 'row' | 'column'
 }
 
-const { id, element = 'ol', class: className = '', style, item = 'center', gap = '40', dotStart, dotColor = '#878787', dotSize = '10px', dotCircle = false, lineGap = '5px', lineWidth = '1px', lineColor = '#878787', lineDotSize = '5px', lineDotColor = '#878787', lineDotCircle = false, trimStart = false, trimEnd = false, mobile = 'none', listDirection = 'column', ...rest } = Astro.props
+const { id, element = 'ol', class: className = '', style, item = 'center', gap = '40', trimStart = false, trimEnd = false, mobile = 'none', listDirection = 'column', ...rest } = Astro.props
 
 const Element = element as keyof HTMLElement
 
@@ -26,30 +26,14 @@ const base = {
 const { start: StartPad, end: EndPad } = base
 // 圖片區padding間隔
 let dT = 'auto'
-let dotStartPad = base.start
-let dotEndPad = base.end
-if (dotStart) {
-  dT = dotStart === 'auto' ? 'auto' : parseUnit(dotStart)
-  console.log(dT)
-  if (dotStart === 'auto') {
-    dotStartPad = `calc(${_gap} / 2)`
-    dotEndPad = `calc(${_gap} / 2)`
-  } else {
-    dotStartPad = parseUnit(dotStart)
-    dotEndPad = `calc(${_gap} - ${parseUnit(dotStart)})`
-  }
-} else {
-  if (item === 'end') dT = '100%'
-  if (item === 'stretch' || item === 'start') dT = '0px'
-}
+if (item === 'end') dT = '100%'
+if (item === 'stretch' || item === 'start') dT = '0px'
 
 const styleList = {
   ...(listDirection === 'column' ? { '--cgap': space } : { '--rgap': space }),
   '--pd-s': StartPad,
   '--pd-e': EndPad,
   '--dt': parseUnit(dT),
-  // '--ts': trimStart ? 0 : 1,
-  // '--te': trimEnd ? 0 : 1,
   ...style,
 }
 const classList = mergeClasses(className, [trimStart ? 'trim-start' : '', trimEnd ? 'trim-end' : '', mobile === 'none' ? '' : `mob-${mobile}`])

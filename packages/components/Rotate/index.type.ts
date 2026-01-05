@@ -1,4 +1,4 @@
-import type { ElementProps } from '../../types/element'
+import type { ElementProps } from '../../types'
 
 export const id = 'ch-rot'
 
