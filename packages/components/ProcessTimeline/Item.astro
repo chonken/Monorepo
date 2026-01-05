@@ -11,7 +11,7 @@ const props = {
   ...Astro.props,
 }
 
-const { class: className, reverse, ...rest } = props
+const { class: className, reverse, lineClass, ...rest } = props
 
 const classList = mergeClasses(className, [id, reverse ? 'reverse' : ''])
 ---
@@ -22,11 +22,11 @@ const classList = mergeClasses(className, [id, reverse ? 'reverse' : ''])
   </div>
   {
     Astro.slots.has('marker') ? (
-      <ItemLine markerClass="ch-ptli-m" lineClass="ch-ptli-n">
+      <ItemLine markerClass="ch-ptli-m" lineClass={mergeClasses(lineClass, 'ch-ptli-n').join(' ')}>
         <slot name="marker" slot="marker" />
       </ItemLine>
     ) : (
-      <ItemLine markerClass="ch-ptli-m" lineClass="ch-ptli-n" />
+      <ItemLine markerClass="ch-ptli-m" lineClass={mergeClasses(lineClass, 'ch-ptli-n').join(' ')} />
     )
   }
   <div class="ch-ptli-r">
@@ -44,20 +44,20 @@ const classList = mergeClasses(className, [id, reverse ? 'reverse' : ''])
     margin-block: 0 !important;
     padding-block: 0 !important;
     column-gap: var(--cgap);
+    &:where(:first-of-type) {
+      margin-top: calc(var(--pd-s) * -1) !important;
+    }
+    &:where(:last-of-type) {
+      margin-bottom: calc(var(--pd-e) * -1) !important;
+    }
   }
-  .ch-ptli:first-of-type {
-    margin-top: calc(var(--t-pd-s) * -1) !important;
-  }
-  .ch-ptli:last-of-type {
-    margin-bottom: calc(var(--t-pd-e) * -1) !important;
-  }
-  :where(.ch-ptl.odd-reverse) > .ch-ptli:nth-of-type(even),
+  :where(.ch-ptl.odd-reverse) > .ch-ptli:where(:nth-of-type(even)),
   .ch-ptli:where(.reverse) {
     direction: rtl;
   }
   .ch-ptli-l,
   .ch-ptli-r {
-    padding-block: var(--t-pd-s) var(--t-pd-e);
+    padding-block: var(--pd-s) var(--pd-e);
   }
 
   // 手動設定尺寸

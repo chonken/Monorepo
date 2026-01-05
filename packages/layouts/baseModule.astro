@@ -34,24 +34,23 @@ const { isDev = false, isIndex = false, keywords = [] } = Astro.props
       </body>
     </html>
   ) : (
-    <Fragment>
-      <head>
-        <script is:inline src="https://pic03.eapple.com.tw/yk_js_web/scrollfade.js" />
-        <slot name="head" />
-      </head>
-      <div class="opsl">
-        {isIndex && (
-          <div class="key_words">
-            <h2>{keywords[0]}</h2>
-            <h3>{keywords[1]}</h3>
-            <h4>{keywords[2]}</h4>
-            <h5>{keywords[3]}</h5>
-            <h6>{keywords[4]}</h6>
-          </div>
-        )}
-        <slot />
-      </div>
-    </Fragment>
+    // 紀錄: 這裡照理說要包一層 Fragment ，讓它是單一 JSX 節點，但是包一層 Fragment 後在打包時會使style跑到最頂層
+    <head>
+      <script is:inline src="https://pic03.eapple.com.tw/yk_js_web/scrollfade.js" />
+      <slot name="head" />
+    </head>
+    <div class="opsl">
+      {isIndex && (
+        <div class="key_words">
+          <h2>{keywords[0]}</h2>
+          <h3>{keywords[1]}</h3>
+          <h4>{keywords[2]}</h4>
+          <h5>{keywords[3]}</h5>
+          <h6>{keywords[4]}</h6>
+        </div>
+      )}
+      <slot />
+    </div>
   )
 }
 

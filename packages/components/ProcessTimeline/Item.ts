@@ -4,10 +4,10 @@ export const id = 'ch-ptli'
 
 export interface ProcessTimelineItemProps extends ElementProps {
   reverse?: boolean
+  lineClass?: string
 }
 
 export const props = {
-  class: '',
   reverse: false,
 }
 

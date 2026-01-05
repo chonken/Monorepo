@@ -23,7 +23,7 @@ const styleList = {
   '--sec': parseUnit(seconds, 's'),
   '--tra': `translate(${hr * 100}%, ${vr * 100}%)`,
 }
-const classList = mergeClasses(className, [id, `ch-dir-${move}`, hover ? 'ch-hover' : '']).join(' ')
+const classList = mergeClasses(className, [id, `ch-dir-${move}`, hover ? 'ch-hover' : ''])
 ---
 
 <div class:list={classList} style={styleList} {...rest}>
@@ -51,8 +51,10 @@ const classList = mergeClasses(className, [id, `ch-dir-${move}`, hover ? 'ch-hov
     }
     &.ch-dir-left > .ch-item,
     &.ch-dir-right > .ch-item {
+      min-width: 100%;
       height: 100%;
       & > * {
+        min-width: 100%;
         height: 100% !important;
       }
     }

@@ -10,7 +10,7 @@ const props = {
   ...defaultProps,
   ...Astro.props,
 }
-const { id: astroId, class: className, ...rest } = props
+const { id: astroId, class: className, lineClass, ...rest } = props
 
 const classList = mergeClasses(className, id)
 ---
@@ -25,11 +25,11 @@ const classList = mergeClasses(className, id)
   }
   {
     Astro.slots.has('marker') ? (
-      <ItemLine markerClass="ch-llli-m" lineClass="ch-llli-l">
+      <ItemLine markerClass="ch-llli-m" lineClass={mergeClasses(lineClass, 'ch-llli-l').join(' ')}>
         <slot name="marker" slot="marker" />
       </ItemLine>
     ) : (
-      <ItemLine markerClass="ch-llli-m" lineClass="ch-llli-l" />
+      <ItemLine markerClass="ch-llli-m" lineClass={mergeClasses(lineClass, 'ch-llli-l').join(' ')} />
     )
   }
   <div class="ch-llli-t"><slot /></div>
@@ -43,21 +43,21 @@ const classList = mergeClasses(className, id)
     margin-block: 0 !important;
     padding-block: 0 !important;
     column-gap: var(--cgap);
-  }
-  .ch-llli:first-of-type {
-    margin-top: calc(var(--t-pd-s) * -1) !important;
-  }
-  .ch-llli:last-of-type {
-    margin-bottom: calc(var(--t-pd-e) * -1) !important;
+    &:where(:first-of-type) {
+      margin-top: calc(var(--pd-s) * -1) !important;
+    }
+    &:where(:last-of-type) {
+      margin-bottom: calc(var(--pd-e) * -1) !important;
+    }
   }
   :is(.ch-llli-g, .ch-llli-m) {
     flex-shrink: 0;
   }
   .ch-llli-g {
-    padding-block: var(--t-pd-s) var(--t-pd-e);
+    padding-block: var(--pd-s) var(--pd-e);
   }
   .ch-llli-t {
-    padding-block: var(--t-pd-s) var(--t-pd-e);
+    padding-block: var(--pd-s) var(--pd-e);
     flex-grow: 1;
   }
 

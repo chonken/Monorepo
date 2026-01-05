@@ -1,6 +1,5 @@
 ---
-import type { TopLineListItemProps } from './Item.type'
-import { id, props as defaultProps } from './Item.type'
+import { type TopLineListItemProps, id, props as defaultProps } from './Item.type'
 import ItemLine from '../prototype/_itemLine.astro'
 import { mergeClasses } from '../../utils'
 
@@ -11,9 +10,9 @@ const props = {
   ...defaultProps,
   ...Astro.props,
 }
-const { id: elId, class: className = '', ...rest } = props
+const { id: elId, class: className = '', lineClass, ...rest } = props
 
-const classList = mergeClasses(className, [id])
+const classList = mergeClasses(className, id)
 ---
 
 <li id={elId} class:list={classList} {...rest}>
@@ -26,11 +25,11 @@ const classList = mergeClasses(className, [id])
   }
   {
     Astro.slots.has('marker') ? (
-      <ItemLine listDirection="row" markerClass="ch-tlli-m" lineClass="ch-tlli-l">
+      <ItemLine listDirection="row" markerClass="ch-tlli-m" lineClass={mergeClasses(lineClass, 'ch-tlli-l').join(' ')}>
         <slot name="marker" slot="marker" />
       </ItemLine>
     ) : (
-      <ItemLine listDirection="row" markerClass="ch-tlli-m" lineClass="ch-tlli-l" />
+      <ItemLine listDirection="row" markerClass="ch-tlli-m" lineClass={mergeClasses(lineClass, 'ch-tlli-l').join(' ')} />
     )
   }
   <div class="ch-tlli-t"><slot /></div>
@@ -41,24 +40,27 @@ const classList = mergeClasses(className, [id])
   .ch-tlli {
     display: flex;
     flex-direction: column;
-    align-items: var(--itm);
     margin-inline: 0 !important;
     padding-inline: 0 !important;
+    max-width: calc(100% / var(--col));
     flex-grow: 1;
   }
   :is(.ch-tlli-g, .ch-tlli-m) {
     flex-shrink: 0;
   }
   .ch-tlli-g {
-    padding-inline: var(--t-pd-s) var(--t-pd-e);
+    padding-inline: var(--pd-s) var(--pd-e);
   }
   .ch-tlli-t {
-    padding-inline: var(--t-pd-s) var(--t-pd-e);
+    padding-inline: var(--pd-s) var(--pd-e);
     width: 100%;
     flex-grow: 1;
   }
-
-  // 手動設定尺寸
-  $map: lg, md, sm, xs, 2xs;
-  // 沒寫
+  @each $size, $value in bp.$breakpoint {
+    @media (max-width: #{$value}px) {
+      .ch-tlli {
+        max-width: calc(100% / var(--col-#{$size}));
+      }
+    }
+  }
 </style>
