@@ -21,60 +21,14 @@ const keywords = Astro.props.keywords || []
 </BaseModule>
 
 <style lang="scss" is:global>
-  @use 'sass:math';
   @use '../config/index.scss' as config;
+  @use '@styles/generator.scss' as generator;
 
   @include config.path_banner;
 
-  // 字體大小基礎值
-  @function base($size, $min, $max, $upper, $lower, $power) {
-    @if $lower < math.div($min, $max) {
-      @error '下界值必須大於等於 $min / $max';
-    }
-    @if $upper > 1 {
-      @error '上界值必須小於等於 1';
-    }
-    @if $upper < $lower {
-      @error '上界值必須大於下界值';
-    }
-    $base-min: $min * $upper;
-    $base-max: $max * $lower;
-    // 超過區間
-    @if $size < $min {
-      @return $size * $upper;
-    }
-    @if $size > $max {
-      @return $base-max;
-    }
-
-    $t: math.pow(math.div(($size - $min), ($max - $min)), $power);
-    $result: $base-min + ($base-max - $base-min) * $t;
-    @if $size < $result {
-      @error "power值過小，至少要讓字體大小:#{$size}大於算出來的基礎值#{$result}";
-    }
-    @return $result;
-  }
-  @function round($value, $precision) {
-    $factor: math.pow(10, $precision);
-    @return math.div(math.round($value * $factor), $factor);
-  }
-  @mixin generate-sizes($prefix, $sizes, $min, $max, $upper, $lower, $power) {
-    --#{$prefix}base: 1rem;
-    @each $size in $sizes {
-      $base: base($size, $min, $max, $upper, $lower, $power);
-      // 相對於--*base 的比例
-      $ratio: round(math.div($base, 16), 2);
-      // vw 補齊剩餘空間
-      $vw: round(math.div($size - $base, config.$lg) * 100, 2);
-      // 最小值
-      $min-val: round($base + math.div(config.$sm * $vw, 100), 0);
-      --#{$prefix}#{$size}: clamp(#{$min-val}px, calc(var(--#{$prefix}base) * #{$ratio} + #{$vw}vw), #{$size}px);
-    }
-  }
-
   .opsl {
-    @include generate-sizes('f', config.$font-size, config.$fmin, config.$fmax, config.$fupper, config.$flower, config.$fpower);
-    @include generate-sizes('s', config.$space, config.$smin, config.$smax, config.$supper, config.$slower, config.$spower);
+    @include generator.generate-sizes('f', config.$font-size, config.$fmin, config.$fmax, config.$fupper, config.$flower, config.$fpower, config.$lg, config.$sm);
+    @include generator.generate-sizes('s', config.$space, config.$smin, config.$smax, config.$supper, config.$slower, config.$spower, config.$lg, config.$sm);
 
     @include config.opsl;
   }
