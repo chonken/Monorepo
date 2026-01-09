@@ -25,7 +25,7 @@ const colGap = overlay === '0px' ? cGap : '0px'
 const gap = `${rowGap} ${colGap}`
 
 const styleList = {
-  '--oly': toNegative(parseUnit(oly, 'px')),
+  '--oly': toNegative(parseUnit(overlay, 'px')),
   ...containerStyleList(maxWidth),
   ...flexStyleList({ item, justify, gap, mobileItem, mobileJustify }),
 }
@@ -57,9 +57,12 @@ const classList = mergeClasses(className, [
 <style lang="scss" is:global>
   @use '../../config/breakpoint' as bp;
   @use '../../styles/container.scss';
-  @use '../../styles/flex.scss';
 
   .ch-l-r {
+    display: flex;
+    justify-content: var(--jst);
+    align-items: var(--itm);
+    gap: var(--gap);
     & > * {
       position: relative;
       z-index: 1;
@@ -76,6 +79,9 @@ const classList = mergeClasses(className, [
   @each $size in $map {
     @media (max-width: bp.size($size)) {
       .ch-l-r.mob-#{$size} {
+        flex-direction: column;
+        justify-content: var(--mob-jst);
+        align-items: var(--mob-itm);
         &.mob-fit {
           margin-inline: auto;
           width: fit-content;
