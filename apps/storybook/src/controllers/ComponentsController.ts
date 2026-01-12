@@ -1,7 +1,7 @@
-import db from '../model/db'
+import db from '../models/db'
 
 // Classification
-export async function getClassification(id) {
+export async function getClassification(id: string) {
   return await db.prepare(`SELECT * FROM components WHERE id = ?;`).all(id)
 }
 /**
@@ -11,7 +11,7 @@ export async function getClassification(id) {
 export function setClassification(data = []) {
   const insert = db.prepare(`INSERT INTO components (id, keywords, categorys, binding) VALUES (?, ?, ?, ?);`)
   for (const { id, keywords, categorys, binding } of data) {
-    insert.run(id, keywords, categorys, binding, (err) => {
+    insert.run(id, keywords, categorys, binding, (err: any) => {
       if (err) {
         console.error('Classification插入失敗: ', err)
       }
@@ -21,7 +21,7 @@ export function setClassification(data = []) {
 }
 
 // Demo
-export async function getDemo(id) {
+export async function getDemo(id: string) {
   return await db.prepare(`SELECT name, category, example, contents, styles, description FROM demos WHERE component_id = ?;`).all(id)
 }
 /**
@@ -31,7 +31,7 @@ export async function getDemo(id) {
 export async function setDemo(data = []) {
   const insert = db.prepare(`INSERT INTO demos (component_id, name, category, example, contents, styles, description) VALUES (?, ?, ?, ?, ?, ?, ?);`)
   for (const { component_id, name, category, example, contents, styles, description } of data) {
-    insert.run(component_id, name, category, example, contents, styles, description, (err) => {
+    insert.run(component_id, name, category, example, contents, styles, description, (err: any) => {
       if (err) {
         console.error('Demo插入失敗: ', err)
       }
@@ -41,7 +41,7 @@ export async function setDemo(data = []) {
 }
 
 // Content
-export async function getContent(category) {
+export async function getContent(category: string) {
   switch (
     category
     // 還沒寫
@@ -53,12 +53,11 @@ export async function getContent(category) {
 export async function getImageTxt() {}
 
 // Config
-export async function getConfig(config) {
-  const config = await db.prepare(`SELECT ${config} FROM config;`).get()
-  return config
+export async function getConfig(config: string) {
+  return await db.prepare(`SELECT ${config} FROM config;`).get()
 }
-export function updateConfig(config, value) {
-  db.prepare(`UPDATE config ${config} VALUES (?);`).run(value, (err) => {
+export function updateConfig(config: string, value: string) {
+  db.prepare(`UPDATE config ${config} VALUES (?);`).run(value, (err: any) => {
     if (err) {
       console.error('Config更新失敗: ', err)
     }

@@ -15,16 +15,18 @@
       <div class="mt-10">
         <AsyncComp v-if="visible[index]" :name="name" :demos="demos" />
       </div>
-      <!-- <PropsTable :props="props" /> -->
+      <PropsTable :props="props" />
     </section>
   </article>
 </template>
 
 <script setup lang="ts">
 import { ref, toRefs, watch, nextTick, defineAsyncComponent } from 'vue'
+import PropsTable from '../components/PropsTable.vue'
+import type { Item } from '../types'
 
 interface Props {
-  list: { structure: string; items: any[] }[]
+  list: { structure: string; items: Item[] }[]
 }
 const props = defineProps<Props>()
 const sectionsModel = defineModel<HTMLElement[]>('sections')
@@ -43,8 +45,9 @@ let observer: IntersectionObserver | null = null
 watch(list, async () => {
   // 等 DOM 更新完成
   nextTick(() => {
+    console.log(list.value)
     sectionsModel.value = sections.value
-    // SwitchDemo 懶加載
+    // SwitchDemo 懶加載(未完成)
     sections.value?.forEach((el, i) => {
       observer = new IntersectionObserver(([entry]) => {
         if (entry.isIntersecting) {

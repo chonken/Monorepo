@@ -26,7 +26,7 @@
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, computed, onBeforeUnmount, watch } from 'vue'
-import DisplayModules from './DisplayModules.vue'
+import DisplayModules from '../layouts/DisplayModules.vue'
 import DirectoryList from '../components/DirectoryList.vue'
 import SearchBox from '../components/SearchBox.vue'
 import Header from '../layouts/Header.vue'

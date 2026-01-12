@@ -6,3 +6,12 @@ export type Demo = {
   styles: Record<string, string>
   description: Record<string, string>
 }
+export type Item = {
+  path: string
+  name: string
+  props: Record<string, unknown>
+  slots: any
+  categorys: string[]
+  keywords: string[]
+  demos: Demo[]
+}

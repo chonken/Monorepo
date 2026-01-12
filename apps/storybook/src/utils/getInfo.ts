@@ -1,27 +1,6 @@
-import { Project } from 'ts-morph'
 import { typeOfLayouts, typeOfComponents } from '../registry/asyncImportDemo'
 import classification from '../save/classification.json' with { type: 'json' }
 import demo from '../save/demo.json' with { type: 'json' }
-
-const namespacePropsRegex = /Props$/
-const project = new Project({ useInMemoryFileSystem: true })
-const sourceFiles = project.addSourceFilesAtPaths(['packages/components/**/*.type.ts', 'packages/layouts/**/*.type.ts'])
-const result: Record<string, any> = {}
-for (const sourceFile of sourceFiles) {
-  // 取得 interface
-  for (const iface of sourceFile.getInterfaces()) {
-    const props = iface.getName().replace(namespacePropsRegex, '')
-    result[props] = []
-    for (const symbol of iface.getType().getProperties()) {
-      const decl = symbol.getDeclarations()[0]
-      result[props].push({
-        name: symbol.getName(),
-        type: symbol.getTypeAtLocation(decl).getText(),
-        optional: symbol.isOptional?.(),
-      })
-    }
-  }
-}
 
 export type Component = Awaited<ReturnType<typeof formatList>>[number]
 export type List = { structure: string; items: Component[] }
@@ -47,7 +26,7 @@ const formatList = async (globObj: Record<string, () => Promise<unknown>>) => {
         categorys: classification[component.id as keyof typeof classification]?.categorys,
         keywords: classification[component.id as keyof typeof classification]?.keywords,
         demos: demo[component.id as keyof typeof demo] ?? [],
-        interface: result[name],
+        interface: undefined,
       }
       nameMap.set(info.name, info)
       idMap.set(info.id, info)
