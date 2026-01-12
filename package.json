@@ -10,6 +10,7 @@
     "setup": "node scripts/setup.js",
     "copy": "node scripts/new_client.js",
     "storybook": "node scripts/open_storybook.js",
+    "update:storybook": "node scripts/update_storybook.js",
     "demo": "pnpm storybook",
     "format": "node scripts/format.js"
   },
