@@ -1,7 +1,3 @@
 {
-  "extends": "@repo/tsconfig",
-  "compilerOptions": {
-    "rootDir": "src"
-  },
-  "include": ["src"]
+  "extends": "@repo/tsconfig"
 }
