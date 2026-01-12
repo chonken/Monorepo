@@ -9,7 +9,7 @@ const props = {
   ...defaultProps,
   ...Astro.props,
 }
-const { element, class: className, rotate, seconds, loop, reverse, ...rest } = props
+const { element, class: className, rotate, seconds, delay, loop, reverse, ...rest } = props
 const timing = loop ? `linear ${reverse ? 'reverse' : ''}` : 'ease-in-out alternate-reverse'
 
 const Element = element as keyof HTMLElement
@@ -17,6 +17,7 @@ const Element = element as keyof HTMLElement
 const styleList = {
   '--sec': parseUnit(seconds, 's'),
   '--rot': parseUnit(loop ? '360deg' : rotate, 'deg'),
+  '--dly': parseUnit(delay, 's'),
   '--tim': timing,
 }
 const classList = mergeClasses(className, id)
@@ -29,7 +30,7 @@ const classList = mergeClasses(className, id)
     display: block;
     max-width: 100%;
     max-height: 100%;
-    animation: rotate var(--sec) infinite var(--tim);
+    animation: rotate var(--sec) var(--dly) infinite var(--tim);
   }
   @keyframes rotate {
     100% {

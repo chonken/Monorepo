@@ -30,7 +30,7 @@ export function mergeClasses(exist: string | string[] | undefined, current: stri
  * parseUnit('var(--pd40)') // 'var(--pd40)'
  */
 export function parseUnit(value: string | number | undefined, unit: string = 'px'): string {
-  if (!value) return ''
+  if (value === undefined) return ''
   return typeof value === 'number' || /^-?(?:\d+\.?\d*|\.\d+)$/.test(value) ? `${value + unit}` : String(value)
 }
 
@@ -140,7 +140,7 @@ export function parseRWD(input: string): Record<string, string> {
  * @returns {string} 轉換後的CSS值
  */
 export function parseJustify(input: string | undefined): string {
-  if (!input) {
+  if (input === undefined) {
     console.error('parseJustify: 輸入的值為空。')
     return 'flex-start'
   }
@@ -184,7 +184,7 @@ export function parseStyle(input: Record<string, string> | string | undefined): 
  * @returns `CSS`單位的陣列
  */
 function splitUnit(input: string | undefined): string[] {
-  if (!input) return []
+  if (input === undefined) return []
   const normalize = input.trim().replace(/\s+/g, ' ')
   const result: string[] = []
   let bracket = 0
