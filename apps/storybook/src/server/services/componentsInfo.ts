@@ -1,4 +1,4 @@
-import db from '../models/db'
+import db from '../models/db.js'
 
 // Classification
 export async function getClassification(id: string) {
@@ -28,9 +28,9 @@ export async function getDemo(id: string) {
  * @param {Array<{component_id: number, name: string, category: string, example: string, contents: string, styles: string, description: string}>} data
  * @returns
  */
-export async function setDemo(data = []) {
+export function setDemo(datas: Array<{ component_id: number; name: string; category: string; example: string; contents: string; styles: string; description: string }> = []) {
   const insert = db.prepare(`INSERT INTO demos (component_id, name, category, example, contents, styles, description) VALUES (?, ?, ?, ?, ?, ?, ?);`)
-  for (const { component_id, name, category, example, contents, styles, description } of data) {
+  for (const { component_id, name, category, example, contents, styles, description } of datas) {
     insert.run(component_id, name, category, example, contents, styles, description, (err: any) => {
       if (err) {
         console.error('Demo插入失敗: ', err)
@@ -57,9 +57,25 @@ export async function getConfig(config: string) {
   return await db.prepare(`SELECT ${config} FROM config;`).get()
 }
 export function updateConfig(config: string, value: string) {
-  db.prepare(`UPDATE config ${config} VALUES (?);`).run(value, (err: any) => {
+  db.prepare(`UPDATE config SET ${config} = ?;`).run(value, (err: any) => {
     if (err) {
       console.error('Config更新失敗: ', err)
     }
   })
+}
+
+// Interface
+export async function getInterface(name: string) {
+  return await db.prepare(`SELECT * FROM interface WHERE name = ${name};`).get()
+}
+export function refreshInterface(datas: Record<string, string> = {}) {
+  const refresh = db.prepare(`INSERT INTO interface (id, data) VALUES (?, ?); ON CONFLICT(id) DO UPDATE SET data = EXCLUDED.data;`)
+  for (const id in datas) {
+    refresh.run([id, datas[id]], (err: any) => {
+      if (err) {
+        console.error('刷新插入失敗: ', err)
+      }
+    })
+  }
+  refresh.finalize()
 }

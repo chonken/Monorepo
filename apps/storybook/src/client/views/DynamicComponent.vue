@@ -3,8 +3,8 @@
 </template>
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import getContent from '../utils/getContent.ts'
-import type { Demo } from '../types/index.ts'
+import getContent from '../../utils/getContent.ts'
+import type { Demo } from '../../types/index.ts'
 
 interface Props {
   name: string

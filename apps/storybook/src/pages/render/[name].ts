@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro'
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js'
 import { experimental_AstroContainer } from 'astro/container'
-import { components, layouts } from '../../registry/asyncImportDemo.js'
+import { components, layouts } from '../../shared/registry'
 
 export const GET: APIRoute = async ({ params, url }) => {
   const { name = '' } = params

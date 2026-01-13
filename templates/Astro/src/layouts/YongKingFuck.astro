@@ -107,12 +107,12 @@ const keywords = Astro.props.keywords || []
     }
   }
 
-  @include config.path_banner;
+  @include path_banner;
   .opsl {
-    @include generator.generate-sizes('f', config.$font-size, config.$fmin, config.$fmax, config.$fupper, config.$flower, config.$fpower, config.$lg, config.$sm);
-    @include generator.generate-sizes('s', config.$space, config.$smin, config.$smax, config.$supper, config.$slower, config.$spower, config.$lg, config.$sm);
+    @include generator.generate-sizes('f', $font-size, $fmin, $fmax, $fupper, $flower, $fpower, $lg, $sm);
+    @include generator.generate-sizes('s', $space, $smin, $smax, $supper, $slower, $spower, $lg, $sm);
 
-    @include config.opsl;
+    @include opsl;
   }
   [data-animate-in] {
     --ani-move-pos: clamp(40px, 10%, 50vw);
@@ -122,7 +122,7 @@ const keywords = Astro.props.keywords || []
       transform 0.8s ease,
       clip-path 0.8s ease;
   }
-  @include config.animate;
+  @include animate;
   .in-view:is([data-animate-in='clip-up'], [data-animate-in='clip-down'], [data-animate-in='clip-left'], [data-animate-in='clip-right']) {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }

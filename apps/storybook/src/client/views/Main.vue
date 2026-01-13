@@ -30,7 +30,7 @@ import DisplayModules from '../layouts/DisplayModules.vue'
 import DirectoryList from '../components/DirectoryList.vue'
 import SearchBox from '../components/SearchBox.vue'
 import Header from '../layouts/Header.vue'
-import getInfo, { type Info } from '../utils/getInfo.js'
+import getInfo, { type Info } from '../../utils/getInfo.js'
 
 const info = ref<Info>({ list: [], idMap: new Map(), nameMap: new Map() })
 const searchTerm = ref<string>('')

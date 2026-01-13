@@ -113,3 +113,8 @@ CREATE TABLE IF NOT EXISTS config (
   theme TEXT DEFAULT 'dark',
   port INTEGER DEFAULT 4320
 );
+--interface
+CREATE TABLE IF NOT EXISTS interface (
+  id TEXT PRIMARY KEY,
+  data TEXT
+);

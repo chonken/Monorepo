@@ -8,13 +8,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(datas, name, index) in info" :key="index">
-        <th class="px-4 py-2 text-end border bg-[var(--bg-main-3)]">{{ name }}</th>
-        <td class="px-4 py-2 border bg-[var(--bg-main-1)]">???</td>
+      <tr v-for="({ props, type, optional }, index) in info" :key="index">
+        <th class="px-4 py-2 text-end border bg-[var(--bg-main-3)]">{{ props }}</th>
         <td class="px-4 py-2 border bg-[var(--bg-main-1)]">
-          <p class="mt-0">
-            <span>預設值: {{ typeof datas === 'string' ? `'${datas}'` : datas }}</span>
-          </p>
+          <p>{{ type }}</p>
+        </td>
+        <td class="px-4 py-2 border bg-[var(--bg-main-1)]">
+          <p>預設值: {{ findDefaultProps(props) }}</p>
         </td>
       </tr>
     </tbody>
@@ -25,8 +25,16 @@
 import { toRefs } from 'vue'
 
 interface Props {
-  props?: Record<string, Record<string, any>>
+  props?: Record<string, any>
+  defaultProps?: Record<string, any>
 }
 const props = defineProps<Props>()
-const { props: info } = toRefs(props)
+const { props: info, defaultProps } = toRefs(props)
+
+const findDefaultProps = (props: string): unknown => {
+  const result = defaultProps.value?.[props]
+  if (result === undefined) return '無'
+  if (typeof result === 'string') return `'${result}'`
+  return result
+}
 </script>

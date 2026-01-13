@@ -11,6 +11,7 @@ export type Item = {
   name: string
   props: Record<string, unknown>
   slots: any
+  defaultProps: Record<string, unknown>
   categorys: string[]
   keywords: string[]
   demos: Demo[]

@@ -61,7 +61,7 @@ type Text = {
   style?: string
 }
 async function toTxt(props: Text): Promise<string> {
-  import('../components/display/Text.astro')
+  import('../server/display/Text.astro')
   const html = await fetch('render/self/Text', {
     method: 'POST',
     headers: {
@@ -79,7 +79,7 @@ type Image = {
   style?: string
 }
 async function toImage(props: Image): Promise<string> {
-  import('../components/display/Image.astro')
+  import('../server/display/Image.astro')
   const html = await fetch('render/self/Image', {
     method: 'POST',
     headers: {
@@ -98,7 +98,7 @@ type List = {
   content: string[]
 }
 async function toList(list: List[]): Promise<{ default: string; marker: string }[]> {
-  import('../components/display/List.astro')
+  import('../server/display/List.astro')
   const items = []
   for (const { marker, title, content } of list) {
     items.push({

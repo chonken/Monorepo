@@ -1,4 +1,4 @@
-import { typeOfLayouts, typeOfComponents } from '../registry/asyncImportDemo'
+import { typeOfLayouts, typeOfComponents, interfaces } from '../shared/registry'
 import classification from '../save/classification.json' with { type: 'json' }
 import demo from '../save/demo.json' with { type: 'json' }
 
@@ -21,12 +21,12 @@ const formatList = async (globObj: Record<string, () => Promise<unknown>>) => {
         path,
         name,
         id: component.id,
-        props: component.props,
+        props: interfaces[name as keyof typeof interfaces],
         slots: component.slots,
+        defaultProps: component.props,
         categorys: classification[component.id as keyof typeof classification]?.categorys,
         keywords: classification[component.id as keyof typeof classification]?.keywords,
         demos: demo[component.id as keyof typeof demo] ?? [],
-        interface: undefined,
       }
       nameMap.set(info.name, info)
       idMap.set(info.id, info)

@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro'
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js'
 import { experimental_AstroContainer } from 'astro/container'
-const display = import.meta.glob('../../../components/display/*.astro')
+const display = import.meta.glob('../../../server/display/*.astro')
 
 
 export const GET: APIRoute = async ({ params, url }) => {
