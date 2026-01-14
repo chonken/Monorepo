@@ -3,8 +3,8 @@
 </template>
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import getContent from '../../utils/getContent.ts'
-import type { Demo } from '../../types/index.ts'
+import { getContent } from '../utils/index.ts'
+import type { Demo } from '../types/index.ts'
 
 interface Props {
   name: string
@@ -16,14 +16,14 @@ const { name, demo } = props
 const html = ref('')
 onMounted(async () => {
   if (!demo) {
-    html.value = await fetch(`render/${name}`).then((res) => res.text())
+    html.value = await fetch(`api/render/${name}`).then((res) => res.text())
     return
   }
 
   const { props, slots } = await getContent(demo['category'], demo['styles'])
   switch (demo['category']) {
     case 'list':
-      html.value = await fetch(`render/${name}`, {
+      html.value = await fetch(`api/render/${name}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ onMounted(async () => {
       }).then((res) => res.text())
       break
     default:
-      html.value = await fetch(`render/${name}`, {
+      html.value = await fetch(`api/render/${name}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ onMounted(async () => {
 })
 async function getListSlots(name: string, items: { default: string; marker: string }[]): Promise<{ default: string }> {
   let result = { default: '' }
-  const itemHtml = await fetch(`render/${name}`, {
+  const itemHtml = await fetch(`api/render/${name}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -3,14 +3,14 @@ import { defineConfig } from 'astro/config'
 import devtoolsJson from 'vite-plugin-devtools-json'
 import vue from '@astrojs/vue'
 import tailwindcss from '@tailwindcss/vite'
-import config from './src/save/config.json' with { type: 'json' }
+import { getConfig } from './src/server/services/configs'
 
 /** @type {import('astro').AstroUserConfig} */
 const userConfig = {
   ...(base ?? {}),
   server: {
     ...(base.server ?? {}),
-    port: config.port,
+    port: Number(getConfig('port')),
   },
   integrations: [vue(), ...(base.integrations ?? [])],
   vite: {

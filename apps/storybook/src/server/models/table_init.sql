@@ -2,8 +2,8 @@
 CREATE TABLE IF NOT EXISTS components (
   id TEXT PRIMARY KEY,
   keywords TEXT,
-  categorys TEXT,
-  binding TEXT,
+  categories TEXT,
+  binding TEXT
 );
 -- 組件屬性展示
 CREATE TABLE IF NOT EXISTS demos (
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS demos (
   description TEXT,
   FOREIGN KEY (component_id) REFERENCES components(id)
 );
--- categorys
+-- categories
 CREATE TABLE IF NOT EXISTS image_txt (
   id INTEGER PRIMARY KEY,
   header_id INTEGER,
@@ -51,21 +51,21 @@ CREATE TABLE IF NOT EXISTS list (id INTEGER PRIMARY KEY);
 CREATE TABLE IF NOT EXISTS text_link (
   text_id INTEGER,
   owner_id INTEGER,
-  owner_type Text,
+  owner_type TEXT,
   PRIMARY KEY (text_id, owner_id),
   FOREIGN KEY (text_id) REFERENCES unit_text(id)
 );
 CREATE TABLE IF NOT EXISTS article_link (
   article_id INTEGER,
   owner_id INTEGER,
-  owner_type Text,
+  owner_type TEXT,
   PRIMARY KEY (article_id, owner_id),
   FOREIGN KEY (article_id) REFERENCES unit_article(id)
 );
 CREATE TABLE IF NOT EXISTS list_item_link (
   list_item_id INTEGER,
   owner_id INTEGER,
-  owner_type Text,
+  owner_type TEXT,
   PRIMARY KEY (list_item_id, owner_id),
   FOREIGN KEY (list_item_id) REFERENCES unit_list_item(id)
 );
@@ -91,30 +91,22 @@ CREATE TABLE IF NOT EXISTS unit_hover (
   hover TEXT
 );
 CREATE TABLE IF NOT EXISTS unit_header (
-  id INTEGER PRIMARY,
+  id INTEGER PRIMARY KEY,
   title_id INTEGER,
   subtitle TEXT,
   FOREIGN KEY (title_id) REFERENCES unit_title(id)
 );
 CREATE TABLE IF NOT EXISTS unit_article (
-  id INTEGER PRIMARY,
+  id INTEGER PRIMARY KEY,
   header_id INTEGER,
   FOREIGN KEY (header_id) REFERENCES unit_header(id)
 );
 CREATE TABLE IF NOT EXISTS unit_list_item (
-  id INTEGER PRIMARY,
+  id INTEGER PRIMARY KEY,
   marker TEXT,
   article_id INTEGER,
-  index INTEGER,
+  sort_order INTEGER,
   FOREIGN KEY (article_id) REFERENCES unit_article(id)
 );
 -- 設定檔
-CREATE TABLE IF NOT EXISTS config (
-  theme TEXT DEFAULT 'dark',
-  port INTEGER DEFAULT 4320
-);
---interface
-CREATE TABLE IF NOT EXISTS interface (
-  id TEXT PRIMARY KEY,
-  data TEXT
-);
+CREATE TABLE IF NOT EXISTS config (key TEXT PRIMARY KEY, value TEXT);

@@ -5,14 +5,14 @@
   "compilerOptions": {
     "declaration": true,
     "outDir": "dist",
-    "baseUrl": ".",
+    "baseUrl": "../",
     "paths": {
-      "@components/*": ["../components/*", "../components/*/index.astro"],
-      "@layouts/*": ["../layouts/*", "../layouts/*/index.astro"],
-      "@styles/*": ["../styles/*"],
-      "@utils": ["../utils"],
-      "@config/*": ["../config/*"],
-      "@tailwind": ["../styles/tailwind.css"]
+      "@components/*": ["components/*", "components/*/index.astro"],
+      "@layouts/*": ["layouts/*", "layouts/*/index.astro"],
+      "@styles/*": ["styles/*"],
+      "@utils": ["utils"],
+      "@config/*": ["config/*"],
+      "@tailwind": ["styles/tailwind.css"]
     },
     "types": ["astro/client"]
   },

@@ -1,15 +1,17 @@
-import { typeOfLayouts, typeOfComponents, interfaces } from '../shared/registry'
-import classification from '../save/classification.json' with { type: 'json' }
-import demo from '../save/demo.json' with { type: 'json' }
+import { typeOfLayouts, typeOfComponents } from '../registry'
+import classification from '../../save/classification.json' with { type: 'json' }
+import demo from '../../save/demo.json' with { type: 'json' }
 
 export type Component = Awaited<ReturnType<typeof formatList>>[number]
 export type List = { structure: string; items: Component[] }
+
 type ComponentInfo = { id: string; props: Record<string, any>; slots: Record<string, any> }
 
 const nameMap = new Map<string, Component>()
 const idMap = new Map<string, Component>()
 const pathRegex = /^(\.\.\/)+|\/[^/]+$/g
 const formatList = async (globObj: Record<string, () => Promise<unknown>>) => {
+  const props: Record<string, Record<string, unknown>> = await fetch('api/types').then((res) => res.json())
   const entries = Object.entries(globObj)
   const dependents: string[] = []
   const infos = await Promise.all(
@@ -21,7 +23,7 @@ const formatList = async (globObj: Record<string, () => Promise<unknown>>) => {
         path,
         name,
         id: component.id,
-        props: interfaces[name as keyof typeof interfaces],
+        props: props[name],
         slots: component.slots,
         defaultProps: component.props,
         categorys: classification[component.id as keyof typeof classification]?.categorys,
@@ -34,6 +36,7 @@ const formatList = async (globObj: Record<string, () => Promise<unknown>>) => {
       return info
     }),
   )
+
   return infos.filter((info) => !dependents.includes(info.id))
 }
 

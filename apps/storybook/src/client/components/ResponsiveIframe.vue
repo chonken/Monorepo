@@ -9,7 +9,7 @@
     </ul>
     <div ref="compRef" class="component mt-10 w-full">
       <div class="inner">
-        <iframe ref="iframeRef" class="block w-full mx-auto outline-1 outline-red-500" :src="`getDemo/${name}`"></iframe>
+        <iframe ref="iframeRef" class="block w-full mx-auto outline-1 outline-red-500" :src="`api/demos/${name}`"></iframe>
       </div>
     </div>
   </div>

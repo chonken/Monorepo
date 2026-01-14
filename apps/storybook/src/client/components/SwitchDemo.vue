@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import ResponsiveIframe from '../components/ResponsiveIframe.vue'
 import DynamicComponent from '../views/DynamicComponent.vue'
-import type { Demo } from '../../types'
+import type { Demo } from '../types'
 
 interface Props {
   name: string

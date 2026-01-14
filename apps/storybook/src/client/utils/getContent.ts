@@ -1,10 +1,10 @@
-import content from '../save/content.json' with { type: 'json' }
+import content from '../../save/content.json' with { type: 'json' }
 
 type Props = {
   props?: Record<string, string>
   slots?: any
 }
-export default async function getContent(category: string, contentsStyle?: Record<string, string>, index?: number): Promise<Props> {
+export default async function (category: string, contentsStyle?: Record<string, string>, index?: number): Promise<Props> {
   switch (category) {
     case 'image_txt':
       const image_txt = getData(content.image_txt)
@@ -61,8 +61,8 @@ type Text = {
   style?: string
 }
 async function toTxt(props: Text): Promise<string> {
-  import('../server/display/Text.astro')
-  const html = await fetch('render/self/Text', {
+  import('../../server/display/Text.astro')
+  const html = await fetch('api/render/self/Text', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -79,8 +79,8 @@ type Image = {
   style?: string
 }
 async function toImage(props: Image): Promise<string> {
-  import('../server/display/Image.astro')
-  const html = await fetch('render/self/Image', {
+  import('../../server/display/Image.astro')
+  const html = await fetch('api/render/self/Image', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -98,11 +98,11 @@ type List = {
   content: string[]
 }
 async function toList(list: List[]): Promise<{ default: string; marker: string }[]> {
-  import('../server/display/List.astro')
+  import('../../server/display/List.astro')
   const items = []
   for (const { marker, title, content } of list) {
     items.push({
-      default: await fetch('render/self/List', {
+      default: await fetch('api/render/self/List', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

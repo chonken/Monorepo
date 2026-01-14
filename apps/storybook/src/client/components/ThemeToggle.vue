@@ -11,7 +11,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { mergeClasses } from '@utils'
-import config from '../../save/config.json' with { type: 'json' }
 
 interface Props {
   class?: string

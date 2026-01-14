@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { ref, toRefs, watch, nextTick, defineAsyncComponent } from 'vue'
 import PropsTable from '../components/PropsTable.vue'
-import type { Item } from '../../types'
+import type { Item } from '../types'
 
 interface Props {
   list: { structure: string; items: Item[] }[]
@@ -43,6 +43,7 @@ const AsyncComp = defineAsyncComponent({
 const visible = ref<boolean[]>([])
 let observer: IntersectionObserver | null = null
 watch(list, async () => {
+  console.log(list.value)
   // 等 DOM 更新完成
   nextTick(() => {
     sectionsModel.value = sections.value
