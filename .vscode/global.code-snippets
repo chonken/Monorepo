@@ -152,7 +152,7 @@
   "css-space-custom": {
     "scope": "css,scss",
     "prefix": "--s",
-    "body": ["var(--f${1:40})"],
+    "body": ["var(--s${1:40})"],
     "description": "space",
   },
   "css-space-20": {

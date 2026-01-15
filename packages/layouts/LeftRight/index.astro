@@ -63,14 +63,10 @@ const classList = mergeClasses(className, [
     justify-content: var(--jst);
     align-items: var(--itm);
     gap: var(--gap);
-    & > * {
-      position: relative;
-      z-index: 1;
-    }
   }
   :where(.ch-l-r) > :is(:last-child, .ch-cnt) {
     margin-inline-start: var(--oly);
-    z-index: 2;
+    z-index: 1;
   }
 
   // 手動設定尺寸
