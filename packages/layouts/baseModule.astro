@@ -94,12 +94,13 @@ const { isDev = false, isIndex = false, keywords = [] } = Astro.props
     font-size: inherit;
     font-weight: inherit;
     line-height: inherit;
+    letter-spacing: inherit;
     word-break: inherit;
   }
   .opsl hr {
     height: auto;
   }
-  .opsl :is(h3, h4, h5, h6) {
+  .opsl :where(h3, h4, h5, h6) {
     line-height: 1.2;
   }
   @layer base {
