@@ -82,9 +82,13 @@ const keywords = Astro.props.keywords || []
     [data-animate-in='trans-down'] {
       --y: var(--ani-move-nag);
     }
-    [data-animate-in]:where(.trans-scaleIn),
-    [data-animate-in='trans-scaleIn'] {
+    [data-animate-in]:where(.trans-zoomIn),
+    [data-animate-in='trans-zoomIn'] {
       --s: 0.3;
+    }
+    [data-animate-in]:where(.trans-zoomOut),
+    [data-animate-in='trans-zoomOut'] {
+      --s: 1.3;
     }
     [data-animate-in]:where(.trans-rotateIn),
     [data-animate-in='trans-rotateIn'] {
@@ -107,8 +111,8 @@ const keywords = Astro.props.keywords || []
     [data-animate-in='clip-right'] {
       clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
     }
-    [data-animate-in]:where(.clip-scaleIn),
-    [data-animate-in='clip-scaleIn'] {
+    [data-animate-in]:where(.clip-zoomIn),
+    [data-animate-in='clip-zoomIn'] {
       clip-path: circle(15% at 50% 50%);
     }
     // filter
@@ -145,7 +149,7 @@ const keywords = Astro.props.keywords || []
   .in-view:is(.clip-up, .clip-down, .clip-left, .clip-right, [data-animate-in='clip-up'], [data-animate-in='clip-down'], [data-animate-in='clip-left'], [data-animate-in='clip-right']) {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }
-  .in-view:is(.clip-scaleIn, [data-animate-in='clip-scaleIn']) {
+  .in-view:is(.clip-zoomIn, [data-animate-in='clip-zoomIn']) {
     clip-path: circle(100% at 50% 50%);
   }
   .in-view:is([class*='filter-'], [data-animate-in^='filter-']) {

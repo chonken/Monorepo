@@ -1,5 +1,5 @@
 <template>
-  <table class="mx-auto mt-10 max-w-6xl border">
+  <table class="mx-auto mt-10 max-w-6xl w-full border">
     <thead>
       <tr>
         <th class="px-6 py-2.5 text-center font-bold text-xl border bg-[var(--bg-main-4)]">屬性名</th>
@@ -11,7 +11,7 @@
       <tr v-for="({ props, type, optional }, index) in info" :key="index">
         <th class="px-4 py-2 text-end border bg-[var(--bg-main-3)]">{{ props }}</th>
         <td class="px-4 py-2 border bg-[var(--bg-main-1)]">
-          <p>{{ type }}</p>
+          <p>{{ type }}<b class="block text-sm text-[var(--text-accent-4)]" v-if="!optional">(必填)</b></p>
         </td>
         <td class="px-4 py-2 border bg-[var(--bg-main-1)]">
           <p>預設值: {{ findDefaultProps(props) }}</p>

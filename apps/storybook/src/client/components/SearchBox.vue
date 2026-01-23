@@ -26,7 +26,6 @@ interface Props {
   placeholder?: string
   modelValue: string
 }
-
 const props = withDefaults(defineProps<Props>(), {
   title: '搜尋',
   placeholder: '請輸入關鍵字...',
