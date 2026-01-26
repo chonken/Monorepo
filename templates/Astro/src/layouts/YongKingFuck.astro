@@ -61,7 +61,27 @@ const keywords = Astro.props.keywords || []
     letter-spacing: 0;
   }
   @mixin animate {
-    // opacity
+    // 一般
+    [data-animate-in='up'] {
+      opacity: 0;
+      transform: translate3d(0, var(--ani-move-pos), 0);
+    }
+    [data-animate-in='left'] {
+      opacity: 0;
+      transform: translate3d(var(--ani-move-pos), 0, 0);
+    }
+    [data-animate-in='right'] {
+      opacity: 0;
+      transform: translate3d(var(--ani-move-nag), 0, 0);
+    }
+    [data-animate-in='down'] {
+      opacity: 0;
+      transform: translate3d(0, var(--ani-move-nag), 0);
+    }
+    [data-animate-in='scaleIn'] {
+      opacity: 0;
+      transform: scale(0.3);
+    }
     [data-animate-in='fadeIn'] {
       opacity: 0;
     }
@@ -142,23 +162,24 @@ const keywords = Astro.props.keywords || []
   }
   [class*='trans-'],
   [data-animate-in^='trans-'] {
-    opacity: 0;
     transform: translate(var(--x, 0), var(--y, 0)) scale(var(--s, 1)) rotate(var(--r, 0));
   }
   @include animate;
-  .in-view:is(.clip-up, .clip-down, .clip-left, .clip-right, [data-animate-in='clip-up'], [data-animate-in='clip-down'], [data-animate-in='clip-left'], [data-animate-in='clip-right']) {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-  }
-  .in-view:is(.clip-zoomIn, [data-animate-in='clip-zoomIn']) {
-    clip-path: circle(100% at 50% 50%);
-  }
-  .in-view:is([class*='filter-'], [data-animate-in^='filter-']) {
-    filter: blur(0px) brightness(100%) contrast(100%) grayscale(0%) hue-rotate(0deg) invert(0%) opacity(100%) saturate(100%) sepia(0%);
-  }
-  .in-view:is([class*='trans-'], [data-animate-in^='trans-']) {
-    transform: none;
-  }
-  .in-view[data-animate-in] {
-    opacity: 1;
+  .in-view {
+    &[data-animate-in] {
+      opacity: 1;
+    }
+    &:is([class*='trans-'], [data-animate-in^='trans-'], [data-animate-in='up'], [data-animate-in='down'], [data-animate-in='left'], [data-animate-in='right'], [data-animate-in='scaleIn']) {
+      transform: none;
+    }
+    &:is(.clip-up, .clip-down, .clip-left, .clip-right, [data-animate-in='clip-up'], [data-animate-in='clip-down'], [data-animate-in='clip-left'], [data-animate-in='clip-right']) {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+    &:is(.clip-zoomIn, [data-animate-in='clip-zoomIn']) {
+      clip-path: circle(100% at 50% 50%);
+    }
+    &:is([class*='filter-'], [data-animate-in^='filter-']) {
+      filter: blur(0px) brightness(100%) contrast(100%) grayscale(0%) hue-rotate(0deg) invert(0%) opacity(100%) saturate(100%) sepia(0%);
+    }
   }
 </style>
