@@ -1,9 +1,9 @@
 ---
-import { type LeftRightProps, id, props as defaultProps } from './index.type'
+import type { LeftRightProps } from './index.type'
+import { id, props as defaultProps } from './index.props'
 import { mergeClasses, parseUnit, parseDualUnit, isNegative, toNegative } from '../../utils'
-import Content from '../../components/Content.astro'
-import { containerStyleList, containerClassList } from '../Container/props'
-import { flexClassList, flexStyleList } from '../../components/Flex/props'
+import { containerStyleList, containerClassList } from '../Container/index.props'
+import { flexClassList, flexStyleList } from '../../components/Flex/index.props'
 
 interface Props extends LeftRightProps {}
 
@@ -12,8 +12,7 @@ const props = {
   ...defaultProps,
   ...Astro.props,
 }
-const { element, class: className, maxWidth, item, justify, gap: g, reverse, flexReverse, mobile, mobileItem, mobileJustify, mobileFit, mobileReverse, center, overlay: oly, contentWidth, contentDirection, ...args } = props
-const { wrap, ...rest } = args
+const { element, class: className, item, justify, gap: g, reverse, flexReverse, mobile, mobileItem, mobileFit, mobileReverse, maxWidth, center, overlay: oly, ...rest } = props
 
 const Element = element as keyof HTMLElement
 
@@ -25,48 +24,43 @@ const colGap = overlay === '0px' ? cGap : '0px'
 const gap = `${rowGap} ${colGap}`
 
 const styleList = {
+  ...containerStyleList({ maxWidth }),
+  ...flexStyleList({ flexReverse, item, justify, gap, mobileItem }),
   '--oly': toNegative(parseUnit(overlay, 'px')),
-  ...containerStyleList(maxWidth),
-  ...flexStyleList({ item, justify, gap, mobileItem, mobileJustify }),
 }
 const classList = mergeClasses(className, [
   id,
-  ...(mobile === 'none' ? [] : [mobileFit ? 'mob-fit' : '']),
-  ...containerClassList(center),
+  ...containerClassList({ center }),
   ...flexClassList({
     reverse,
     flexReverse,
-    mobile: 'lg' as const,
+    mobile,
     mobileReverse,
   }),
+  ...(mobile === 'none' ? [] : [mobileFit ? 'mob-fit' : '']),
 ])
 ---
 
 <Element class:list={classList} style={styleList} {...rest}>
-  {Astro.slots.has('image') && <slot name="image" />}
   <slot />
-  {
-    Astro.slots.has('content') && (
-      <Content width={contentWidth} direction={contentDirection}>
-        <slot name="content" />
-      </Content>
-    )
-  }
 </Element>
 
 <style lang="scss" is:global>
   @use '../../config/breakpoint' as bp;
-  @use '../../styles/container.scss';
 
   .ch-l-r {
     display: flex;
     justify-content: var(--jst);
     align-items: var(--itm);
     gap: var(--gap);
-  }
-  :where(.ch-l-r) > :is(:last-child, .ch-cnt) {
-    margin-inline-start: var(--oly);
-    z-index: 1;
+    max-width: var(--mw);
+    &.ch-ctr-cen {
+      margin-inline: auto;
+    }
+    & > :where(:last-child) {
+      margin-inline-start: var(--oly);
+      z-index: 2;
+    }
   }
 
   // 手動設定尺寸
@@ -74,7 +68,8 @@ const classList = mergeClasses(className, [
 
   @each $size in $map {
     @media (max-width: bp.size($size)) {
-      .ch-l-r.mob-#{$size} {
+      :where(.main-mob-#{$size}) .ch-l-r:where(.mob-inherit),
+      .ch-l-r:where(.mob-#{$size}) {
         flex-direction: column;
         justify-content: var(--mob-jst);
         align-items: var(--mob-itm);
@@ -82,7 +77,7 @@ const classList = mergeClasses(className, [
           margin-inline: auto;
           width: fit-content;
         }
-        & > :is(:last-child, .ch-cnt) {
+        & > :is(:last-child) {
           margin-inline: 0;
         }
       }

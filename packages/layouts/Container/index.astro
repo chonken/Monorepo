@@ -1,8 +1,7 @@
 ---
-import { type ContainerProps, props as defaultProps } from './index.type'
-import { containerStyleList, containerClassList } from './props'
+import type { ContainerProps } from './index.type'
+import { id, props as defaultProps, containerStyleList, containerClassList } from './index.props'
 import { mergeClasses } from '../../utils'
-import '../../styles/container.scss'
 
 interface Props extends ContainerProps {}
 
@@ -14,8 +13,17 @@ const props = {
 const { element, class: className, maxWidth, center, ...rest } = props
 
 const Element = element as keyof HTMLElement
-const styleList = containerStyleList(maxWidth)
-const classList = mergeClasses(className, containerClassList(center))
+const styleList = containerStyleList({ maxWidth })
+const classList = mergeClasses(className, [id, ...containerClassList({ center })])
 ---
 
 <Element class:list={classList} style={styleList} {...rest}><slot /></Element>
+
+<style lang="scss" is:global>
+  .ch-ctr {
+    max-width: var(--mw);
+    &.ch-ctr-cen {
+      margin-inline: auto !important;
+    }
+  }
+</style>

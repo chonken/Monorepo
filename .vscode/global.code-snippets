@@ -230,10 +230,15 @@
     "prefix": "as-demo",
     "body": ["---", "import { type $1, id, props as defaultProps } from './index.type'", "import { mergeClasses } from '../../utils'", "", "interface Props extends $1 {}", "", "// 合併属性", "const props = {", "  ...defaultProps,", "  ...Astro.props,", "}", "", "const { class: className, ...rest } = props", "", "const styleList = {}", "const classList = mergeClasses(className, id)", "---", "", "<div class:list={classList} style={styleList} {...rest}>", "  $2", "</div>", "", "<style lang='scss' is:global>", "  $3", "</style>"],
   },
-  "ts-demo": {
+  "ts-type-demo": {
     "scope": "typescript",
-    "prefix": "ts-demo",
-    "body": ["import { ElementProps } from '../../types'", "", "export const id = '$1'", "", "export interface $2 extends ElementProps {", "  $3", "}", "", "export const props = {", "  $4", "}", "", "export const slots = ['default'$5]"],
+    "prefix": "ts-type-demo",
+    "body": ["import { ElementProps } from '../../types'", "", "export interface $1 extends ElementProps {", "  $2", "}"],
+  },
+  "ts-props-demo": {
+    "scope": "typescript",
+    "prefix": "ts-props-demo",
+    "body": ["export const id = '$1'", "", "export const props = {", "  $2", "}", "", "export const slots = ['default']"],
   },
   "side-padding": {
     "scope": "astro",

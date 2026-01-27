@@ -1,8 +1,8 @@
 ---
-import { type FlexProps, props as defaultProps } from './index.type'
-import { flexClassList, flexStyleList } from './props'
+import type { FlexProps } from './index.type'
+import { props as defaultProps } from './index.props'
+import { flexClassList, flexStyleList } from './index.props'
 import { mergeClasses } from '../../utils'
-import '../../styles/flex.scss'
 
 interface Props extends FlexProps {}
 
@@ -21,3 +21,35 @@ const classList = mergeClasses(className, flexClassList({ reverse, flexReverse, 
 <Element class:list={classList} style={styleList} {...rest}>
   <slot />
 </Element>
+
+<style lang="scss" is:global>
+  @use '../config/breakpoint' as bp;
+
+  .ch-flex {
+    display: flex;
+    flex-wrap: var(--wrp);
+    justify-content: var(--jst);
+    align-items: var(--itm);
+    gap: var(--gap);
+    &:where(.reverse) {
+      direction: rtl;
+    }
+    &:where(.flex-re) {
+      flex-direction: row-reverse;
+    }
+  }
+
+  @each $size, $value in bp.$breakpoint {
+    @media (max-width: #{$value}px) {
+      :where(.main-mob-#{$size}) .ch-flex:where(.mob-inherit),
+      .ch-flex:where(.mob-#{$size}) {
+        flex-direction: column;
+        direction: unset;
+        align-items: var(--mob-itm);
+        &:where(.mob-re) {
+          flex-direction: column-reverse;
+        }
+      }
+    }
+  }
+</style>

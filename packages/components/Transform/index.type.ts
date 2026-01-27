@@ -1,6 +1,4 @@
-import { ElementProps } from '../../types/element'
-
-export const id = 'ch-tfm'
+import { ElementProps } from '../../types'
 
 export interface TransformProps extends ElementProps {
   seconds?: string | number
@@ -10,11 +8,3 @@ export interface TransformProps extends ElementProps {
   skew?: string | number
   delay?: string | number
 }
-
-export const props = {
-  element: 'div',
-  seconds: '1',
-  delay: '0',
-}
-
-export const slots = ['default']

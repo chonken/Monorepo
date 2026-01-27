@@ -1,12 +1,4 @@
-import ListLineProps from '../prototype/ListLine.type'
-
 export const id = 'ch-ptl'
-
-export interface ProcessTimelineProps extends ListLineProps {
-  element?: 'ol' | 'ul'
-  evenReverse?: boolean
-  mobileItem?: 'center' | 'start' | 'end'
-}
 
 export const props = {
   class: '',

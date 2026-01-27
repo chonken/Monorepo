@@ -1,9 +1,9 @@
 ---
 import type { TopLineListProps } from './List.type'
-import { id, props as defaultProps } from './List.type'
-import { fullRWD, mergeClasses, parseDualUnit, parseRWD, setRWD } from '../../utils'
+import { id, props as defaultProps } from './List.props'
+import { fullRWD, mergeClasses, parseRWD, setRWD } from '../../utils'
 import ListLine from '../prototype/_listLine.astro'
-import { containerStyleList, containerClassList } from '../../layouts/Container/props'
+import { containerStyleList, containerClassList } from '../../layouts/Container/index.props'
 
 interface Props extends TopLineListProps {}
 
@@ -21,11 +21,11 @@ const sizes = ['3xl', '2xl', 'xl', 'lg', 'md', 'sm', 'xs', '2xs']
 const colMap = setRWD(fullRWD(parseRWD(col), sizes))
 
 const styleList = {
-  ...containerStyleList(maxWidth),
+  ...containerStyleList({ maxWidth }),
   '--jst': justify,
   ...colMap,
 }
-const classList = mergeClasses(className, [id, ...containerClassList(center)])
+const classList = mergeClasses(className, [id, ...containerClassList({ center })])
 ---
 
 <ListLine class:list={classList} style={styleList} listDirection="row" gap={gap} {...rest}>
@@ -34,7 +34,6 @@ const classList = mergeClasses(className, [id, ...containerClassList(center)])
 
 <style lang="scss" is:global>
   @use '../../config/breakpoint' as bp;
-  @use '../../styles/container.scss';
 
   .ch-tll {
     display: flex;
@@ -42,5 +41,8 @@ const classList = mergeClasses(className, [id, ...containerClassList(center)])
     justify-content: var(--jst);
     max-width: var(--mw);
     row-gap: var(--rgap);
+    &.ch-ctr-cen {
+      margin-inline: auto;
+    }
   }
 </style>

@@ -7,9 +7,7 @@ export interface ElementProps {
 
 export interface ButtonProps {
   class?: string
-  href: string
-  color?: string
-  backgroundColor?: string
+  href?: string
   blank?: boolean
 }
 
@@ -19,7 +17,6 @@ export interface ImageProps {
 }
 
 export interface LayoutProps extends ElementProps {
-  reverse?: boolean
   item?: 'stretch' | 'start' | 'center' | 'end' | 'baseline'
   justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly' | 'space-between' | 'space-around' | 'space-evenly'
   gap?: string | number
