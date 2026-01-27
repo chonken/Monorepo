@@ -23,10 +23,12 @@ async function removeRedundantTags(dir) {
         // 讀取 HTML
         let content = await fs.readFile(filePath, 'utf-8')
 
-        // 格式化：刪除 <!DOCTYPE html> 和 <head> 區塊
-        content = content.replace(/<!DOCTYPE html>|<head>|<\/head>/g, '')
+        // 刪除 <!DOCTYPE html>、<html> 和 <head> 區塊
+        content = content.replace(/<!DOCTYPE html>|<html[^>]*>|<\/html>|<head>|<\/head>/g, '')
         // 把 <link ... /> 後面加上換行
         content = content.replace(/<link[^>]*\/?>/gi, (match) => `${match}\n`)
+        // 合併相鄰的 <style> 標籤
+        content = content.replace(/<\/style[^>]*>\s*<style>/gi, '')
 
         // Prettier 格式化
         const options = (await prettier.resolveConfig(filePath)) || { parser: 'html' }

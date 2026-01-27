@@ -20,12 +20,12 @@ const { isDev = false, isIndex = false, keywords = [] } = Astro.props
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.css" />
         <script is:inline src="https://pic03.eapple.com.tw/yk_js_web/jquery-1.11.3.min.js" />
         <script is:inline src="https://pic03.eapple.com.tw/yk_js_web/scrollfade.js" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.2/normalize.css" />
 
-        <slot name="head" />
         <slot name="demo" />
+        <slot name="head" />
       </head>
       <body>
         <div class="opsl">
@@ -34,23 +34,25 @@ const { isDev = false, isIndex = false, keywords = [] } = Astro.props
       </body>
     </html>
   ) : (
-    // 紀錄: 這裡照理說要包一層 Fragment ，讓它是單一 JSX 節點，但是包一層 Fragment 後在打包時會使style跑到最頂層
-    <head>
-      <script is:inline src="https://pic03.eapple.com.tw/yk_js_web/scrollfade.js" />
-      <slot name="head" />
-    </head>
-    <div class="opsl">
-      {isIndex && (
-        <div class="key_words">
-          <h2>{keywords[0]}</h2>
-          <h3>{keywords[1]}</h3>
-          <h4>{keywords[2]}</h4>
-          <h5>{keywords[3]}</h5>
-          <h6>{keywords[4]}</h6>
-        </div>
-      )}
-      <slot />
-    </div>
+    // 紀錄: 原始情況是有 head 標籤和模組根標籤，照理說要包一層 Fragment 讓它是單一 JSX 節點，但是在 head 外包一層 Fragment 會使打包時style跑到最頂層，解決方式就是加入 html 標籤，並連同 head 標籤給腳本刪除，改用 html 使根標籤保持唯一
+    <html>
+      <head>
+        <script is:inline src="https://pic03.eapple.com.tw/yk_js_web/scrollfade.js" />
+        <slot name="head" />
+      </head>
+      <div class="opsl">
+        {isIndex && (
+          <div class="key_words">
+            <h2>{keywords[0]}</h2>
+            <h3>{keywords[1]}</h3>
+            <h4>{keywords[2]}</h4>
+            <h5>{keywords[3]}</h5>
+            <h6>{keywords[4]}</h6>
+          </div>
+        )}
+        <slot />
+      </div>
+    </html>
   )
 }
 
@@ -116,10 +118,6 @@ const { isDev = false, isIndex = false, keywords = [] } = Astro.props
       list-style: none;
       font: inherit;
       color: inherit;
-      transition:
-        color 0.5s,
-        background-color 0.5s,
-        border-color 0.5s;
     }
     .opsl *::before,
     .opsl *::after {
@@ -134,7 +132,8 @@ const { isDev = false, isIndex = false, keywords = [] } = Astro.props
     .opsl table {
       border-collapse: collapse;
     }
-    .opsl a {
+    .opsl a,
+    .opsl a * {
       transition: 0.5s;
     }
     .opsl hr {

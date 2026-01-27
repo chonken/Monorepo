@@ -1,11 +1,13 @@
 ---
 interface Props {
   keywords?: string[]
+  banner?: boolean
 }
 import BaseModule from '@layouts/baseModule.astro'
 const isIndex = Astro.url.pathname.endsWith('/index') || Astro.url.pathname === '/'
 const isDev = import.meta.env.MODE === 'development'
-const keywords = Astro.props.keywords || []
+
+const { keywords = [], banner = false } = Astro.props
 ---
 
 <BaseModule isIndex={isIndex} isDev={isDev} keywords={isIndex ? keywords : undefined}>
@@ -16,6 +18,7 @@ const keywords = Astro.props.keywords || []
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC:wght@200..900&display=swap" rel="stylesheet" />
+    {!banner && <Fragment set:html={`<style>.path,.banner { display: none; }</style>\n`} />}
   </Fragment>
   <slot />
 </BaseModule>
@@ -44,14 +47,6 @@ const keywords = Astro.props.keywords || []
   $lg: bp.value(2xl); // 縮放區間的最大尺寸
   $sm: bp.value(2xs); // 縮放區間的最小尺寸
 
-  // 參數設置
-  @mixin path_banner {
-    // banner path 開關
-    .path,
-    .banner {
-      display: none;
-    }
-  }
   @mixin opsl {
     // 模組區塊根元素
     font-size: var(--f18);
@@ -143,7 +138,6 @@ const keywords = Astro.props.keywords || []
     }
   }
 
-  @include path_banner;
   .opsl {
     @include generator.generate-sizes('f', $font-size, $fmin, $fmax, $fupper, $flower, $fpower, $lg, $sm);
     @include generator.generate-sizes('s', $space, $smin, $smax, $supper, $slower, $spower, $lg, $sm);
