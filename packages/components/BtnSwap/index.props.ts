@@ -7,9 +7,6 @@ export const props = {
   borderColor: '#000',
   hoverColor: '#000',
   hoverBackgroundColor: '#fff',
-  borderRadius: 0,
-  iconHoverInvert: false,
-  iconReverse: false,
   blank: false,
 }
 

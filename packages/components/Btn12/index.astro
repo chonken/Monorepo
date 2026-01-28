@@ -1,0 +1,68 @@
+---
+import { mergeClasses } from '../../utils'
+import Button from '../_prototype/button.astro'
+import type { Btn12Props } from './index.type'
+import { id, props as defaultProps } from './index.props'
+
+interface Props extends Btn12Props {}
+
+// 合併属性
+const props = {
+  ...defaultProps,
+  ...Astro.props,
+}
+
+const { class: className, color, backgroundColor, borderColor, move, ...rest } = props
+
+// 方向設定
+const moveMap = {
+  x: {
+    up: '0px',
+    down: '0px',
+    left: '-100%',
+    right: '100%',
+  },
+  y: {
+    up: '-100%',
+    down: '100%',
+    left: '0px',
+    right: '0px',
+  },
+}
+
+const styleList = {
+  '--tra-x': moveMap['x'][move],
+  '--tra-y': moveMap['y'][move],
+  '--clr': color,
+  '--bgc': backgroundColor,
+  '--bor-c': borderColor,
+}
+const classList = mergeClasses(className, id)
+---
+
+<Button class:list={classList} style={styleList} {...rest}>
+  <span class="btn_type12_txt ch-btnptt-txt">
+    <slot>查看更多</slot>
+    <span class="btn_type12_hover_txt ch-btnptt-txt"><slot name="hoverText">MORE</slot></span>
+  </span>
+</Button>
+
+<style lang="scss" is:global>
+  .btn_type12 {
+    position: relative;
+    color: var(--clr);
+    overflow: hidden;
+    border: 1px solid var(--bor-c);
+    background: var(--bgc);
+    z-index: 1;
+    &:hover .btn_type12_txt {
+      transform: translate(var(--tra-x), var(--tra-y));
+    }
+  }
+  .btn_type12_hover_txt {
+    position: absolute;
+    padding: 0.25em 1em;
+    inset: 0;
+    transform: translate(calc(var(--tra-x) * -1), calc(var(--tra-y) * -1));
+  }
+</style>

@@ -1,0 +1,62 @@
+---
+import { mergeClasses } from '../../utils'
+import Button from '../_prototype/button.astro'
+import type { Btn04Props } from './index.type'
+import { id, props as defaultProps } from './index.props'
+
+interface Props extends Btn04Props {}
+
+// 合併属性
+const props = {
+  ...defaultProps,
+  ...Astro.props,
+}
+
+const { class: className, color, backgroundColor, borderColor, ...rest } = props
+
+const styleList = {
+  '--clr': color,
+  '--bgc': backgroundColor,
+  '--bor-c': borderColor,
+}
+const classList = mergeClasses(className, id)
+---
+
+<Button class:list={classList} style={styleList} {...rest}>
+  <span class="ch-btnptt-txt">
+    <slot>查看更多</slot>
+  </span>
+</Button>
+
+<style lang="scss" is:global>
+  .btn_type04 {
+    position: relative;
+    color: var(--clr);
+    z-index: 1;
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      transition: 0.3s;
+    }
+    &::before {
+      opacity: 0.1;
+      background: var(--bgc);
+      z-index: 1;
+    }
+    &::after {
+      opacity: 0.3;
+      border-top: 1px solid var(--bor-c);
+      border-bottom: 1px solid var(--bor-c);
+      transform: scale(0, 1);
+    }
+    &:hover::before {
+      opacity: 0;
+      transform: scale(0, 1);
+    }
+    &:hover:after {
+      transform: scale(1);
+    }
+  }
+</style>

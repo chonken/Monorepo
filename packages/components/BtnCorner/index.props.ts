@@ -6,9 +6,8 @@ export const props = {
   backgroundColor: '#fff',
   hoverColor: '#fff',
   hoverBackgroundColor: '#000',
-  blank: false,
   position: 'rb' as 'lt' | 'rt' | 'lb' | 'rb',
-  iconHoverInvert: false,
+  blank: false,
 }
 
-export const slots = ['default', 'icon']
+export const slots = ['default']

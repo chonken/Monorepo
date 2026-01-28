@@ -1,0 +1,70 @@
+---
+import { mergeClasses } from '../../utils'
+import Button from '../_prototype/button.astro'
+import type { Btn03Props } from './index.type'
+import { id, props as defaultProps } from './index.props'
+
+interface Props extends Btn03Props {}
+
+// 合併属性
+const props = {
+  ...defaultProps,
+  ...Astro.props,
+}
+
+const { class: className, color, dotColor, dotSize, lineWidth, lineColor, ...rest } = props
+
+const styleList = {
+  '--clr': color,
+  '--dc': dotColor,
+  '--ds': dotSize,
+  '--lw': lineWidth,
+  '--lc': lineColor,
+}
+const classList = mergeClasses(className, id)
+---
+
+<Button class:list={classList} style={styleList} {...rest}>
+  <s class="ch-btnptt-txt">
+    <slot>查看更多</slot>
+  </s>
+  <span class="btn_type03_txt ch-btnptt-txt">
+    <slot>查看更多</slot>
+  </span>
+</Button>
+
+<style lang="scss" is:global>
+  .btn_type03 {
+    position: relative;
+    color: var(--clr);
+    text-wrap: nowrap;
+    border-bottom: var(--lw) solid var(--lc);
+    z-index: 1;
+    &::before {
+      content: '';
+      position: absolute;
+      left: calc(var(--ds) / -2);
+      bottom: calc((var(--ds) + var(--lw)) / -2);
+      width: var(--ds);
+      height: var(--ds);
+      border-radius: 50%;
+      background: var(--dc);
+      transition: 0.4s;
+    }
+    & s {
+      opacity: 0 !important;
+      letter-spacing: 0.3em;
+      pointer-events: none;
+    }
+    &:hover {
+      letter-spacing: 0.3em;
+    }
+    &:hover::before {
+      left: calc(100% - var(--ds) / 2);
+    }
+  }
+  .btn_type03_txt {
+    position: absolute;
+    inset: 0;
+  }
+</style>

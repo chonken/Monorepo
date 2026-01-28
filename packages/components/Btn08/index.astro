@@ -1,0 +1,96 @@
+---
+import { mergeClasses } from '../../utils'
+import Button from '../_prototype/button.astro'
+import type { Btn08Props } from './index.type'
+import { id, props as defaultProps } from './index.props'
+
+interface Props extends Btn08Props {}
+
+// 合併属性
+const props = {
+  ...defaultProps,
+  ...Astro.props,
+}
+
+const { class: className, color, backgroundColor, hoverColor, hoverBackgroundColor, ...rest } = props
+
+const styleList = {
+  '--clr': color,
+  '--bgc': backgroundColor,
+  '--clr-h': hoverColor,
+  '--bgc-h': hoverBackgroundColor,
+}
+const classList = mergeClasses(className, id)
+---
+
+<Button class:list={classList} style={styleList} {...rest}>
+  <span class="ch-btnptt-txt">
+    <slot>查看更多</slot>
+  </span>
+</Button>
+
+<style lang="scss" is:global>
+  .btn_type08 {
+    position: relative;
+    display: inline-block;
+    color: var(--clr);
+    overflow: hidden;
+    background: var(--bgc);
+    z-index: 1;
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      background: var(--bgc-h);
+    }
+    &::before {
+      width: 135%;
+      clip-path: polygon(calc(100% - 2em) 0%, 100% 50%, calc(100% - 2em) 100%, 0% 100%, 0% 0%);
+      transform: translateX(-100%);
+    }
+    &::after {
+      width: 105%;
+      transition: 0.3s cubic-bezier(0.7, 0, 0.2, 1);
+      transform: translateX(100%);
+    }
+    & .ch-btnptt-txt {
+      position: relative;
+      z-index: 1;
+    }
+    &:hover {
+      color: var(--clr-h);
+      & .btn_type08_txt {
+        animation:
+          move_right_initial 0.1s forwards,
+          move_right_end 0.3s forwards 0.2s;
+      }
+      &::before,
+      &::after {
+        transform: none;
+        transition-timing-function: cubic-bezier(0.7, 0, 0.2, 1);
+      }
+      &::before {
+        transition: transform 0.3s;
+      }
+      &::after {
+        transition: transform 0.01s 0.3s;
+      }
+    }
+  }
+  @keyframes move_right_initial {
+    to {
+      transform: translateX(105%);
+    }
+  }
+  @keyframes move_right_end {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+</style>

@@ -1,6 +1,6 @@
 ---
 import { mergeClasses } from '../../utils'
-import Button from '../prototype/_button.astro'
+import Button from '../_prototype/button.astro'
 import type { BtnCurtainProps } from './index.type'
 import { id, props as defaultProps } from './index.props'
 
@@ -23,67 +23,60 @@ const classList = mergeClasses(className, [id, `cur-${curtain[0]}`, `${open ? 'c
 ---
 
 <Button class:list={classList} style={styleList} {...rest}>
-  {
-    Astro.slots.has('icon') && (
-      <span class="ch-icon">
-        <slot name="icon" slot="icon" />
-      </span>
-    )
-  }
-  <slot />
+  <span class="ch-btnptt-txt">
+    <slot>查看更多</slot>
+  </span>
 </Button>
 
-<style is:global>
+<style lang="scss" is:global>
   .ch-btn-cur {
     position: relative;
-    font-weight: bold;
-    width: fit-content;
     color: var(--clr);
     background-color: var(--bgc);
-    transition: 0.4s;
+    transition: 0.5s ease-in-out;
     z-index: 1;
-  }
-  .ch-btn-cur::before {
-    content: '';
-    position: absolute;
-    width: var(--curw);
-    height: 100%;
-    transition: 0.4s;
-    background-color: var(--clr);
-    z-index: -1;
-  }
-  .ch-btn-cur.ch-open {
-    color: var(--bgc);
-  }
-  .ch-btn-cur.ch-open::before {
-    width: 100%;
-  }
-  .ch-btn-cur.cur-l::before {
-    top: 0;
-    left: 0;
-  }
-  .ch-btn-cur.cur-r::before {
-    top: 0;
-    right: 0;
-  }
-  .ch-btn-cur.cur-t::before {
-    left: 0;
-    top: 0;
-  }
-  .ch-btn-cur.cur-b::before {
-    left: 0;
-    bottom: 0;
-  }
-  .ch-btn-cur:hover {
-    color: var(--bgc);
-  }
-  .ch-btn-cur:hover::before {
-    width: 100%;
-  }
-  .ch-btn-cur.ch-open:hover {
-    color: var(--clr);
-  }
-  .ch-btn-cur.ch-open:hover::before {
-    width: var(--curw);
+    &::before {
+      content: '';
+      position: absolute;
+      width: var(--curw);
+      height: 100%;
+      transition: 0.4s;
+      background-color: var(--clr);
+      z-index: -1;
+    }
+    &.ch-open {
+      color: var(--bgc);
+    }
+    &.ch-open::before {
+      width: 100%;
+    }
+    &.cur-l::before {
+      top: 0;
+      left: 0;
+    }
+    &.cur-r::before {
+      top: 0;
+      right: 0;
+    }
+    &.cur-t::before {
+      left: 0;
+      top: 0;
+    }
+    &.cur-b::before {
+      left: 0;
+      bottom: 0;
+    }
+    &:hover {
+      color: var(--bgc);
+    }
+    &:hover::before {
+      width: 100%;
+    }
+    &.ch-open:hover {
+      color: var(--clr);
+    }
+    &.ch-open:hover::before {
+      width: var(--curw);
+    }
   }
 </style>

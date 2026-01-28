@@ -1,3 +1,3 @@
-import ListLineProps from '../prototype/ListLine.type'
+import ListLineProps from '../../types'
 
 export interface LeftLineListProps extends ListLineProps {}

@@ -1,0 +1,90 @@
+---
+import { mergeClasses } from '../../utils'
+import Button from '../_prototype/button.astro'
+import type { Btn10Props } from './index.type'
+import { id, props as defaultProps } from './index.props'
+
+interface Props extends Btn10Props {}
+
+// 合併属性
+const props = {
+  ...defaultProps,
+  ...Astro.props,
+}
+
+const { class: className, color, backgroundColor, hoverBackgroundColor, hoverBorderColor, ...rest } = props
+
+const styleList = {
+  '--clr': color,
+  '--bgc': backgroundColor,
+  '--bgc-h': hoverBackgroundColor,
+  '--bor-c-h': hoverBorderColor,
+}
+const classList = mergeClasses(className, id)
+---
+
+<Button class:list={classList} style={styleList} {...rest}>
+  <span class="btn_type10_l0"></span>
+  <span class="btn_type10_l1"></span>
+  <span class="btn_type10_l2"></span>
+  <span class="btn_type10_l3"></span>
+  <span class="ch-btnptt-txt">
+    <slot>查看更多</slot>
+  </span>
+</Button>
+
+<style lang="scss" is:global>
+  .btn_type10 {
+    position: relative;
+    display: inline-block;
+    padding: 0.6em;
+    color: var(--clr);
+    z-index: 1;
+    & .ch-btnptt-txt {
+      padding-block: 0.4em;
+    }
+    &:hover {
+      & [class^='btn_type10_l'] {
+        opacity: 1;
+        transform: none;
+      }
+      & .ch-btnptt-txt {
+        background: var(--bgc-h);
+      }
+    }
+  }
+  [class^='btn_type10_l'] {
+    content: '';
+    position: absolute;
+    border: solid var(--bor-c-h);
+    transition: 0.5s;
+    width: 15px;
+    height: 15px;
+    opacity: 0;
+    z-index: -1;
+  }
+  .btn_type10_l0 {
+    top: 0;
+    left: 0;
+    border-width: 2px 0 0 2px;
+    transform: translate(-10px, -10px);
+  }
+  .btn_type10_l1 {
+    top: 0;
+    right: 0;
+    border-width: 2px 2px 0 0;
+    transform: translate(10px, -10px);
+  }
+  .btn_type10_l2 {
+    bottom: 0;
+    left: 0;
+    border-width: 0 0 2px 2px;
+    transform: translate(-10px, 10px);
+  }
+  .btn_type10_l3 {
+    bottom: 0;
+    right: 0;
+    border-width: 0 2px 2px 0;
+    transform: translate(10px, 10px);
+  }
+</style>

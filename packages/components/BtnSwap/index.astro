@@ -1,6 +1,6 @@
 ---
 import { mergeClasses, parseUnit } from '../../utils'
-import Button from '../prototype/_button.astro'
+import Button from '../_prototype/button.astro'
 import type { BtnSwapProps } from './index.type'
 import { id, props as defaultProps } from './index.props'
 
@@ -11,8 +11,7 @@ const props = {
   ...defaultProps,
   ...Astro.props,
 }
-
-const { class: className, backgroundColor, color, borderColor = backgroundColor, hoverColor = backgroundColor, hoverBackgroundColor = color, borderRadius, iconHoverInvert, iconReverse, ...rest } = props
+const { class: className, backgroundColor, color, borderColor = backgroundColor, hoverColor = backgroundColor, hoverBackgroundColor = color, ...rest } = props
 
 const styleList = {
   '--clr': color,
@@ -20,46 +19,25 @@ const styleList = {
   '--clr-h': hoverColor,
   '--bgc-h': hoverBackgroundColor,
   '--bor': parseUnit(borderColor, 'px'),
-  '--brr': borderRadius,
-  '--icn-inv': iconHoverInvert ? 1 : 0,
 }
-const classList = mergeClasses(className, [id, iconReverse ? 'ch-icon-re' : ''])
+const classList = mergeClasses(className, id)
 ---
 
 <Button class:list={classList} style={styleList} {...rest}>
-  {
-    Astro.slots.has('icon') && (
-      <span class="ch-icon">
-        <slot name="icon" slot="icon" />
-      </span>
-    )
-  }
-  <slot />
+  <span class="ch-btnptt-txt">
+    <slot>查看更多</slot>
+  </span>
 </Button>
 
 <style lang="scss" is:global>
   .ch-btn-swap {
-    text-align: center;
     color: var(--clr);
-    border-radius: var(--brr);
     border: 1px solid var(--bor);
     background-color: var(--bgc);
-    & .ch-icon {
-      filter: none;
-      transition: 0.4s;
-    }
-    &.ch-icon-re .ch-icon {
-      filter: grayscale(1) invert(var(--icn-inv)) brightness(2);
-    }
+    transition: 0.5s ease-in-out;
     &:hover {
       color: var(--clr-h);
       background-color: var(--bgc-h);
-    }
-    &:hover .ch-icon {
-      filter: grayscale(1) invert(var(--icn-inv)) brightness(2);
-    }
-    &.ch-icon-re:hover .ch-icon {
-      filter: none;
     }
   }
 </style>

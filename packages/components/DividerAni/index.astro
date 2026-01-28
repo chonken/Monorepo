@@ -1,0 +1,57 @@
+---
+import { mergeClasses, parseUnit } from '../../utils'
+import type { DividerAniProps } from './index.type'
+import { id, props as defaultProps } from './index.props'
+
+interface Props extends DividerAniProps {}
+
+// 合併属性
+const props = {
+  ...defaultProps,
+  ...Astro.props,
+}
+const { class: className, color1, color2, length, seconds, delay, diraction, ...rest } = props
+
+// 分隔線屬性
+const map = {
+  horizon: {
+    bor: `linear-gradient(to right, ${color1} 50%, ${color2} 50%) right / 200% 100% border-box`,
+    ani: '-100% 0',
+    w: length,
+    h: 0,
+  },
+  vertical: {
+    bor: `linear-gradient(${color1} 50%, ${color2} 50%) bottom / 100% 200% border-box`,
+    ani: '0 -100%',
+    w: 0,
+    h: length === '100%' ? '80px' : length,
+  },
+}
+
+const styleList = {
+  '--wid': parseUnit(map[diraction].w, 'px'),
+  '--hei': parseUnit(map[diraction].h, 'px'),
+  '--bor': map[diraction].bor,
+  '--ani': map[diraction].ani,
+  '--sec': parseUnit(seconds, 's'),
+  '--dly': parseUnit(delay, 's'),
+}
+const classList = mergeClasses(className, id)
+---
+
+<hr class:list={classList} style={styleList} {...rest} />
+
+<style is:global>
+  .ch-div-ani {
+    width: var(--wid);
+    height: var(--hei);
+    border: 1px solid #fff0;
+    background: var(--bor) border-box;
+    animation: div-ani var(--sec) var(--dly) ease infinite;
+  }
+  @keyframes div-ani {
+    100% {
+      background-position: var(--ani);
+    }
+  }
+</style>
