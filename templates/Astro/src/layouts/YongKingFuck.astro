@@ -10,7 +10,7 @@ const isDev = import.meta.env.MODE === 'development'
 const { keywords = [], banner = false } = Astro.props
 ---
 
-<BaseModule isIndex={isIndex} isDev={isDev} keywords={isIndex ? keywords : undefined}>
+<BaseModule isIndex={isIndex} isDev={isDev} keywords={isIndex ? keywords : undefined} banner={banner}>
   <Fragment slot="demo">
     <!-- menu.css custom.css 放這裡 -->
   </Fragment>
