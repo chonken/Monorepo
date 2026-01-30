@@ -228,7 +228,7 @@
   "as-demo": {
     "scope": "astro",
     "prefix": "as-demo",
-    "body": ["---", "import { type $1, id, props as defaultProps } from './index.type'", "import { mergeClasses } from '../../utils'", "", "interface Props extends $1 {}", "", "// 合併属性", "const props = {", "  ...defaultProps,", "  ...Astro.props,", "}", "", "const { class: className, ...rest } = props", "", "const styleList = {}", "const classList = mergeClasses(className, id)", "---", "", "<div class:list={classList} style={styleList} {...rest}>", "  $2", "</div>", "", "<style lang='scss' is:global>", "  $3", "</style>"],
+    "body": ["---", "import type { $1 } from './index.type'", "import { id, props as defaultProps } from './index.props'", "import { mergeClasses } from '../../utils'", "", "interface Props extends $1 {}", "", "// 合併属性", "const props = {", "  ...defaultProps,", "  ...Astro.props,", "}", "", "const { class: className, ...rest } = props", "", "const styleList = {}", "const classList = mergeClasses(className, id)", "---", "", "<div class:list={classList} style={styleList} {...rest}>", "  $2", "</div>", "", "<style lang='scss' is:global>", "  $3", "</style>"],
   },
   "ts-type-demo": {
     "scope": "typescript",

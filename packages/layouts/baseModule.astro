@@ -3,8 +3,9 @@ interface Props {
   isDev?: boolean
   isIndex?: boolean
   keywords?: string[]
+  banner?: boolean
 }
-const { isDev = false, isIndex = false, keywords = [] } = Astro.props
+const { isDev = false, isIndex = false, keywords = [], banner = false } = Astro.props
 ---
 
 {
@@ -39,6 +40,7 @@ const { isDev = false, isIndex = false, keywords = [] } = Astro.props
       <head>
         <script is:inline src="https://pic03.eapple.com.tw/yk_js_web/scrollfade.js" />
         <slot name="head" />
+        {!banner && <Fragment set:html={`<style>.path,.banner { display: none; }</style>\n`} />}
       </head>
       <div class="opsl">
         {isIndex && (
