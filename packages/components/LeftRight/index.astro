@@ -53,7 +53,11 @@ const classList = mergeClasses(className, [
     justify-content: var(--jst);
     align-items: var(--itm);
     gap: var(--gap);
-    max-width: var(--mw);
+    width: var(--mw);
+    max-width: 100%;
+    &:where(.flex-re) {
+      flex-direction: row-reverse;
+    }
     &.ch-ctr-cen {
       margin-inline: auto;
     }
@@ -73,11 +77,14 @@ const classList = mergeClasses(className, [
         flex-direction: column;
         justify-content: var(--mob-jst);
         align-items: var(--mob-itm);
+        &:where(.mob-re) {
+          flex-direction: column-reverse;
+        }
         &.mob-fit {
           margin-inline: auto;
           width: fit-content;
         }
-        & > :is(:last-child) {
+        & > :last-child {
           margin-inline: 0;
         }
       }

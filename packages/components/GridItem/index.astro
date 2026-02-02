@@ -44,13 +44,14 @@ const classList = mergeClasses(className, [id, ...containerClassList({ center })
     align-items: var(--itm);
     justify-content: var(--jst);
     gap: var(--gap);
-    max-width: var(--mw);
+    max-width: 100%;
+    width: var(--mw);
     &.ch-ctr-cen {
       margin-inline: auto;
     }
     & > * {
-      width: 100%;
-      max-width: calc((100% - var(--cgap) * max(var(--col) - 1, 0)) / var(--col));
+      max-width: 100%;
+      width: calc((100% - var(--cgap) * max(var(--col) - 1, 0)) / var(--col));
     }
   }
 
@@ -67,10 +68,10 @@ const classList = mergeClasses(className, [id, ...containerClassList({ center })
         }
 
         &.ch-gdi-fit {
-          max-width: calc((var(--mw) - var(--cgap) * max(var(--col) - 1, 0)) / var(--col) * var(--col-#{$size}) + (var(--col-#{$size}) - 1) * #{$gap});
+          width: calc((var(--mw) - var(--cgap) * max(var(--col) - 1, 0)) / var(--col) * var(--col-#{$size}) + (var(--col-#{$size}) - 1) * #{$gap});
         }
         & > * {
-          max-width: calc((100% - #{$gap} * max(var(--col-#{$size}) - 1, 0)) / var(--col-#{$size}));
+          width: calc((100% - #{$gap} * max(var(--col-#{$size}) - 1, 0)) / var(--col-#{$size}));
         }
       }
     }
