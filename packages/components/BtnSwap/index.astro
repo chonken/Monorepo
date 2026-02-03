@@ -20,13 +20,11 @@ const styleList = {
   '--bgc-h': hoverBackgroundColor,
   '--bor': parseUnit(borderColor, 'px'),
 }
-const classList = mergeClasses(className, id)
+const classList = mergeClasses(className, [id, 'ch-btnptt-txt'])
 ---
 
 <Button class:list={classList} style={styleList} {...rest}>
-  <span class="ch-btnptt-txt">
-    <slot>查看更多</slot>
-  </span>
+  <slot>查看更多</slot>
 </Button>
 
 <style lang="scss" is:global>

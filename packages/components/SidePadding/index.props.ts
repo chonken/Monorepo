@@ -5,7 +5,7 @@ export const props = {
   mainMobile: 'none' as const,
   maxWidthStart: '100%',
   maxWidthEnd: '100%',
-  mobile: 'lg',
+  mobile: 'none' as const,
   mobileFill: false,
   paddingBlock: '0',
   marginBlock: '0',

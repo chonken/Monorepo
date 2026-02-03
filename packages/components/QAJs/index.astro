@@ -14,22 +14,27 @@ const { selector, group, firstOpen, activeOnly } = props
 ---
 
 <script define:vars={{ s: selector, g: group, f: firstOpen, a: activeOnly }}>
-  $(`${s} dd`).hide()
-  if (g) {
-    if (f) {
-      $(`${s} dt:nth-of-type(1)`).addClass('active').next('dd').show()
+  $(function () {
+    $(`${s} dt`).css('cursor', 'pointer')
+    $(`${s} dd`).hide()
+    if (g) {
+      if (f) {
+        $(`${s} dt:nth-of-type(1)`).addClass('active').next('dd').show()
+      }
+      $(s).on('click', 'dt', function () {
+        $(this).next('dd').css('transition', 'none')
+        if (a) $(this).siblings('.active').removeClass('active').next('dd').slideUp(400)
+        $(this).toggleClass('active').next('dd').slideToggle(400)
+      })
+    } else {
+      if (f) {
+        $(`${s} dl:nth-of-type(1)`).addClass('active').find('dd').show()
+      }
+      $(s).on('click', 'dt', function () {
+        $(this).next('dd').css('transition', 'none')
+        if (a) $(this).parent().siblings('.active').removeClass('active').find('dd').slideUp(400)
+        $(this).next('dd').slideToggle(400).parent().toggleClass('active')
+      })
     }
-    $(s).on('click', 'dt', function () {
-      if (a) $(this).siblings('.active').removeClass('active').next('dd').slideUp(400)
-      $(this).toggleClass('active').next('dd').slideToggle(400)
-    })
-  } else {
-    if (f) {
-      $(`${s} dl:nth-of-type(1)`).addClass('active').find('dd').show()
-    }
-    $(s).on('click', 'dt', function () {
-      if (a) $(this).parent().siblings('.active').removeClass('active').find('dd').slideUp(400)
-      $(this).next('dd').slideToggle(400).parent().toggleClass('active')
-    })
-  }
+  })
 </script>

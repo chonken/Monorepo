@@ -1,7 +1,7 @@
 ---
 import type { ContainerProps } from './index.type'
 import { id, props as defaultProps, containerStyleList, containerClassList } from './index.props'
-import { mergeClasses } from '../../utils'
+import { mergeClasses, mergeStyles } from '../../utils'
 
 interface Props extends ContainerProps {}
 
@@ -10,10 +10,10 @@ const props = {
   ...defaultProps,
   ...Astro.props,
 }
-const { element, class: className, maxWidth, center, ...rest } = props
+const { element, class: className, maxWidth, center, style, ...rest } = props
 
 const Element = element as keyof HTMLElement
-const styleList = containerStyleList({ maxWidth })
+const styleList = mergeStyles(containerStyleList({ maxWidth }), style)
 const classList = mergeClasses(className, [id, ...containerClassList({ center })])
 ---
 

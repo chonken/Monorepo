@@ -20,6 +20,16 @@ export function mergeClasses(exist: string | string[] | undefined, current: stri
 }
 
 /**
+ * 合併`style`並去重
+ * @param {Record<string, unknown> | undefined} exist 已有的`style`物件
+ * @param {Record<string, unknown> | undefined} current 目前輸入的`style`物件，此物件會覆蓋已有的屬性
+ * @returns {Record<string, unknown>} 合併後的`style`物件
+ */
+export function mergeStyles(exist: Record<string, unknown> | undefined, current: Record<string, unknown> | undefined): Record<string, unknown> {
+  return { ...exist, ...current }
+}
+
+/**
  * 將數值或字串轉換為CSS單位
  * @param {string | number | undefined} value 輸入的數值或字串
  * @param {string} [unit='px'] 默認單位

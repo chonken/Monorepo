@@ -2,33 +2,38 @@
 import type { BgFixedProps } from './index.type'
 import { id, props as defaultProps } from './index.props'
 import { mergeClasses, parseUnit } from '../../utils'
+import SidePadding from '../SidePadding/index.astro'
+import { props as sidePaddingDefaultProps } from '../SidePadding/index.props'
 
 interface Props extends BgFixedProps {}
 
 // 合併属性
 const props = {
+  ...sidePaddingDefaultProps,
   ...defaultProps,
   ...Astro.props,
 }
-const { src, class: className, minHeight, ...rest } = props
+const { class: className, src, minHeight, ...rest } = props
 
 const styleList = {
-  '--url': `url(${src})`,
-  '--h': parseUnit(minHeight, 'vw'),
+  '--min-h': parseUnit(minHeight, 'vw'),
 }
 const classList = mergeClasses(className, id)
 ---
 
-<div class:list={classList} style={styleList} {...rest}>
+<SidePadding class:list={classList} style={styleList} background={src} {...rest}>
   <slot />
-</div>
+</SidePadding>
 
 <style lang="scss" is:global>
   @use '../../config/breakpoint' as bp;
 
   .ch-bgf {
-    min-height: var(--h);
-    background: var(--url) center / cover fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: var(--min-h);
+    background-attachment: fixed;
   }
   @media (max-width: bp.size(md)) {
     .ch-bgf {

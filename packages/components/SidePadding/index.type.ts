@@ -11,4 +11,5 @@ export interface SidePaddingProps extends ElementProps {
   paddingInline?: string | number
   minPaddingInline?: string | number
   aside?: 'start' | 'end' | 'none'
+  background?: string
 }

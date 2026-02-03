@@ -243,12 +243,7 @@
   "side-padding": {
     "scope": "astro",
     "prefix": "sidePadding",
-    "body": ["<SidePadding class='$1' space='${2|normal,wide,narrow|}' ${3|paddingBlock='',marginBlock=''|}>", "\t$4", "</SidePadding>"],
-  },
-  "aside-padding": {
-    "scope": "astro",
-    "prefix": "asidePadding",
-    "body": ["<AsidePadding class='$1' maxWidth='${2:1400}' aside='${3|left,right|}' mobile='${4|lg,md,xl,2xl,none|}' ${5|mobileFill|} ${6|paddingBlock='',marginBlock=''|}>", "\t$7", "</AsidePadding>"],
+    "body": ["<SidePadding class='$1' ${2|paddingBlock='',marginBlock=''|} ${3| ,maxWidthStart=''|} ${4| ,maxWidthEnd=''|} aside='${5|none,start,end|}' mainMobile='${6|none,3xl,2xl,xl,lg,md,sm,xs,2xs,3xs|}'>", "\t$7", "</SidePadding>"],
   },
   "container": {
     "scope": "astro",
@@ -283,7 +278,7 @@
   "background-fixed": {
     "scope": "astro",
     "prefix": "bgFixed",
-    "body": ["<BgFixed class='$1' src='$2' minHeight='$3vw'>", "\t$4", "</BgFixed>"],
+    "body": ["<BgFixed class='$1' src='$2' minHeight='$3vw' ${4| ,paddingBlock='' maxWidthStart='' maxWidthEnd='' aside='none' mainMobile='none'|}>", "\t$9", "</BgFixed>"],
   },
   "content": {
     "scope": "astro",

@@ -5,8 +5,6 @@ export const props = {
   color: '#fff',
   backgroundColor: '#000',
   borderColor: '#000',
-  hoverColor: '#000',
-  hoverBackgroundColor: '#fff',
   blank: false,
 }
 
