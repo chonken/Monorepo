@@ -1,5 +1,3 @@
-import type { ElementProps } from '../../types'
+import type { ItemLineProps } from '../../types'
 
-export interface LeftLineListItemProps extends ElementProps {
-  lineClass?: string
-}
+export interface LeftLineListItemProps extends ItemLineProps {}

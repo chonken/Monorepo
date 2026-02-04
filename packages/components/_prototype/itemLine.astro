@@ -1,19 +1,18 @@
 ---
 import { mergeClasses } from '../../utils'
-interface Props {
-  markerClass?: string
-  lineClass?: string
+import type { ItemLineProps } from '../../types'
+interface Props extends ItemLineProps {
   listDirection?: 'row' | 'column'
 }
-const { markerClass = '', lineClass = '', listDirection = 'column', ...rest } = Astro.props
+const { dotClass = '', lineClass = '', listDirection = 'column', ...rest } = Astro.props
 ---
 
-<div class:list={mergeClasses(markerClass, ['ch-itlptt-m', listDirection === 'column' ? 'ch-col' : 'ch-row'])} {...rest}>
-  <div class:list={mergeClasses(lineClass, 'ch-itlptt-l')} {...rest}></div>
+<div class:list={mergeClasses('ch-itlptt-m', listDirection === 'column' ? 'ch-col' : 'ch-row')} {...rest}>
+  <div class:list={mergeClasses('ch-itlptt-l', lineClass)} {...rest}></div>
   <slot name="marker">
-    <div class="ch-itlptt-d"></div>
+    <div class:list={mergeClasses('ch-itlptt-d', dotClass)}></div>
   </slot>
-  <div class:list={mergeClasses(lineClass, 'ch-itlptt-l')} {...rest}></div>
+  <div class:list={mergeClasses('ch-itlptt-l', lineClass)} {...rest}></div>
 </div>
 
 <style lang="scss" is:global>

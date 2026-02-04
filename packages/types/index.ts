@@ -23,11 +23,16 @@ export interface LayoutProps extends ElementProps {
   gap?: string | number
 }
 
-export default interface ListLineProps extends ElementProps {
+export interface ListLineProps extends ElementProps {
   item?: 'stretch' | 'start' | 'center' | 'end'
   gap?: string | number
   lineGap?: string | number
   trimStart?: boolean
   trimEnd?: boolean
   mobile?: 'lg' | 'md' | 'sm' | 'xs' | '2xs' | 'none'
+}
+
+export interface ItemLineProps extends ElementProps {
+  dotClass?: string
+  lineClass?: string
 }

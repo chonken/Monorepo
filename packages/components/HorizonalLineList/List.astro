@@ -1,18 +1,18 @@
 ---
-import type { TopLineListProps } from './List.type'
+import type { HorizonalLineListProps } from './List.type'
 import { id, props as defaultProps } from './List.props'
 import { fullRWD, mergeClasses, parseRWD, setRWD } from '../../utils'
 import ListLine from '../_prototype/listLine.astro'
 import { containerStyleList, containerClassList } from '../Container/index.props'
 
-interface Props extends TopLineListProps {}
+interface Props extends HorizonalLineListProps {}
 
 // 合併属性
 const props = {
   ...defaultProps,
   ...Astro.props,
 }
-const { element, class: className, justify, maxWidth, gap, col, center, ...rest } = props
+const { element, class: className, justify, linePosition, maxWidth, gap, col, center, ...rest } = props
 
 // RWD尺寸(由大到小排序)
 const sizes = ['3xl', '2xl', 'xl', 'lg', 'md', 'sm', 'xs', '2xs']
@@ -25,7 +25,7 @@ const styleList = {
   '--jst': justify,
   ...colMap,
 }
-const classList = mergeClasses(className, [id, ...containerClassList({ center })])
+const classList = mergeClasses(className, [id, `${linePosition === 'bottom' ? 'ch-hll-b' : ''}`, ...containerClassList({ center })])
 ---
 
 <ListLine class:list={classList} style={styleList} listDirection="row" gap={gap} {...rest}>
@@ -35,7 +35,7 @@ const classList = mergeClasses(className, [id, ...containerClassList({ center })
 <style lang="scss" is:global>
   @use '../../config/breakpoint' as bp;
 
-  .ch-tll {
+  .ch-hll {
     display: flex;
     flex-wrap: wrap;
     justify-content: var(--jst);

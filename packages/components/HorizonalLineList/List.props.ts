@@ -1,4 +1,4 @@
-export const id = 'ch-tll'
+export const id = 'ch-hll'
 
 export const props = {
   element: 'ol',
@@ -6,6 +6,7 @@ export const props = {
   justify: 'center' as const,
   item: 'center' as const,
   gap: '60 40',
+  linePosition: 'top' as const,
   trimStart: false,
   trimEnd: false,
   maxWidth: '100%',

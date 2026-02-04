@@ -12,7 +12,7 @@ const props = {
   ...Astro.props,
 }
 
-const { class: className, reverse, lineClass, ...rest } = props
+const { class: className, reverse, lineClass, dotClass, ...rest } = props
 
 const classList = mergeClasses(className, [id, reverse ? 'reverse' : ''])
 ---
@@ -23,11 +23,11 @@ const classList = mergeClasses(className, [id, reverse ? 'reverse' : ''])
   </div>
   {
     Astro.slots.has('marker') ? (
-      <ItemLine markerClass="ch-ptli-m" lineClass={mergeClasses(lineClass, 'ch-ptli-n').join(' ')}>
+      <ItemLine lineClass={lineClass} dotClass={dotClass}>
         <slot name="marker" slot="marker" />
       </ItemLine>
     ) : (
-      <ItemLine markerClass="ch-ptli-m" lineClass={mergeClasses(lineClass, 'ch-ptli-n').join(' ')} />
+      <ItemLine lineClass={lineClass} dotClass={dotClass} />
     )
   }
   <div class="ch-ptli-r">
@@ -77,14 +77,14 @@ const classList = mergeClasses(className, [id, reverse ? 'reverse' : ''])
         & > .ch-ptli-r {
           padding-block-start: 0;
         }
-        & > .ch-ptli-m {
+        & > .ch-itlptt-m {
           order: -1;
           grid-row: span 2;
-          & .ch-ptli-n:first-child {
+          & .ch-itlptt-l:first-child {
             max-height: var(--mob-lt);
             height: var(--mob-lt);
           }
-          & .ch-ptli-n:last-child {
+          & .ch-itlptt-l:last-child {
             max-height: var(--mob-lb);
             height: var(--mob-lb);
           }

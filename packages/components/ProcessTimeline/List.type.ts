@@ -1,4 +1,4 @@
-import ListLineProps from '../../types'
+import { ListLineProps } from '../../types'
 
 export interface ProcessTimelineProps extends ListLineProps {
   element?: 'ol' | 'ul'

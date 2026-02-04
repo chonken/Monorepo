@@ -1,6 +1,3 @@
-import { ElementProps } from '../../types'
+import type { ItemLineProps } from '../../types'
 
-export interface ProcessTimelineItemProps extends ElementProps {
-  reverse?: boolean
-  lineClass?: string
-}
+export interface ProcessTimelineItemProps extends ItemLineProps {}
