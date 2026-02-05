@@ -11,12 +11,12 @@ const props = {
   ...defaultProps,
   ...Astro.props,
 }
-const { id: astroId, class: className, lineClass, dotClass, ...rest } = props
+const { class: className, lineClass, dotClass, ...rest } = props
 
 const classList = mergeClasses(className, id)
 ---
 
-<li id={astroId} class:list={classList} {...rest}>
+<li class:list={classList} {...rest}>
   {
     Astro.slots.has('icon') && (
       <div class="ch-llli-g">

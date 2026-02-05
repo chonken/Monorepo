@@ -1,3 +1,3 @@
-import type { ItemLineProps } from '../../types'
+import type { ElementProps, ItemLineProps } from '../../types'
 
-export interface TopLineListItemProps extends ItemLineProps {}
+export interface TopLineListItemProps extends ItemLineProps, ElementProps {}

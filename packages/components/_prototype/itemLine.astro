@@ -8,11 +8,11 @@ const { dotClass = '', lineClass = '', listDirection = 'column', ...rest } = Ast
 ---
 
 <div class:list={mergeClasses('ch-itlptt-m', listDirection === 'column' ? 'ch-col' : 'ch-row')} {...rest}>
-  <div class:list={mergeClasses('ch-itlptt-l', lineClass)} {...rest}></div>
+  <div class:list={mergeClasses('ch-itlptt-l', lineClass)}></div>
   <slot name="marker">
     <div class:list={mergeClasses('ch-itlptt-d', dotClass)}></div>
   </slot>
-  <div class:list={mergeClasses('ch-itlptt-l', lineClass)} {...rest}></div>
+  <div class:list={mergeClasses('ch-itlptt-l', lineClass)}></div>
 </div>
 
 <style lang="scss" is:global>
@@ -36,7 +36,7 @@ const { dotClass = '', lineClass = '', listDirection = 'column', ...rest } = Ast
     }
     @at-root :where(&.ch-col) {
       .ch-itlptt-l {
-        border-left: 1px solid #fff;
+        border-left: 1px solid #000;
         &:where(:first-child) {
           min-height: var(--pd-s);
           height: var(--dt);
@@ -61,7 +61,7 @@ const { dotClass = '', lineClass = '', listDirection = 'column', ...rest } = Ast
     }
     @at-root :where(&.ch-row) {
       .ch-itlptt-l {
-        border-top: 1px solid #fff;
+        border-top: 1px solid #000;
         &:where(:first-child) {
           min-width: var(--pd-s);
           width: var(--dt);
@@ -86,6 +86,10 @@ const { dotClass = '', lineClass = '', listDirection = 'column', ...rest } = Ast
     }
     @at-root {
       .ch-itlptt-d {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background-color: #000;
         flex-shrink: 0;
       }
     }

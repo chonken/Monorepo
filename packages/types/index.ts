@@ -32,7 +32,7 @@ export interface ListLineProps extends ElementProps {
   mobile?: 'lg' | 'md' | 'sm' | 'xs' | '2xs' | 'none'
 }
 
-export interface ItemLineProps extends ElementProps {
+export interface ItemLineProps {
   dotClass?: string
   lineClass?: string
 }

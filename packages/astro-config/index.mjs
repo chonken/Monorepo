@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config'
 import devtoolsJson from 'vite-plugin-devtools-json'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 import tailwindcss from '@tailwindcss/vite'
+import ykfk from './ykfk.plugin.js'
 
 export const port = 4321
 export const outDir = 'dist'
@@ -27,6 +28,7 @@ export default defineConfig({
       }),
       devtoolsJson(),
       tailwindcss(),
+      ykfk(),
     ],
   },
   outDir,

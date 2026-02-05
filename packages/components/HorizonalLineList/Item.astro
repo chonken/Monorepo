@@ -11,12 +11,12 @@ const props = {
   ...defaultProps,
   ...Astro.props,
 }
-const { id: elId, class: className = '', lineClass, dotClass, ...rest } = props
+const { class: className, lineClass, dotClass, ...rest } = props
 
 const classList = mergeClasses(className, id)
 ---
 
-<li id={elId} class:list={classList} {...rest}>
+<li class:list={classList} {...rest}>
   {
     Astro.slots.has('icon') && (
       <div class="ch-hlli-g">
@@ -59,7 +59,7 @@ const classList = mergeClasses(className, id)
   @each $size, $value in bp.$breakpoint {
     @media (max-width: #{$value}px) {
       .ch-hlli {
-        max-width: calc(100% / var(--col-#{$size}));
+        width: calc(100% / var(--col-#{$size}));
       }
     }
   }
