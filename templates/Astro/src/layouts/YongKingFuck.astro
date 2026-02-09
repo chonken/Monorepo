@@ -26,6 +26,7 @@ const { keywords = [], banner = false } = Astro.props
   @use '@styles/generator.scss' as generator;
   @use '@config/breakpoint' as bp;
 
+  $font-base: 1rem;
   // 字體大小 (腳本自動更新)
   $font-size: 18;
   // 字體參數設置
@@ -34,6 +35,8 @@ const { keywords = [], banner = false } = Astro.props
   $fupper: 0.8; // 最大基礎占比
   $flower: 0.5; // 保底基礎占比
   $fpower: 0.8; // 縮放指數
+
+  $space-base: 1rem;
   // 空間大小 (腳本自動更新)
   $space: 40;
   // 空間參數設置
@@ -42,6 +45,7 @@ const { keywords = [], banner = false } = Astro.props
   $supper: 1; // 最大基礎占比
   $slower: 0.3; // 保底基礎占比
   $spower: 0.8; // 縮放指數
+
   // 縮放區間
   $lg: bp.value(2xl); // 縮放區間的最大尺寸
   $sm: bp.value(2xs); // 縮放區間的最小尺寸

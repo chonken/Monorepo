@@ -32,8 +32,8 @@
   $factor: math.pow(10, $precision);
   @return math.div(math.round($value * $factor), $factor);
 }
-@mixin generate-sizes($prefix, $sizes, $min, $max, $upper, $lower, $power, $lg, $sm) {
-  --#{$prefix}base: 1rem;
+@mixin generate-sizes($base, $prefix, $sizes, $min, $max, $upper, $lower, $power, $lg, $sm) {
+  --#{$prefix}base: #{$base};
   @each $size in $sizes {
     $base: base($size, $min, $max, $upper, $lower, $power);
     // 相對於--*base 的比例
