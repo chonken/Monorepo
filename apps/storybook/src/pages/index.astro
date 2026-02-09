@@ -1,6 +1,6 @@
 ---
 import '@tailwind'
-import Main from '../client/views/Main.vue'
+import App from '../client/views/App.vue'
 import { getConfig } from '../server/services/configs'
 // 紀錄: 這裡是node環境，不是瀏覽器環境，路徑不能寫相對於瀏覽器根目錄，所以fetch要寫完整路徑，缺點就是localhost要寫死，所以要嘛改用瀏覽器環境寫fetch，要嘛就直接取資料庫
 ---
@@ -17,7 +17,7 @@ import { getConfig } from '../server/services/configs'
   <body class={String(getConfig('theme'))}>
     <div class="flex w-full h-full text-lg text-[var(--text-main-1)] bg-[var(--bg-main-1)]">
       <!-- 紀錄: 當其他框架組件使用 client:load 時，會將該框架的組件進行水合，刷新元素，導致slot中的astro組件的事件註冊無法採用刷新的元素 -->
-      <Main client:load />
+      <App client:load />
     </div>
   </body>
 </html>

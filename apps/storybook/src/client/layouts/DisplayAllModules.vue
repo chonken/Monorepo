@@ -13,7 +13,8 @@
         </li>
       </ul> -->
       <div class="mt-10">
-        <AsyncComp v-if="visible[index]" :name="name" :demos="demos" />
+        <AsyncComp v-if="visible[index]" :name="name" :demo="demos[0]" />
+        <!-- <LodingComp/> -->
       </div>
       <PropsTable :props="props" :default-props="defaultProps" />
     </section>
@@ -22,6 +23,7 @@
 
 <script setup lang="ts">
 import { ref, toRefs, watch, nextTick, defineAsyncComponent } from 'vue'
+// import LodingComp from '../components/LodingComp.vue'
 import PropsTable from '../components/PropsTable.vue'
 import type { Item } from '../types'
 
@@ -34,7 +36,7 @@ const { list } = toRefs(props)
 const sections = ref<HTMLElement[]>()
 
 const AsyncComp = defineAsyncComponent({
-  loader: () => import('../components/SwitchDemo.vue'),
+  loader: () => import('../components/DisplayDemo.vue'),
   // loadingComponent: ,
   // errorComponent: ,
   // delay: 200,
@@ -43,7 +45,6 @@ const AsyncComp = defineAsyncComponent({
 const visible = ref<boolean[]>([])
 let observer: IntersectionObserver | null = null
 watch(list, async () => {
-  console.log(list.value)
   // 等 DOM 更新完成
   nextTick(() => {
     sectionsModel.value = sections.value

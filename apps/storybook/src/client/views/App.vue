@@ -21,13 +21,13 @@
     <div ref="scrollRoot" class="relative z-1 w-full h-full px-[5%] pb-[10%] overflow-x-hidden overflow-y-auto">
       <!-- 紀錄: 除了created和有before外，子組件的生命週期順序都先於父組件，所以雙方都在onMounted寫程式時，子組件onMounted的程式是不會有父組件在onMounted的更新，解法是子組件用watch監聽父組件的關鍵數據 -->
       <DisplayModules :list="info.list" v-model:sections="sections" />
-      <ModuleShowcase></ModuleShowcase>
+      <ModuleShowcase v-if="info.list.length > 0" :item="info.list[0].items[2]"></ModuleShowcase>
     </div>
   </main>
 </template>
 <script lang="ts" setup>
 import { ref, onMounted, computed, onBeforeUnmount, watch } from 'vue'
-import DisplayModules from '../layouts/DisplayModules.vue'
+import DisplayModules from '../layouts/DisplayAllModules.vue'
 import DirectoryList from '../components/DirectoryList.vue'
 import ModuleShowcase from './ModuleShowcase.vue'
 import SearchBox from '../components/SearchBox.vue'
