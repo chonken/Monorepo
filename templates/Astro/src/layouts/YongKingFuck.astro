@@ -54,12 +54,11 @@ const { keywords = [], banner = false } = Astro.props
     // 模組區塊根元素
     font-size: var(--f18);
     font-family: 'Microsoft JhengHei', serif;
-    overflow: hidden;
+    contain: paint;
     line-height: 1.8;
     letter-spacing: 0;
   }
   @mixin animate {
-    // 一般
     [data-animate-in='up'] {
       opacity: 0;
       transform: translate3d(0, var(--ani-move-pos), 0);

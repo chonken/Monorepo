@@ -285,4 +285,9 @@
     "prefix": "content",
     "body": ["<Content class='$1' width='$2' padding='$3'>", "\t", "</Content>"],
   },
+  "twoIconsTitle": {
+    "scope": "astro",
+    "prefix": "twoIconsTitle",
+    "body": ["<TwoIconsTitle gap='40' mobile='xs'>", "  ", "</TwoIconsTitle>"],
+  },
 }

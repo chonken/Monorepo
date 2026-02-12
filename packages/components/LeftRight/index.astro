@@ -61,9 +61,12 @@ const classList = mergeClasses(className, [
     &.ch-ctr-cen {
       margin-inline: auto;
     }
-    & > :where(:last-child) {
+    > :where(:last-child) {
       margin-inline-start: var(--oly);
       z-index: 2;
+    }
+    > * {
+      min-width: 0;
     }
   }
 

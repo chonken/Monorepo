@@ -15,36 +15,33 @@ const { element, class: className, gap, mobile, ...rest } = props
 const Element = element as keyof HTMLElement
 
 const styleList = {
-  '--gap': parseMultiUnit(gap),
+  '--gap': parseMultiUnit(gap).join(' '),
 }
 const classList = mergeClasses(className, [id, ...(mobile === 'none' ? [] : [`mob-${mobile}`])])
 ---
 
 <Element class:list={classList} style={styleList} {...rest}>
-  <div class="ch-tit-i">
-    <slot name="icon"><div class="ch-tit-l"></div></slot>
-  </div>
+  {
+    Astro.slots.has('icon') ? (
+      <div class="ch-tit-i">
+        <slot name="icon" />
+      </div>
+    ) : (
+      <div class="ch-tit-l" />
+    )
+  }
   <div class="ch-tit-t"><slot /></div>
-  <div class="ch-tit-i">
-    {
-      Astro.slots.has('icon2') ? (
-        <slot name="icon2" />
-      ) : (
-        <slot name="icon">
-          <div class="ch-tit-l" />
-        </slot>
-      )
-    }
-  </div>
+  {Astro.slots.has('icon') ? <div class="ch-tit-i">{Astro.slots.has('icon2') ? <slot name="icon2" /> : <slot name="icon" />}</div> : <div class="ch-tit-l" />}
 </Element>
 
 <style lang="scss" is:global>
-  @use '../config/breakpoint' as bp;
+  @use '../../config/breakpoint' as bp;
   .ch-tit {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: var(--gap);
+    text-align: center;
   }
   .ch-tit-t {
     flex-shrink: 0;
@@ -59,7 +56,7 @@ const classList = mergeClasses(className, [id, ...(mobile === 'none' ? [] : [`mo
   @each $size in $map {
     @media (max-width: bp.size($size)) {
       .ch-tit.mob-#{$size} {
-        & :is(.ch-tit-l, .ch-tit-i) {
+        :is(.ch-tit-l, .ch-tit-i) {
           display: none;
         }
       }
