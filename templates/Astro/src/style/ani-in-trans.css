@@ -1,0 +1,32 @@
+[data-animate-in]:where(.trans-up),
+[data-animate-in='trans-up'] {
+  --y: var(--ani-move-pos);
+}
+[data-animate-in]:where(.trans-left),
+[data-animate-in='trans-left'] {
+  --x: var(--ani-move-pos);
+}
+[data-animate-in]:where(.trans-right),
+[data-animate-in='trans-right'] {
+  --x: var(--ani-move-nag);
+}
+[data-animate-in]:where(.trans-down),
+[data-animate-in='trans-down'] {
+  --y: var(--ani-move-nag);
+}
+[data-animate-in]:where(.trans-zoomIn),
+[data-animate-in='trans-zoomIn'] {
+  --s: 0.3;
+}
+[data-animate-in]:where(.trans-zoomOut),
+[data-animate-in='trans-zoomOut'] {
+  --s: 1.3;
+}
+[data-animate-in]:where(.trans-rotateIn),
+[data-animate-in='trans-rotateIn'] {
+  --r: -10deg;
+}
+[class*='trans-'],
+[data-animate-in^='trans-'] {
+  transform: translate(var(--x, 0), var(--y, 0)) scale(var(--s, 1)) rotate(var(--r, 0));
+}

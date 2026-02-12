@@ -83,67 +83,11 @@ const { keywords = [], banner = false } = Astro.props
     [data-animate-in='fadeIn'] {
       opacity: 0;
     }
-    // transform
-    [data-animate-in]:where(.trans-up),
-    [data-animate-in='trans-up'] {
-      --y: var(--ani-move-pos);
-    }
-    [data-animate-in]:where(.trans-left),
-    [data-animate-in='trans-left'] {
-      --x: var(--ani-move-pos);
-    }
-    [data-animate-in]:where(.trans-right),
-    [data-animate-in='trans-right'] {
-      --x: var(--ani-move-nag);
-    }
-    [data-animate-in]:where(.trans-down),
-    [data-animate-in='trans-down'] {
-      --y: var(--ani-move-nag);
-    }
-    [data-animate-in]:where(.trans-zoomIn),
-    [data-animate-in='trans-zoomIn'] {
-      --s: 0.3;
-    }
-    [data-animate-in]:where(.trans-zoomOut),
-    [data-animate-in='trans-zoomOut'] {
-      --s: 1.3;
-    }
-    [data-animate-in]:where(.trans-rotateIn),
-    [data-animate-in='trans-rotateIn'] {
-      --r: -10deg;
-    }
-    // clip
-    [data-animate-in]:where(.clip-up),
-    [data-animate-in='clip-up'] {
-      clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
-    }
-    [data-animate-in]:where(.clip-down),
-    [data-animate-in='clip-down'] {
-      clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
-    }
-    [data-animate-in]:where(.clip-left),
-    [data-animate-in='clip-left'] {
-      clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
-    }
-    [data-animate-in]:where(.clip-right),
-    [data-animate-in='clip-right'] {
-      clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-    }
-    [data-animate-in]:where(.clip-zoomIn),
-    [data-animate-in='clip-zoomIn'] {
-      clip-path: circle(15% at 50% 50%);
-    }
-    // filter
-    [data-animate-in]:where(.filter-blur),
-    [data-animate-in='filter-blur'] {
-      opacity: 0;
-      filter: blur(10px);
-    }
   }
 
   .opsl {
-    @include generator.generate-sizes('f', $font-size, $fmin, $fmax, $fupper, $flower, $fpower, $lg, $sm);
-    @include generator.generate-sizes('s', $space, $smin, $smax, $supper, $slower, $spower, $lg, $sm);
+    @include generator.generate-sizes($font-base, 'f', $font-size, $fmin, $fmax, $fupper, $flower, $fpower, $lg, $sm);
+    @include generator.generate-sizes($space-base, 's', $space, $smin, $smax, $supper, $slower, $spower, $lg, $sm);
 
     @include opsl;
   }
@@ -157,10 +101,6 @@ const { keywords = [], banner = false } = Astro.props
       clip-path 1.2s ease,
       filter 1.2s ease;
   }
-  [class*='trans-'],
-  [data-animate-in^='trans-'] {
-    transform: translate(var(--x, 0), var(--y, 0)) scale(var(--s, 1)) rotate(var(--r, 0));
-  }
   @include animate;
   .in-view {
     &[data-animate-in] {
@@ -168,15 +108,6 @@ const { keywords = [], banner = false } = Astro.props
     }
     &:is([class*='trans-'], [data-animate-in^='trans-'], [data-animate-in='up'], [data-animate-in='down'], [data-animate-in='left'], [data-animate-in='right'], [data-animate-in='scaleIn']) {
       transform: none;
-    }
-    &:is(.clip-up, .clip-down, .clip-left, .clip-right, [data-animate-in='clip-up'], [data-animate-in='clip-down'], [data-animate-in='clip-left'], [data-animate-in='clip-right']) {
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    }
-    &:is(.clip-zoomIn, [data-animate-in='clip-zoomIn']) {
-      clip-path: circle(100% at 50% 50%);
-    }
-    &:is([class*='filter-'], [data-animate-in^='filter-']) {
-      filter: blur(0px) brightness(100%) contrast(100%) grayscale(0%) hue-rotate(0deg) invert(0%) opacity(100%) saturate(100%) sepia(0%);
     }
   }
 </style>

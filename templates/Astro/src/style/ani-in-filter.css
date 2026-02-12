@@ -1,0 +1,8 @@
+[data-animate-in]:where(.filter-blur),
+[data-animate-in='filter-blur'] {
+  opacity: 0;
+  filter: blur(10px);
+}
+.in-view:is([class*='filter-'], [data-animate-in^='filter-']) {
+  filter: blur(0px) brightness(100%) contrast(100%) grayscale(0%) hue-rotate(0deg) invert(0%) opacity(100%) saturate(100%) sepia(0%);
+}

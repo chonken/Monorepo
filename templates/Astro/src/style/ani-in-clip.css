@@ -1,0 +1,26 @@
+[data-animate-in]:where(.clip-up),
+[data-animate-in='clip-up'] {
+  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+}
+[data-animate-in]:where(.clip-down),
+[data-animate-in='clip-down'] {
+  clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+}
+[data-animate-in]:where(.clip-left),
+[data-animate-in='clip-left'] {
+  clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+}
+[data-animate-in]:where(.clip-right),
+[data-animate-in='clip-right'] {
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+}
+[data-animate-in]:where(.clip-zoomIn),
+[data-animate-in='clip-zoomIn'] {
+  clip-path: circle(15% at 50% 50%);
+}
+.in-view:is(.clip-up, .clip-down, .clip-left, .clip-right, [data-animate-in='clip-up'], [data-animate-in='clip-down'], [data-animate-in='clip-left'], [data-animate-in='clip-right']) {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+.in-view:is(.clip-zoomIn, [data-animate-in='clip-zoomIn']) {
+  clip-path: circle(100% at 50% 50%);
+}

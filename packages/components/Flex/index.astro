@@ -37,6 +37,9 @@ const classList = mergeClasses(className, flexClassList({ reverse, flexReverse, 
     &:where(.flex-re) {
       flex-direction: row-reverse;
     }
+    > * {
+      min-width: 0;
+    }
   }
 
   @each $size, $value in bp.$breakpoint {

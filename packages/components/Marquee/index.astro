@@ -10,7 +10,7 @@ const props = {
   ...defaultProps,
   ...Astro.props,
 }
-const { class: className, seconds, move, hover, src, ...rest } = props
+const { class: className, seconds, move, hover, mobile, gap, src, ...rest } = props
 
 // 移動方向
 const map = {
@@ -24,56 +24,92 @@ const [hr, vr] = map[move] ?? [0, 0]
 const styleList = {
   '--sec': parseUnit(seconds, 's'),
   '--tra': `translate(${hr * 100}%, ${vr * 100}%)`,
+  '--tra-1': hr,
+  '--tra-2': vr,
+  '--gap': parseUnit(gap, 'px'),
 }
-const classList = mergeClasses(className, [id, `ch-dir-${move}`, hover ? 'ch-hover' : ''])
+const classList = mergeClasses(className, [id, `ch-dir-${move}`, hover ? 'ch-hover' : '', `mob-${mobile} `])
 ---
 
 <div class:list={classList} style={styleList} {...rest}>
-  <div class="ch-item">
-    {Astro.slots.has('default') ? <slot /> : <img src={src} alt="" />}
-  </div>
-  <div class="ch-item">
-    {Astro.slots.has('default') ? <slot /> : <img src={src} alt="" />}
+  <div class="ch-frame">
+    <div class="ch-item">
+      {Astro.slots.has('default') ? <slot /> : <img src={src} alt="" />}
+    </div>
+    <div class="ch-item ch-shadow">
+      {Astro.slots.has('default') ? <slot /> : <img src={src} alt="" />}
+    </div>
   </div>
 </div>
 
 <style lang="scss" is:global>
+  @use '../../config/breakpoint' as bp;
   @use 'sass:map';
+
   .ch-mar {
-    display: flex;
     overflow: hidden;
-    & > .ch-item {
-      max-width: unset;
-      animation: marquee var(--sec) linear infinite;
-      flex-shrink: 0;
+    writing-mode: horizontal-tb;
+    direction: ltr;
+    &:where(.ch-dir-up, .ch-dir-down) {
+      writing-mode: vertical-lr;
+      max-width: fit-content;
     }
-    &.ch-dir-right,
-    &.ch-dir-down {
-      justify-content: end;
+    &:where(.ch-dir-down, .ch-dir-right) {
+      direction: rtl;
     }
-    &.ch-dir-left > .ch-item,
-    &.ch-dir-right > .ch-item {
-      min-width: 100%;
-      height: 100%;
-      & > * {
-        min-width: 100%;
-        height: 100% !important;
+    * {
+      block-size: 100%;
+    }
+    @at-root :where(.ch-mar) {
+      .ch-frame {
+        --hr: var(--tra-1);
+        --vr: var(--tra-2);
+        position: relative;
+        max-inline-size: none;
+        inline-size: max-content;
+        min-inline-size: 100%;
+        animation: marquee var(--sec) linear infinite;
+      }
+      .ch-item {
+        display: flex;
+        justify-content: space-around;
+        inline-size: max-content;
+        > * {
+          margin-inline-end: var(--gap);
+        }
+        * {
+          block-size: 100% !important;
+        }
+      }
+      .ch-shadow {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-start: 100%;
       }
     }
-    &.ch-dir-up,
-    &.ch-dir-down {
-      flex-direction: column;
-      & > .ch-item * {
-        width: 100%;
+    @at-root {
+      :where(.ch-mar.ch-hover):hover .ch-frame {
+        animation-play-state: paused;
       }
     }
-    &.ch-hover:hover > .ch-item {
-      animation-play-state: paused;
+  }
+
+  $map: 2xl, xl, lg, md, sm;
+  @each $size in $map {
+    @media (max-width: bp.size($size)) {
+      :where(.ch-mar.mob-#{$size}):is(.ch-dir-up, .ch-dir-down) {
+        writing-mode: horizontal-tb;
+        max-width: 100%;
+      }
+      :where(.ch-mar.mob-#{$size}:is(.ch-dir-up, .ch-dir-down)) .ch-frame {
+        --hr: var(--tra-2);
+        --vr: var(--tra-1);
+      }
     }
   }
   @keyframes marquee {
     100% {
-      transform: var(--tra);
+      transform: translate(calc(var(--hr) * 100%), calc(var(--vr) * 100%));
     }
   }
 </style>

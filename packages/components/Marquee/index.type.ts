@@ -5,4 +5,6 @@ export interface MarqueeProps extends ElementProps {
   move?: 'left' | 'right' | 'up' | 'down'
   hover?: boolean
   src?: string
+  gap?: string | number
+  mobile?: '2xl' | 'xl' | 'lg' | 'md' | 'sm' | 'none'
 }
