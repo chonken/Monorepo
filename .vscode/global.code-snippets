@@ -290,4 +290,9 @@
     "prefix": "twoIconsTitle",
     "body": ["<TwoIconsTitle gap='40' mobile='xs'>", "  ", "</TwoIconsTitle>"],
   },
+  "qajs": {
+    "scope": "astro",
+    "prefix": "qaJs",
+    "body": ["<QAJs selector='$1' ${2|group|} ${3|firstOpen|} ${4|activeOnly|} />"],
+  },
 }
