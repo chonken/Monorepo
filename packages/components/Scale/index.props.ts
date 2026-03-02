@@ -4,7 +4,7 @@ export const props = {
   element: 'div',
   scale: '1.2',
   seconds: '1',
-  loop: false,
+  delay: '0',
 }
 
 export const slots = ['default']

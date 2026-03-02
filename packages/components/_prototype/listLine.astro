@@ -6,7 +6,7 @@ interface Props extends ListLineProps {
   listDirection?: 'row' | 'column'
 }
 
-const { id, element = 'ol', class: className = '', style, item = 'center', gap = '40', lineGap = '0', trimStart = false, trimEnd = false, mobile = 'none', listDirection = 'column', ...rest } = Astro.props
+const { id, element = 'ol', class: className = '', style, item = 'center', gap = '40', lineGap = '0', trimStart = false, trimEnd = false, mobile = 'none', listDirection = 'column', dotStart = 'auto', ...rest } = Astro.props
 
 const Element = element as keyof HTMLElement
 
@@ -25,15 +25,17 @@ const base = {
 // 文字區padding間隔
 const { start: StartPad, end: EndPad } = base
 // 圖片區padding間隔
-let dT = 'auto'
-if (item === 'end') dT = '100%'
-if (item === 'stretch' || item === 'start') dT = '0px'
+let ds = dotStart
+if (ds === 'auto') {
+  if (item === 'end') ds = '100%'
+  if (item === 'stretch' || item === 'start') ds = '0px'
+}
 
 const styleList = {
   ...(listDirection === 'column' ? { '--cgap': space } : { '--rgap': space }),
   '--pd-s': StartPad,
   '--pd-e': EndPad,
-  '--dt': parseUnit(dT),
+  '--ds': parseUnit(ds, 'px'),
   '--l-gap': parseUnit(lineGap, 'px'),
   ...style,
 }

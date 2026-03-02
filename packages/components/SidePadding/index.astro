@@ -43,7 +43,9 @@ const classList = mergeClasses(className, [id, `${mainMobile === 'none' ? '' : `
     margin-block: var(--mgb);
     padding-block: var(--pdb);
     padding-inline: calc(max(50% - var(--mws) / 2, var(--mpd))) calc(max(50% - var(--mwe) / 2, var(--mpd)));
-    background: var(--url) center / cover;
+    background-image: var(--url);
+    background-position: center;
+    background-size: cover;
   }
   .ch-spd-s {
     padding-inline-start: 0;

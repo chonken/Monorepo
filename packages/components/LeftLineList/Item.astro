@@ -41,14 +41,14 @@ const classList = mergeClasses(className, id)
   .ch-llli {
     display: flex;
     align-items: var(--itm);
-    margin-block: 0 !important;
-    padding-block: 0 !important;
+    margin-block: 0;
+    padding-block: 0;
     column-gap: var(--cgap);
     &:where(:first-of-type) {
-      margin-top: calc(var(--pd-s) * -1) !important;
+      margin-top: calc(var(--pd-s) * -1);
     }
     &:where(:last-of-type) {
-      margin-bottom: calc(var(--pd-e) * -1) !important;
+      margin-bottom: calc(var(--pd-e) * -1);
     }
   }
   :is(.ch-llli-g, .ch-itlptt-m) {
@@ -73,12 +73,13 @@ const classList = mergeClasses(className, id)
         column-gap: 20px;
         &:first-of-type,
         &:last-of-type {
-          margin-block: 0 !important;
+          margin-block: 0;
         }
-        & > .ch-itlptt-m .ch-itlptt-l {
+        > .ch-llli-g + .ch-itlptt-m,
+        > .ch-itlptt-m .ch-itlptt-l {
           display: none;
         }
-        & > .ch-llli-t {
+        > .ch-llli-t {
           padding-block: 0 var(--cgap);
         }
         &:last-of-type {

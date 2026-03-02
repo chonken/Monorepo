@@ -11,7 +11,7 @@ const props = {
   ...Astro.props,
 }
 const { element, class: className, rotate, seconds, delay, loop, reverse, ...rest } = props
-const timing = loop ? `linear ${reverse ? 'reverse' : ''}` : 'ease-in-out alternate-reverse'
+const timing = loop ? `linear ${reverse ? 'reverse' : ''}` : 'ease-in-out alternate'
 
 const Element = element as keyof HTMLElement
 
@@ -28,14 +28,18 @@ const classList = mergeClasses(className, id)
 
 <style is:global>
   .ch-rot > * {
+    --deg: calc(var(--rot) / 2);
     display: block;
     max-width: 100%;
     max-height: 100%;
     animation: rotate var(--sec) var(--dly) infinite var(--tim);
   }
   @keyframes rotate {
+    0% {
+      transform: rotate(calc(var(--deg) * -1));
+    }
     100% {
-      transform: rotate(var(--rot));
+      transform: rotate(var(--deg));
     }
   }
 </style>
