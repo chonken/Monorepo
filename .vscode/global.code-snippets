@@ -218,7 +218,7 @@
   "as-fk": {
     "scope": "astro",
     "prefix": "as-fk",
-    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Debug from '@components/Debug'", "---\n", "<YkFk ${1|banner|}>", "\t", "</YkFk>", "<Debug/>\n", "<style is:global>", "\t", "</style>"],
+    "body": ["---", "import YkFk from '../layouts/YongKingFuck.astro'", "import Debug from '@components/Debug'", "---\n", "<YkFk ${1|banner path|}>", "\t", "</YkFk>", "<Debug/>\n", "<style is:global>", "\t", "</style>"],
   },
   "as-fk-index": {
     "scope": "astro",

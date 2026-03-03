@@ -4,8 +4,9 @@ interface Props {
   isIndex?: boolean
   keywords?: string[]
   banner?: boolean
+  path?: boolean
 }
-const { isDev = false, isIndex = false, keywords = [], banner = false } = Astro.props
+const { isDev = false, isIndex = false, keywords = [], banner = false, path = false } = Astro.props
 ---
 
 {
@@ -25,6 +26,7 @@ const { isDev = false, isIndex = false, keywords = [], banner = false } = Astro.
         <script is:inline src="https://pic03.eapple.com.tw/yk_js_web/jquery-1.11.3.min.js" />
         <script is:inline src="https://pic03.eapple.com.tw/yk_js_web/scrollfade.js" />
 
+        {/* 這個demo有個奇怪的BUG，放入除了style外的其他東西只會出現在開發模式，唯獨style會被跟著打包，明明打包區域沒有使用到<slot name="demo" />，無解。 */}
         <slot name="demo" />
         <slot name="head" />
       </head>
@@ -40,7 +42,7 @@ const { isDev = false, isIndex = false, keywords = [], banner = false } = Astro.
       <head>
         <script is:inline src="https://pic03.eapple.com.tw/yk_js_web/scrollfade.js" />
         <slot name="head" />
-        {!banner && <Fragment set:html={`<style>.path,.banner { display: none; }</style>\n`} />}
+        {!(banner && path) && <Fragment set:html={`<style>${path ? '' : '.path'}${!banner && !path ? ',' : ''}${banner ? '' : '.banner'} { display: none; }</style>\n`} />}
       </head>
       <div class="opsl">
         {isIndex && (

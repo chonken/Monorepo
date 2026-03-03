@@ -2,15 +2,16 @@
 interface Props {
   keywords?: string[]
   banner?: boolean
+  path?: boolean
 }
 import BaseModule from '@layouts/baseModule.astro'
 const isIndex = Astro.url.pathname.endsWith('/index') || Astro.url.pathname === '/'
 const isDev = import.meta.env.MODE === 'development'
 
-const { keywords = [], banner = false } = Astro.props
+const { keywords = [], banner = false, path = false } = Astro.props
 ---
 
-<BaseModule isIndex={isIndex} isDev={isDev} keywords={isIndex ? keywords : undefined} banner={banner}>
+<BaseModule isIndex={isIndex} isDev={isDev} keywords={isIndex ? keywords : undefined} banner={banner} path={path}>
   <Fragment slot="demo">
     <!-- menu.css custom.css 放這裡 -->
   </Fragment>
