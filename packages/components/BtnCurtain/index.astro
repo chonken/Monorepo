@@ -44,7 +44,7 @@ const classList = mergeClasses(className, [id, `cur-${curtain[0]}`, `${open ? 'c
       background-color: var(--clr);
       z-index: -1;
     }
-    &.ch-open {
+    &.ch-open > span {
       color: var(--bgc);
     }
     &.ch-open::before {
@@ -66,13 +66,13 @@ const classList = mergeClasses(className, [id, `cur-${curtain[0]}`, `${open ? 'c
       left: 0;
       bottom: 0;
     }
-    &:hover {
+    &:hover > span {
       color: var(--bgc);
     }
     &:hover::before {
       width: 100%;
     }
-    &.ch-open:hover {
+    &.ch-open:hover > span {
       color: var(--clr);
     }
     &.ch-open:hover::before {

@@ -5,4 +5,5 @@ export interface BtnCornerProps extends ButtonProps {
   position?: 'lt' | 'rt' | 'lb' | 'rb'
   hoverColor?: string
   hoverBackgroundColor?: string
+  blank?: boolean
 }

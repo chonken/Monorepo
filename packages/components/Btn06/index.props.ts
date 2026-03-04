@@ -5,7 +5,7 @@ export const props = {
   color: 'inherit',
   backgroundColor: '#eef1f6',
   borderColor: '#fff0',
-  hoverBorderColor: '#00b39b',
+  hoverBorderColor: 'currentColor',
   blank: false,
 }
 

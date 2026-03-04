@@ -4,7 +4,7 @@ export const props = {
   href: '#',
   color: 'inherit',
   backgroundColor: '#fff0',
-  borderColor: '#333',
+  borderColor: 'currentColor',
   move: 'right' as 'left' | 'right' | 'up' | 'down',
   blank: false,
 }

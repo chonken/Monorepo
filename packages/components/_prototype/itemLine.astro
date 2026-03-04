@@ -36,7 +36,7 @@ const { dotClass = '', lineClass = '', listDirection = 'column', ...rest } = Ast
     }
     @at-root :where(&.ch-col) {
       .ch-itlptt-l {
-        border-left: 1px solid #000;
+        border-left: 1px solid currentColor;
         &:where(:first-child) {
           min-height: var(--pd-s);
           height: var(--ds);
@@ -61,7 +61,7 @@ const { dotClass = '', lineClass = '', listDirection = 'column', ...rest } = Ast
     }
     @at-root :where(&.ch-row) {
       .ch-itlptt-l {
-        border-top: 1px solid #000;
+        border-top: 1px solid currentColor;
         &:where(:first-child) {
           min-width: var(--pd-s);
           width: var(--ds);
@@ -89,7 +89,7 @@ const { dotClass = '', lineClass = '', listDirection = 'column', ...rest } = Ast
         width: 15px;
         height: 15px;
         border-radius: 50%;
-        background-color: #000;
+        background-color: currentColor;
         flex-shrink: 0;
       }
     }

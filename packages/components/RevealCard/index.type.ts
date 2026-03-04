@@ -5,6 +5,5 @@ export interface RevealCardProps extends ElementProps {
   minHeight?: string | number
   background?: string
   backgroundHover?: string
-  contentClass?: string
   mobile?: 'md' | 'sm' | 'xs' | '2xl' | 'none'
 }

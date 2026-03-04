@@ -3,7 +3,7 @@ export const id = 'ch-btn-cur'
 export const props = {
   href: '#',
   backgroundColor: '#fff',
-  color: '#000',
+  color: 'currentColor',
   curtain: 'left' as const,
   curtainWidth: '0.12em',
   open: false,

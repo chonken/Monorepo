@@ -12,7 +12,7 @@ const props = {
   ...Astro.props,
 }
 
-const { class: className, color, backgroundColor, hoverColor = backgroundColor, hoverBackgroundColor = color, position, ...rest } = props
+const { class: className, color, backgroundColor, hoverColor = backgroundColor, hoverBackgroundColor = color, position, blank, ...rest } = props
 
 const map = {
   lt: 'ch-lt',
@@ -30,7 +30,7 @@ const styleList = {
 const classList = mergeClasses(className, [id, map[position]])
 ---
 
-<Button class:list={classList} style={styleList} {...rest}>
+<Button class:list={classList} style={styleList} target={blank ? '_blank' : '_self'} {...rest}>
   <span class="ch-btnptt-txt">
     <slot>查看更多</slot>
   </span>
@@ -40,8 +40,8 @@ const classList = mergeClasses(className, [id, map[position]])
   .ch-btn-cnr {
     position: relative;
     color: var(--clr);
-    overflow: hidden;
     background-color: var(--bgc);
+    overflow: hidden;
     transition: 0.5s ease-in-out;
     z-index: 1;
     &::before {
@@ -75,7 +75,9 @@ const classList = mergeClasses(className, [id, map[position]])
       clip-path: polygon(100% 0, 0% 100%, 100% 100%);
     }
     &:hover {
-      color: var(--clr-h);
+      & > span {
+        color: var(--clr-h);
+      }
       &::before {
         width: 200%;
         transition-timing-function: ease-in;
