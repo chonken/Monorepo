@@ -16,10 +16,10 @@ const { element, class: className, translate, rotate, scale, skew, seconds, dela
 const Element = element as keyof HTMLElement
 
 const transforms: string[] = []
-if (translate) transforms.push(`translate(${parseMultiUnit(translate, '%')})`)
-if (rotate) transforms.push(`rotate(${parseMultiUnit(rotate, 'deg')})`)
-if (scale) transforms.push(`scale(${parseMultiUnit(scale, '')})`)
-if (skew) transforms.push(`skew(${parseMultiUnit(skew, 'deg')})`)
+if (translate !== undefined) transforms.push(`translate(${parseMultiUnit(translate, '%')})`)
+if (rotate !== undefined) transforms.push(`rotate(${parseMultiUnit(rotate, 'deg')})`)
+if (scale !== undefined) transforms.push(`scale(${parseMultiUnit(scale, '')})`)
+if (skew !== undefined) transforms.push(`skew(${parseMultiUnit(skew, 'deg')})`)
 
 const styleList = {
   '--tfm': `${transforms.join(' ')};`,
