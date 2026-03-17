@@ -73,7 +73,7 @@ const classList = mergeClasses(className, [id, `ch-dir-${move}`, hover ? 'ch-hov
       .ch-item {
         display: flex;
         justify-content: space-around;
-        inline-size: max-content;
+        inline-size: fit-content;
         > * {
           margin-inline-end: var(--gap);
         }
@@ -84,7 +84,7 @@ const classList = mergeClasses(className, [id, `ch-dir-${move}`, hover ? 'ch-hov
       .ch-shadow {
         position: absolute;
         inset-block-start: 0;
-        inset-inline-start: 100%;
+        inset-inline-end: -100%;
       }
     }
     @at-root {
